@@ -1,0 +1,28 @@
+:root {
+  --color-bg: #13151a;
+  --color-bg-header: #101216;
+  --color-surface: #1a1d24;
+  --color-border: #2a2e38;
+  --color-border-strong: #3a3f4b;
+  --color-accent: #1fd5e6;
+  --color-on-accent: #06222a;
+  --color-logo-from: #3ef0e0;
+  --color-logo-to: #0e8fb8;
+  --color-text: #ffffff;
+  --color-text-base: #e8eaf0;
+  --color-text-secondary: #c9ced8;
+  --color-text-muted: #9aa1ad;
+  --color-error: #ffb3b6;
+  --color-error-border: #ff7a80;
+  --color-error-bg: #2b1416;
+  --font-main: 'Montserrat', system-ui, sans-serif;
+  --font-display: 'Bebas Neue', sans-serif;
+  --container-max: 1280px;
+  --space-page: 44px;
+  --space-section: 40px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 12px;
+  --height-btn: 48px;
+  --height-field: 44px;
+}
