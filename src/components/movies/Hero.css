@@ -1,0 +1,29 @@
+.hero-carousel {
+  width: 100%;
+  max-width: 750px;
+  height: 720px;
+  margin: 0 auto;
+}
+
+.hero-image {
+  height: 720px;
+  width: 100%;
+  object-fit: cover;
+  background-color: var(--color-bg);
+}
+
+.hero-caption {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  border-radius: var(--radius-md);
+  padding: 16px 24px;
+}
+
+.hero-title {
+  color: var(--color-accent);
+  font-family: var(--font-display);
+}
+
+.hero-description {
+  color: var(--color-text-secondary);
+}
