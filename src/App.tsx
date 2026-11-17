@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router'
-import Footer from './components/layout/Footer'
-import Navbar from './components/layout/Navbar'
+import Footer from './components/Footer'
+import AppNavbar from './components/Navbar'
 import HomePage from './pages/HomePage'
 import AdminPage from './pages/AdminPage'
 import LoginPage from './pages/LoginPage'
@@ -10,7 +10,7 @@ import ProtectedRoute from './routes/ProtectedRoute'
 export default function App() {
   return (
     <>
-      <Navbar />
+      <AppNavbar />
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
