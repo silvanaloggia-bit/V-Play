@@ -8,6 +8,7 @@ export interface Movie {
   description: string
   category: Category
   imageUrl: string
+  bannerUrl?:string
   published: boolean
   isFeatured: boolean
 }

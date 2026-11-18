@@ -2,6 +2,7 @@
 
 export const storage_key = {
   movies: 'movies',
+  users: 'users',
   isLogged: 'isLogged',
 } as const
 
