@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import Carousel from 'react-bootstrap/Carousel'
-import { terror1, terror2, terror3 } from '../../asset/importMovies'
+import { terror1, terror2, terror3 } from '../../assets/importMovies'
 import './Hero.css'
 
 type Slide = {
