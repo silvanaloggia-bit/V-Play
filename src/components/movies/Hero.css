@@ -1,29 +1,105 @@
 .hero-carousel {
   width: 100%;
-  max-width: 750px;
-  height: 720px;
+  max-width: var(--container-max);
+  height: min(600px, 70vh);
+  min-height: 420px;
   margin: 0 auto;
 }
 
+.hero-carousel .carousel-inner,
+.hero-carousel .carousel-item {
+  height: 100%;
+}
+
 .hero-image {
-  height: 720px;
   width: 100%;
+  height: 100%;
   object-fit: cover;
-  background-color: var(--color-bg);
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg,
+      color-mix(in srgb, var(--color-bg) 95%, transparent) 0%,
+      color-mix(in srgb, var(--color-bg) 70%, transparent) 35%,
+      color-mix(in srgb, var(--color-bg) 10%, transparent) 70%,
+      color-mix(in srgb, var(--color-bg) 45%, transparent) 100%),
+    linear-gradient(0deg,
+      var(--color-bg) 0%,
+      color-mix(in srgb, var(--color-bg) 0%, transparent) 40%);
 }
 
 .hero-caption {
-  background-color: var(--color-bg);
-  color: var(--color-text);
-  border-radius: var(--radius-md);
-  padding: 16px 24px;
+  position: absolute;
+  inset: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  padding: 0 6%;
+  text-align: left;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.hero-content {
+  max-width: 560px;
+  pointer-events: auto;
+}
+
+.hero-carousel .carousel-control-prev,
+.hero-carousel .carousel-control-next {
+  z-index: 3;
+}
+
+.hero-badge {
+  font-family: var(--font-display);
+  letter-spacing: 2px;
+  color: var(--color-accent);
 }
 
 .hero-title {
-  color: var(--color-accent);
   font-family: var(--font-display);
+  font-size: clamp(3rem, 7vw, 6rem);
+  line-height: 0.95;
+  color: var(--color-text);
+  margin: 8px 0 16px;
 }
 
 .hero-description {
-  color: var(--color-text-secondary);
+  color: var(--color-text-base);
+  font-size: 1.05rem;
+  line-height: 1.5;
+  margin-bottom: 28px;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.hero-carousel .carousel-indicators {
+  justify-content: flex-start;
+  margin-left: 0;
+  margin-right: 0;
+  padding-left: 6%;
+  margin-bottom: 14px;
+}
+
+.hero-carousel .carousel-indicators [data-bs-target] {
+  width: 34px;
+  height: 3px;
+  border: 0;
+  border-radius: 0;
+  background-color: rgba(255, 255, 255, 0.4);
+  opacity: 1;
+  margin: 0 2px;
+}
+
+.hero-carousel .carousel-indicators .active {
+  background-color: var(--color-accent);
 }
