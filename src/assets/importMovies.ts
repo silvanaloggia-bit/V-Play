@@ -1,11 +1,3 @@
-// Carrusel actual (NO borrar, lo usa HeroBanner)
-import terror1 from './images/hero-terror-1.svg'
-import terror2 from './images/hero-terror-2.svg'
-import terror3 from './images/hero-terror-3.svg'
-
-export { terror1, terror2, terror3 }
-
-
 import misionImposible from './images/movies/mision-imposible-sentencia-final.webp'
 import f1 from './images/movies/f1-la-pelicula.webp'
 import gladiador2 from './images/movies/gladiador-2.webp'
