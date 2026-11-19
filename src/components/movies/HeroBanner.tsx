@@ -1,29 +1,36 @@
 import { useState } from 'react'
 import Carousel from 'react-bootstrap/Carousel'
-import { terror1, terror2, terror3 } from '../../assets/importMovies'
+import { banners } from '../../assets/importMovies'
 import './Hero.css'
 
 type Slide = {
   image: string
   title: string
   description: string
+  badge: string
 }
 
 const slides: Slide[] = [
   {
-    image: terror1,
-    title: 'Terror',
-    description: 'Sumérgete en el género que te mantendrá al borde del asiento.',
+    image: banners.duna2,
+    title: 'Duna: Parte Dos',
+    description:
+      'Paul Atreides se une a los Fremen para vengar la conspiración que destruyó a su familia, mientras enfrenta un destino que solo él puede evitar.',
+    badge: 'Tendencia VPlay',
   },
   {
-    image: terror2,
-    title: 'Suspenso',
-    description: 'Historias que te acompañarán mucho después de terminar.',
+    image: banners.gladiador2,
+    title: 'Gladiador II',
+    description:
+      'Lucio vuelve a la arena para enfrentarse al poder que lo desterró y recuperar el honor de su familia.',
+    badge: 'Tendencia VPlay',
   },
   {
-    image: terror3,
-    title: 'Escalofríos',
-    description: 'El cine de terror que estabas esperando.',
+    image: banners.pecadores,
+    title: 'Pecadores',
+    description:
+      'Dos hermanos regresan a su ciudad natal para empezar de nuevo, pero descubren un mal aún mayor que los espera.',
+    badge: 'Tendencia VPlay',
   },
 ]
 
@@ -39,17 +46,26 @@ export default function HeroBanner() {
       className="hero-carousel"
       activeIndex={index}
       onSelect={handleSelect}
+      interval={null}
     >
       {slides.map((slide) => (
-        <Carousel.Item key={slide.image}>
-          <img
-            className="d-block w-100 hero-image"
-            src={slide.image}
-            alt={slide.title}
-          />
+        <Carousel.Item key={slide.title}>
+          <img className="hero-image" src={slide.image} alt={slide.title} />
+          <div className="hero-overlay" />
           <Carousel.Caption className="hero-caption">
-            <h3 className="hero-title">{slide.title}</h3>
-            <p className="hero-description">{slide.description}</p>
+            <div className="hero-content">
+              <span className="hero-badge">{slide.badge}</span>
+              <h2 className="hero-title">{slide.title}</h2>
+              <p className="hero-description">{slide.description}</p>
+              <div className="hero-actions">
+                <button type="button" className="btn btn-light fw-semibold px-4">
+                  ▶ Reproducir
+                </button>
+                <button type="button" className="btn btn-outline-light fw-semibold px-4">
+                  ⓘ Más información
+                </button>
+              </div>
+            </div>
           </Carousel.Caption>
         </Carousel.Item>
       ))}
