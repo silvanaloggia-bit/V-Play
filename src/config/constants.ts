@@ -1,6 +1,4 @@
-
-
-export const storage_key = {
+export const storageKey = {
   movies: 'movies',
   users: 'users',
   isLogged: 'isLogged',
@@ -8,8 +6,8 @@ export const storage_key = {
 
 export const categories = ['Acción', 'Comedia', 'Drama', 'Terror', 'Ciencia ficción'] as const
 
-
-export const admin_user = {
+export const adminUser = {
   username: 'admin',
   password: '',
 }
+

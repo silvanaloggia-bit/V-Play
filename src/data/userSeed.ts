@@ -2,7 +2,7 @@ import type { User } from '../types/user'
 
 export const userSeed: User[] = [
   {
-    id: 'u-1',
+    id: '1',
     name: 'Admin',
     lastName: 'Vplay',
     email: 'admin@vplay.com',
@@ -10,15 +10,15 @@ export const userSeed: User[] = [
     role: 'admin',
   },
   {
-    id: 'u-2',
-    name: 'Gestor',
+    id: '2',
+    name: 'Editor',
     lastName: 'Vplay',
-    email: 'gestor@vplay.com',
-    password: 'Gestor123',
+    email: 'editor@vplay.com',
+    password: 'editor123',
     role: 'editor',
   },
   {
-    id: 'u-3',
+    id: '3',
     name: 'Diego',
     lastName: 'Pérez',
     email: 'diego@vplay.com',
