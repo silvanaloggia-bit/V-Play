@@ -1,0 +1,93 @@
+/* Panel de Tops (películas y series) */
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.headerSpaced {
+  margin-top: 2.5rem;
+}
+
+.heading {
+  font-family: var(--font-display);
+  color: var(--color-text);
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+.addBtn {
+  background: #f5b83d;
+  color: #241c00;
+  font-weight: 600;
+  border: none;
+  border-radius: var(--radius-sm);
+  height: var(--height-btn);
+  padding-inline: 1rem;
+  transition: filter 0.15s ease;
+}
+
+.addBtn:hover {
+  filter: brightness(1.12);
+}
+
+/* --- Tabla del top --- */
+.listWrapper {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.table {
+  --bs-table-bg: var(--color-surface);
+  --bs-table-color: var(--color-text-base);
+  --bs-table-hover-bg: var(--color-bg-header);
+  --bs-table-hover-color: var(--color-text);
+  --bs-table-border-color: var(--color-border);
+}
+
+.rankCol {
+  width: 48px;
+}
+
+.rank {
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  color: #f5b83d;
+  width: 48px;
+}
+
+.thumb {
+  height: 48px;
+  width: 84px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+}
+
+.name {
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.category {
+  color: #ffffff;
+}
+
+/* --- Estado vacío (series) --- */
+.emptyBox {
+  border: 1px dashed var(--color-border-strong);
+  border-radius: var(--radius-md);
+  padding: 2rem;
+  text-align: center;
+  color: var(--color-text-muted);
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.emptyHint {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  opacity: 0.8;
+}

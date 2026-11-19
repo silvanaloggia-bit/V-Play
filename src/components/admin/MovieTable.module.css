@@ -1,0 +1,146 @@
+/* Estilos del panel de administración (MovieTable).
+   Todos los colores salen de las variables definidas en src/styles/global.css */
+
+/* --- Toolbar --- */
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.counter {
+  color: var(--color-text-muted);
+}
+
+/* Botón "Agregar título" */
+.addBtn {
+  background: #f5b83d;
+  color: #241c00;
+  font-weight: 600;
+  border: none;
+  border-radius: var(--radius-sm);
+  height: var(--height-btn);
+  padding-inline: 1rem;
+}
+
+.addBtn:hover {
+  filter: brightness(1.1);
+}
+
+/* Dropdown de categorías integrado en el encabezado de la tabla */
+.headerDropdown {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  color: inherit;
+  font: inherit;
+  font-weight: inherit;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.headerDropdown:hover,
+.headerDropdown:focus,
+.headerDropdown:active {
+  background: transparent;
+  color: #f5b83d;
+}
+
+/* Cuando hay un filtro activo, el encabezado se marca en cian */
+.headerDropdownActive,
+.headerDropdownActive:hover,
+.headerDropdownActive:focus {
+  color: #f5b83d;
+}
+
+/* Menú del dropdown: lista de texto blanco, sin aspecto de botones */
+.dropdownMenu {
+  --bs-dropdown-bg: var(--color-surface);
+  --bs-dropdown-border-color: var(--color-border);
+  --bs-dropdown-link-color: #ffffff;
+  --bs-dropdown-link-hover-bg: transparent;
+  --bs-dropdown-link-hover-color: #f5b83d;
+  --bs-dropdown-link-active-bg: transparent;
+  --bs-dropdown-link-active-color: #f5b83d;
+  --bs-dropdown-divider-bg: var(--color-border);
+}
+
+/* --- Tabla --- */
+.tableWrapper {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+/* Se pisan las variables de Bootstrap para adaptar la tabla al tema */
+.table {
+  --bs-table-bg: var(--color-surface);
+  --bs-table-color: var(--color-text-base);
+  --bs-table-hover-bg: var(--color-bg-header);
+  --bs-table-hover-color: var(--color-text);
+  --bs-table-border-color: var(--color-border);
+}
+
+.thumb {
+  height: 48px;
+  width: 84px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+}
+
+.name {
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+/* Categoría de cada fila: texto blanco plano, sin badge de color */
+.categoryText {
+  color: #ffffff;
+}
+
+.badges {
+  display: flex;
+  gap: 0.25rem;
+  align-items: center;
+}
+
+.actions {
+  display: flex;
+  gap: 0.25rem;
+}
+
+/* --- Badges de estado --- */
+.badgePublished {
+  background: #198754;
+  color: #fff;
+}
+
+.badgeInactive {
+  background: #6c757d;
+  color: #fff;
+}
+
+.badgeFeatured {
+  background: #f5b83d;
+  color: #241c00;
+}
+
+/* --- Botones de fila --- */
+.editBtn {
+  border-color: #f5b83d;
+  color: #f5b83d;
+}
+
+.editBtn:hover,
+.editBtn:focus-visible {
+  background: #f5b83d;
+  color: #241c00;
+}
+
+/* --- Estado vacío --- */
+.empty {
+  text-align: center;
+  padding: 3rem 0;
+  color: var(--color-text-muted);
+}
