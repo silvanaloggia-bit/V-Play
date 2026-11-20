@@ -1,28 +1,34 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap');
+
 :root {
-  --color-bg: #13151a;
-  --color-bg-header: #101216;
-  --color-surface: #1a1d24;
-  --color-border: #2a2e38;
-  --color-border-strong: #3a3f4b;
-  --color-accent: #1fd5e6;
-  --color-on-accent: #06222a;
-  --color-logo-from: #3ef0e0;
-  --color-logo-to: #0e8fb8;
-  --color-text: #ffffff;
-  --color-text-base: #e8eaf0;
-  --color-text-secondary: #c9ced8;
-  --color-text-muted: #9aa1ad;
-  --color-error: #ffb3b6;
-  --color-error-border: #ff7a80;
+  
+  --color-bg: #0d0c0b;
+  --color-bg-header: #0d0c0b;
+  --color-surface: #171513;
+  --color-border: #2c2925;
+  --color-border-strong: #4a443b;
+  --color-accent: #f5b83d;
+  --color-accent-hover: #ffcb5c;
+  --color-on-accent: #2a1a00;
+  --color-logo-from: #ffd772;
+  --color-logo-to: #e8902a;
+  --color-text: #f5f2ec;
+  --color-text-base: #e6e1d8;
+  --color-text-secondary: #bdb6aa;
+  --color-text-muted: #8a8378; 
+  --color-success: #4ade80;
+  --color-error: #f87171;
+  --color-error-border: #f87171;
   --color-error-bg: #2b1416;
-  --font-main: 'Montserrat', system-ui, sans-serif;
-  --font-display: 'Bebas Neue', sans-serif;
+  --font-main: 'Inter', system-ui, sans-serif;
+  --font-display: 'Bebas Neue', sans-serif;  
   --container-max: 1280px;
-  --space-page: 44px;
-  --space-section: 40px;
+  --space-page: 48px;
+  --space-section: 48px;
   --radius-sm: 6px;
   --radius-md: 10px;
   --radius-lg: 12px;
+  --radius-pill: 999px;
   --height-btn: 48px;
   --height-field: 44px;
 }
