@@ -1,0 +1,127 @@
+.main-navbar {
+  background: var(--color-bg);
+  border-bottom: 1px solid var(--color-border);
+  padding: 12px 0;
+}
+
+.navbar-logo {
+  height: 40px;
+  width: auto;
+}
+
+.main-navbar .navbar-nav .nav-link {
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+  transition: color 0.2s;
+}
+
+.main-navbar .navbar-nav .nav-link:hover,
+.main-navbar .navbar-nav .nav-link:focus,
+.main-navbar .navbar-nav .nav-link.show,
+.main-navbar .navbar-nav .nav-link.active {
+  color: var(--color-accent);
+}
+.main-navbar .dropdown-menu {
+    --bs-dropdown-bg: var(--color-surperface);
+    --bs-dropdown-border-color: var(--color-border-strong);
+    --bs-dropdown-border-radius: 0;
+    --bs-dropdown-link-color: var(--color-text-secondary);
+    --bs-dropdown-link-hover-color: var(--color-accent);
+    --bs-dropdown-link-hover-bg: transparent;
+    --bs-dropdown-link-active-color: var(--color-accent);
+    --bs-dropdown-link-active-bg: transparent;
+    padding: 6px;
+    background-color: #000 !important;
+    opacity: 1;
+}
+.main-navbar .dropdown-item {
+    border: 1px solid transparent;
+    border-radius: 0;
+    padding: 8px 16px;
+    transition: color 0.2s, border-color 0.2s, background 0.2s;
+}
+.main-navbar .dropdown-item:hover,
+.main-navbar .dropdown-item:focus,
+.main-navbar .dropdown-item:active {
+    background: color-mix(in srgb, var(--color-accent) 12%, transparent);
+    color: var(--color-accent);
+    border-color: var(--color-accent);
+}
+
+.navbar-search-input {
+  height: var(--height-field);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border-strong);
+  border-radius: 0;
+  color: var(--color-text);
+}
+.navbar-search-input::placeholder {
+    color: var(--color-text-muted);
+    opacity: 1;
+}
+.navbar-search-input:focus {
+    background: var(--color-surface);
+    color: var(--color-text);
+    border-color: var(--color-accent);
+    box-shadow: none;
+}
+
+.navbar-search-button,
+.navbar-icon-button {
+    --bs-btn-bg: var(--color-surface);
+  --bs-btn-color: var(--color-text-secondary);
+  --bs-btn-border-color: var(--color-border-strong);
+  --bs-btn-hover-bg: var(--color-surface);
+  --bs-btn-hover-color: var(--color-accent);
+  --bs-btn-hover-border-color: var(--color-accent);
+  --bs-btn-active-bg: var(--color-surface);
+  --bs-btn-active-color: var(--color-accent);
+  --bs-btn-active-border-color: var(--color-accent);
+  --bs-btn-focus-shadow-rgb: 0,0,0;
+  width: var(--height-field);
+  height: var(--height-field);
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0;
+}
+.navbar-search-button:focus-visible,
+.navbar-icon-button:focus-visible {
+    box-shadow: none;
+    border-color: var(--color-accent);
+}
+
+.navbar-subscribe-button {
+  --bs-btn-bg: var(--color-accent);
+  --bs-btn-color: var(--color-on-accent);
+  --bs-btn-border-color: var(--color-accent);
+  --bs-btn-hover-bg: var(--color-accent-hover, var(--color-accent));
+  --bs-btn-hover-color: var(--color-on-accent);
+  --bs-btn-hover-border-color: var(--color-accent-hover, var(--color-accent));
+  --bs-btn-active-bg: var(--color-accent-hover, var(--color-accent));
+  --bs-btn-active-color: var(--color-on-accent);
+  --bs-btn-active-border-color: var(--color-accent-hover, var(--color-accent));
+  height: var(--height-field);
+  padding-inline: 1.25rem;
+  border-radius: 0;
+  font-weight: 700;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.navbar-icon-button {
+  --bs-btn-color: var(--color-text);
+  --bs-btn-border-color: var(--color-border-strong);
+  --bs-btn-hover-color: var(--color-accent);
+  --bs-btn-hover-bg: transparent;
+  --bs-btn-hover-border-color: var(--color-accent);
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-pill);
+}
