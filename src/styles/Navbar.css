@@ -1,0 +1,76 @@
+.app-navbar {
+    background-color: var(--color-bg-header) !important;
+    border-bottom: 1px solid var(--color-border);
+    padding-block: 0.6rem;
+    font-family: var(--font-main);
+}
+/* Links */
+.app-navbar .nav-link {
+    color: var(--color-text-secondary);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    transition: color 0.2s;
+}
+.app-navbar .nav-link:hover,
+.app-navbar .nav-link.active,
+.app-navbar .nav-link.show {
+    color: var(--color-accent);
+}
+/*Dropdown de categorías*/
+.app-navbar .dropdown-menu {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-lg);
+    padding: 0.5rem;
+}
+.app-navbar .dropdown-item {
+    color: var(--color-text-secondary);
+    border-radius: var(--radius-md);
+    padding: 0.5rem 1rem;
+}
+.app-navbar .dropdown-item:hover ,
+.app-navbar .dropdown-item:focus {
+    background-color: var(--color-border);
+    color: var(--color-accent);
+}
+/* Buscador */
+.app-navbar .form-control {
+    height: var(--height-field);
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    color: var(--color-text);
+}
+.app-navbar .form-control::placeholder {
+    color: var(--color-text-muted);
+}
+.app-navbar .form-control:focus {
+    border-color: var(--color-accent);
+    box-shadow: none;
+}
+.app-navbar .btn-outline-secondary:hover {
+    background-color: var(--color-accent);
+    border-color: var(--color-accent);
+    color: var(--color-on-accent);
+}
+/* Botón de Suscripción */
+.app-navbar .btn-info {
+    height: var(--height-field);
+    background-color: var(--color-accent);
+    border-color: var(--color-accent);
+    color: var(--color-on-accent);
+    border-radius: var(--radius-md);
+    padding-inline: 1.25rem;
+}
+.app-navbar .btn-info:hover {
+    filter: brightness(1.1);
+    color: var(--color-text-secondary);
+}
+/* Campanita */
+.app-navbar .btn-link {
+    color: var(--color-text-secondary) !important;
+}
+.app-navbar .btn-link:hover {
+    color: var(--color-accent) !important;
+}
