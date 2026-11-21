@@ -1,33 +1,35 @@
-import Button from 'react-bootstrap/Button';
-import Container from 'react-bootstrap/Container';
-import Form from 'react-bootstrap/Form';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import NavDropdown from 'react-bootstrap/NavDropdown';
-import { Link } from 'react-router';
-import "../styles/Navbar.css";
-import logo from "../assets/logo-vplay.png.png";
-
-// Más adelante esta lista se importa desde config/constants.ts
-const categories = ['Acción', 'Comedia', 'Drama'];
+import Button from 'react-bootstrap/Button'
+import Container from 'react-bootstrap/Container'
+import Form from 'react-bootstrap/Form'
+import Nav from 'react-bootstrap/Nav'
+import Navbar from 'react-bootstrap/Navbar'
+import NavDropdown from 'react-bootstrap/NavDropdown'
+import { Link, useNavigate } from 'react-router'
+import { categories } from '../config/constants'
+import vplayLogo from '../assets/images/logo/vplay-logo-navbar.svg'
+import './Navbar.css'
 
 function AppNavbar() {
+  const navigate = useNavigate()
+
   return (
-    <Navbar expand="lg" className="app-navbar px-3" data-bs-theme="dark">
+    <Navbar expand="lg" className="main-navbar">
       <Container fluid>
         <Navbar.Brand as={Link} to="/">
-          <img src={logo} alt="VPlay" height={36} />
+          <img src={vplayLogo} alt="VPLAY" className="navbar-logo" />
         </Navbar.Brand>
 
-        <Navbar.Toggle aria-controls="navbarScroll" />
+        <Navbar.Toggle aria-controls="mainNavbar" />
 
-        <Navbar.Collapse id="navbarScroll" className='justify-content-between w-100'>
-          <Nav className="ms-lg-4 gap-lg-4 align-items-lg-center">
+        <Navbar.Collapse id="mainNavbar">
+          <Nav className="mx-auto my-2 my-lg-0">
             <Nav.Link as={Link} to="/">
               Inicio
             </Nav.Link>
 
-            <Nav.Link as= {Link} to="/tendencias">Tendencias</Nav.Link>
+            <Nav.Link as={Link} to="/">
+              Tendencias
+            </Nav.Link>
 
             <NavDropdown title="Categorías" id="navbarCategoriesDropdown">
               {categories.map((category) => (
@@ -38,46 +40,45 @@ function AppNavbar() {
             </NavDropdown>
           </Nav>
 
-          <div className="d-flex align-items-center gap-5 flex-nowrap">
+          <div className="d-flex flex-column flex-lg-row align-items-lg-center gap-3">
             <Form
-              className="d-flex my-2 my-lg-0"
+              className="d-flex"
               role="search"
               onSubmit={(event) => event.preventDefault()}
             >
               <Form.Control
                 type="search"
                 placeholder="Buscar película"
-                className="me-2"
-                style={{width: 280}}
+                className="me-2 navbar-search-input"
                 aria-label="Buscar película"
               />
-              <Button type="submit" variant="outline-secondary" aria-label="Buscar">
+              <Button type="submit" className="navbar-search-button" aria-label="Buscar">
                 <i className="bi bi-search" aria-hidden="true"></i>
               </Button>
             </Form>
 
-            <Button variant="info" className="fw-bold text-uppercase text-nowrap">
+            <Button className="navbar-subscribe-button" onClick={() => navigate('/suscripcion')}>
               Suscripción
-            </Button> 
-            <Button variant='link' className='text-body p-0' aria-label='Notificaciones'>
-              <i className='bi bi-bell fs-5' aria-hidden="true"></i>
             </Button>
 
-            {/* <Button
-              as={Link}
-              to="/login"
-              variant="secondary"
-              className="rounded-circle d-flex align-items-center justify-content-center"
-              style={{ width: '42px', height: '42px' }}
-              aria-label="Ingresar"
-            >
-              <i className="bi bi-person-fill" aria-hidden="true"></i>
-            </Button> */}
+            <div className="d-flex align-items-center gap-2">
+              <Button className="navbar-icon-button" aria-label="Notificaciones">
+                <i className="bi bi-bell" aria-hidden="true"></i>
+              </Button>
+
+              <Button
+                className="navbar-icon-button"
+                aria-label="Iniciar sesión"
+                onClick={() => navigate('/login')}
+              >
+                <i className="bi bi-person-fill" aria-hidden="true"></i>
+              </Button>
+            </div>
           </div>
         </Navbar.Collapse>
       </Container>
     </Navbar>
-  );
+  )
 }
 
-export default AppNavbar;
+export default AppNavbar
