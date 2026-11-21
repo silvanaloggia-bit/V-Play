@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 315 120" role="img" aria-label="VPLAY">
+  <defs>
+    <linearGradient id="emblemFill" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffd772"/>
+      <stop offset="1" stop-color="#e8902a"/>
+    </linearGradient>
+    <linearGradient id="emblemShine" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <linearGradient id="beam" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#f5b83d" stop-opacity="0.9"/>
+      <stop offset="1" stop-color="#f5b83d" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="emblemGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="5"/>
+      <feFlood flood-color="#f5b83d" flood-opacity="0.45"/>
+      <feComposite operator="in" in2="SourceAlpha"/>
+      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <g filter="url(#emblemGlow)" transform="translate(4 4)">
+    <path d="M16 16 H104 L60 96 Z" fill="url(#emblemFill)" stroke="url(#emblemFill)" stroke-width="14" stroke-linejoin="round"/>
+    <path d="M18 14 H102 L94 28 H26 Z" fill="url(#emblemShine)"/>
+    <path d="M19 19 L60 93 L101 19" fill="none" stroke="#5c4a33" stroke-opacity="0.55" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M53 28 L53 52 L73 40 Z" fill="#0d0c0b" stroke="#0d0c0b" stroke-width="6" stroke-linejoin="round"/>
+  </g>
+  <path d="M136.26 96L136.26 23.20L153.11 23.20Q161.64 23.20 165.90 27.78Q170.17 32.35 170.17 41.19L170.17 41.19L170.17 48.37Q170.17 57.21 165.90 61.78Q161.64 66.36 153.11 66.36L153.11 66.36L147.70 66.36L147.70 96L136.26 96ZM147.70 55.96L153.11 55.96Q155.92 55.96 157.32 54.40Q158.73 52.84 158.73 49.10L158.73 49.10L158.73 40.46Q158.73 36.72 157.32 35.16Q155.92 33.60 153.11 33.60L153.11 33.60L147.70 33.60L147.70 55.96Z M182.41 96L182.41 23.20L193.85 23.20L193.85 85.60L212.67 85.60L212.67 96L182.41 96Z M221.58 96L233.44 23.20L248.94 23.20L260.79 96L249.35 96L247.27 81.54L247.27 81.75L234.27 81.75L232.19 96L221.58 96ZM235.62 71.87L245.92 71.87L240.82 35.89L240.62 35.89L235.62 71.87Z M278.02 96L278.02 65.01L264.19 23.20L276.36 23.20L284.16 49.93L284.37 49.93L292.17 23.20L303.30 23.20L289.46 65.01L289.46 96L278.02 96Z" fill="#f5f2ec"/>
+  <rect x="134" y="104" width="172" height="4" rx="2" fill="url(#beam)"/>
+</svg>
