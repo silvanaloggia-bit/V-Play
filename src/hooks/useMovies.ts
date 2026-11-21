@@ -1,6 +1,17 @@
-import { useContext } from 'react'
-import { MoviesContext } from '../context/MoviesContext'
+import { useState } from 'react'
+import { movieService } from '../services/movieService'
+import type { Movie } from '../types/movie'
 
 export function useMovies() {
-  return useContext(MoviesContext)
+    const [movies, setMovies] = useState(() => movieService.getMovies())
+  
+    function updateMovies(updatedMovieList: Movie[]): void {
+      setMovies(updatedMovieList)
+      movieService.saveMovies(updatedMovieList)
+    }
+
+    return {
+      movies,
+      updateMovies
+    }
 }
