@@ -6,6 +6,7 @@ import AdminPage from './pages/AdminPage'
 import LoginPage from './pages/LoginPage'
 import NotFoundPage from './pages/NotFoundPage'
 import ProtectedRoute from './routes/ProtectedRoute'
+import SubscriptionPage from './pages/SubscriptionPage'
 
 export default function App() {
   return (
@@ -14,6 +15,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
+        <Route path="/suscripcion" element={<SubscriptionPage />} />
         <Route element={<ProtectedRoute />}>
           <Route path="/admin" element={<AdminPage />} />
         </Route>
