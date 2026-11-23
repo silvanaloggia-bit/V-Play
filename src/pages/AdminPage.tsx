@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import ConfirmModal from '../components/admin/ConfirmModal'
+import DeleteMovieModal from '../components/admin/DeleteMovieModal'
 import MovieFormModal from '../components/admin/MovieFormModal'
 import MovieTable from '../components/admin/MovieTable'
 import TopsPanel from '../components/admin/TopsPanel'
@@ -275,7 +275,7 @@ export default function AdminPage() {
         />
       )}
 
-      <ConfirmModal
+      <DeleteMovieModal
         open={movieToDelete !== null}
         title="Eliminar título"
         confirmLabel="Eliminar"
@@ -284,7 +284,7 @@ export default function AdminPage() {
       >
         ¿Seguro que querés eliminar <strong>{movieToDelete?.name}</strong>?
         Esta acción no se puede deshacer.
-      </ConfirmModal>
+      </DeleteMovieModal>
     </div>
   )
 }
