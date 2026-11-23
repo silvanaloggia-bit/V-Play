@@ -12,7 +12,7 @@
   max-width: 440px;
   padding: clamp(20px, 5vw, 32px);
   background-color: var(--color-surface);
-  border: 2px solid #f5b83d;
+  border: 2px solid var(--color-accent);
   border-radius: 0;
 }
 
@@ -36,11 +36,12 @@
   border: none;
 }
 
+
 .login-input:focus {
-  outline: none;
-  box-shadow: none;
-  border-color: transparent;
+box-shadow: 0 0 0 2px var(--color-accent);
+border-color: transparent;
 }
+
 
 .login-error {
   color: var(--color-error);
@@ -48,9 +49,17 @@
   margin-top: 4px;
 }
 
+.login-title,
+.login-subtitle,
+.login-label,
+.login-error {
+  user-select: none;
+  cursor: default;
+}
+
 .login-button {
   height: var(--height-btn);
-  background-color: #f5b83d;
+  background-color: var(--color-accent);
   color: var(--color-on-accent);
   border: 0;
   font-weight: 700;
