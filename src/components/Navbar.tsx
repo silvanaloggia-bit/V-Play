@@ -6,19 +6,31 @@ import Navbar from 'react-bootstrap/Navbar'
 import NavDropdown from 'react-bootstrap/NavDropdown'
 import { Link, useNavigate } from 'react-router'
 import { categories } from '../config/constants'
+import { plans } from '../data/initialData'
+import { useAuth } from '../hooks/useAuth'
 import vplayLogo from '../assets/images/logo/vplay-logo-navbar.svg'
 import './Navbar.css'
-
+const roleLabels = {
+admin: 'Administrador',
+editor: 'Editor',
+subscriber: 'Suscriptor',
+}
 function AppNavbar() {
-  const navigate = useNavigate()
-
-  return (
-    <Navbar expand="lg" className="main-navbar">
-      <Container fluid>
-        <Navbar.Brand as={Link} to="/">
-          <img src={vplayLogo} alt="VPLAY" className="navbar-logo" />
-        </Navbar.Brand>
-
+const navigate = useNavigate()
+const { loggedUser, logout } = useAuth()
+const isStaff = loggedUser?.role === 'admin' || loggedUser?.role === 'editor'
+const isSubscriber = loggedUser?.role === 'subscriber'
+const userPlan = plans.find((plan) => plan.id === loggedUser?.planId)
+function handleLogout(): void {
+logout()
+navigate('/')
+}
+return (
+<Navbar expand="lg" sticky="top" className="main-navbar">
+<Container fluid>
+<Navbar.Brand as={Link} to="/">
+<img src={vplayLogo} alt="VPLAY" className="navbar-logo" />
+</Navbar.Brand>
         <Navbar.Toggle aria-controls="mainNavbar" />
 
         <Navbar.Collapse id="mainNavbar">
@@ -57,28 +69,64 @@ function AppNavbar() {
               </Button>
             </Form>
 
-            <Button className="navbar-subscribe-button" onClick={() => navigate('/suscripcion')}>
-              Suscripción
-            </Button>
+            <div className="navbar-session">
+              {!loggedUser && (
+                <Button
+                  className="navbar-subscribe-button flex-grow-1 flex-lg-grow-0"
+                  onClick={() => navigate('/suscripcion')}
+                >
+                  Suscripción
+                </Button>
+              )}
 
-            <div className="d-flex align-items-center gap-2">
-              <Button className="navbar-icon-button" aria-label="Notificaciones">
-                <i className="bi bi-bell" aria-hidden="true"></i>
-              </Button>
+              {isStaff && (
+                <Button
+                  className="navbar-admin-button flex-grow-1 flex-lg-grow-0"
+                  onClick={() => navigate('/admin')}
+                >
+                  <i className="bi bi-gear-fill" aria-hidden="true"></i>
+                  Administrar
+                </Button>
+              )}
 
-              <Button
-                className="navbar-icon-button"
-                aria-label="Iniciar sesión"
-                onClick={() => navigate('/login')}
-              >
-                <i className="bi bi-person-fill" aria-hidden="true"></i>
-              </Button>
+              {loggedUser ? (
+                <div className="navbar-user">
+                  <span className="navbar-avatar" aria-hidden="true">
+                    {loggedUser.name.charAt(0)}
+                  </span>
+                  <div className="navbar-user-text">
+                    <span className="navbar-user-name">Hola, {loggedUser.name}</span>
+                    <span className="navbar-user-plan">
+                      {userPlan ? `Plan ${userPlan.name}` : roleLabels[loggedUser.role]}
+                    </span>
+                  </div>
+                  {isSubscriber && (
+                    <Button className="navbar-icon-button" aria-label="Notificaciones">
+                      <i className="bi bi-bell" aria-hidden="true"></i>
+                    </Button>
+                  )}
+                  <Button
+                    className="navbar-icon-button"
+                    aria-label="Cerrar sesión"
+                    onClick={handleLogout}
+                  >
+                    <i className="bi bi-box-arrow-right" aria-hidden="true"></i>
+                  </Button>
+                </div>
+              ) : (
+                <Button
+                  className="navbar-icon-button"
+                  aria-label="Iniciar sesión"
+                  onClick={() => navigate('/login')}
+                >
+                  <i className="bi bi-person-fill" aria-hidden="true"></i>
+                </Button>
+              )}
             </div>
           </div>
         </Navbar.Collapse>
       </Container>
     </Navbar>
-  )
+)
 }
-
 export default AppNavbar

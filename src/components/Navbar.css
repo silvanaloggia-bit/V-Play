@@ -24,7 +24,7 @@
   color: var(--color-accent);
 }
 .main-navbar .dropdown-menu {
-    --bs-dropdown-bg: var(--color-surperface);
+    --bs-dropdown-bg: var(--color-surface);
     --bs-dropdown-border-color: var(--color-border-strong);
     --bs-dropdown-border-radius: 0;
     --bs-dropdown-link-color: var(--color-text-secondary);
@@ -56,6 +56,14 @@
   border: 1px solid var(--color-border-strong);
   border-radius: 0;
   color: var(--color-text);
+}
+@media (min-width: 992px) {
+  .navbar-search-input {
+    width: 380px;
+  }
+  .navbar-logo {
+    height: 52px;
+  }
 }
 .navbar-search-input::placeholder {
     color: var(--color-text-muted);
@@ -124,4 +132,75 @@
   align-items: center;
   justify-content: center;
   border-radius: var(--radius-pill);
+}
+.navbar-admin-button {
+--bs-btn-bg: transparent;
+--bs-btn-color: var(--color-accent);
+--bs-btn-border-color: var(--color-accent);
+--bs-btn-hover-bg: var(--color-accent);
+--bs-btn-hover-color: var(--color-on-accent);
+--bs-btn-hover-border-color: var(--color-accent);
+height: var(--height-field);
+padding-inline: 1rem;
+border-radius: 0;
+font-weight: 700;
+text-transform: uppercase;
+white-space: nowrap;
+display: inline-flex;
+align-items: center;
+gap: 8px;
+}
+.navbar-user {
+display: flex;
+align-items: center;
+gap: 10px;
+}
+.navbar-avatar {
+width: 42px;
+height: 42px;
+border-radius: var(--radius-pill);
+display: flex;
+align-items: center;
+justify-content: center;
+background: var(--color-accent);
+color: var(--color-on-accent);
+font-family: var(--font-display);
+font-size: 1.3rem;
+line-height: 1;
+}
+.navbar-user-text {
+display: flex;
+flex-direction: column;
+line-height: 1.2;
+}
+.navbar-user-name {
+font-size: 0.9rem;
+font-weight: 600;
+color: var(--color-text);
+white-space: nowrap;
+}
+.navbar-user-plan {
+font-size: 0.75rem;
+color: var(--color-accent);
+white-space: nowrap;
+}
+.navbar-session {
+display: flex;
+align-items: center;
+gap: 12px;
+}
+@media (max-width: 991.98px) {
+.navbar-session {
+justify-content: space-between;
+margin-top: 8px;
+padding-top: 16px;
+border-top: 1px solid var(--color-border);
+}
+.navbar-session .navbar-user {
+flex-grow: 1;
+gap: 12px;
+}
+.navbar-session .navbar-user-text {
+flex-grow: 1;
+}
 }
