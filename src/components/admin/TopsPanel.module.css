@@ -33,6 +33,12 @@
   filter: brightness(1.12);
 }
 
+.addBtn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  filter: none;
+}
+
 /* --- Tabla del top --- */
 .listWrapper {
   border: 1px solid var(--color-border);
@@ -48,14 +54,23 @@
 }
 
 .rankCol {
-  width: 48px;
+  width: 64px;
 }
 
-.rank {
-  font-family: var(--font-display);
-  font-size: 1.25rem;
+/* Número de puesto (1 a 5) */
+.rankBadge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(245, 184, 61, 0.45);
+  background: rgba(245, 184, 61, 0.12);
   color: #f5b83d;
-  width: 48px;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  line-height: 1;
 }
 
 .thumb {
@@ -74,20 +89,59 @@
   color: #ffffff;
 }
 
-/* --- Estado vacío (series) --- */
-.emptyBox {
-  border: 1px dashed var(--color-border-strong);
-  border-radius: var(--radius-md);
-  padding: 2rem;
-  text-align: center;
-  color: var(--color-text-muted);
+.actions {
   display: flex;
-  flex-direction: column;
-  gap: 0.25rem;
+  gap: 0.5rem;
 }
 
-.emptyHint {
-  font-size: 0.85rem;
+/* Botón de acción: ícono de basura (igual que en el CRUD) */
+.iconBtn {
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid var(--color-border-strong);
+  color: var(--color-text-secondary);
+  border-radius: var(--radius-sm);
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.iconBtn:hover,
+.iconBtn:focus-visible {
+  background: transparent;
+  border-color: #f5b83d;
+  color: #f5b83d;
+}
+
+.deleteBtn:hover,
+.deleteBtn:focus-visible {
+  border-color: #dc3545;
+  color: #dc3545;
+}
+
+.iconBtn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  filter: none;
+}
+
+/* Puestos vacíos del top de series */
+.placeholderThumb {
+  height: 48px;
+  width: 84px;
+  border-radius: var(--radius-sm);
+  border: 1px dashed var(--color-border-strong);
+}
+
+.placeholderText {
   color: var(--color-text-muted);
-  opacity: 0.8;
+}
+
+.note {
+  margin-top: 1rem;
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
 }
