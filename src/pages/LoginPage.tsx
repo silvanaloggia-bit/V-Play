@@ -1,13 +1,39 @@
+import { useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useNavigate } from 'react-router'
+import { loginSchema } from '../schemas/loginSchema'
+import { useAuth } from '../hooks/useAuth'
+import { authService } from '../services/authService'
 import './Login.css'
-
 export default function LoginPage() {
-  return (
-    <main className="login-page">
-      <div className="login-card">
-        <h1 className="login-title">Iniciar sesión</h1>
-        <p className="login-subtitle">Ingresá con tu cuenta de V-Play.</p>
-
-        <form>
+const { login } = useAuth()
+const navigate = useNavigate()
+const [hasLoginFailed, setHasLoginFailed] = useState(false)
+const {
+register,
+handleSubmit,
+formState: { errors },
+} = useForm({ resolver: zodResolver(loginSchema) })
+const submitLogin = handleSubmit((loginData) => {
+const isLoginValid = login(loginData.email, loginData.password)
+if (!isLoginValid) {
+setHasLoginFailed(true)
+return
+}
+    const loggedUser = authService.getLoggedUser()
+    if (loggedUser?.role === 'admin' || loggedUser?.role === 'editor') {
+      navigate('/admin')
+      return
+    }
+    navigate('/')
+})
+return (
+<main className="login-page">
+<div className="login-card">
+<h1 className="login-title">Iniciar sesión</h1>
+<p className="login-subtitle">Ingresá con tu cuenta de V-Play.</p>
+        <form onSubmit={submitLogin} noValidate>
           <div className="mb-3">
             <label htmlFor="login-email" className="form-label login-label">
               Correo electrónico
@@ -17,8 +43,9 @@ export default function LoginPage() {
               type="email"
               className="form-control login-input"
               placeholder="tu@email.com"
+              {...register('email')}
             />
-            <div className="login-error">Ingresá un correo electrónico válido.</div>
+            {errors.email && <div className="login-error">{errors.email.message}</div>}
           </div>
 
           <div className="mb-3">
@@ -30,19 +57,22 @@ export default function LoginPage() {
               type="password"
               className="form-control login-input"
               placeholder="••••••••"
+              {...register('password')}
             />
-            <div className="login-error">La contraseña es obligatoria.</div>
+            {errors.password && <div className="login-error">{errors.password.message}</div>}
           </div>
 
-          <button type="button" className="btn w-100 login-button">
+          <button type="submit" className="btn w-100 login-button">
             Ingresar
           </button>
 
-          <div className="mt-3 login-error">
-            Email o contraseña incorrectos
-          </div>
+          {hasLoginFailed && (
+            <div className="mt-3 login-error" role="alert">
+              Email o contraseña incorrectos
+            </div>
+          )}
         </form>
       </div>
     </main>
-  )
+)
 }
