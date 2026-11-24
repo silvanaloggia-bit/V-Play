@@ -1,14 +1,16 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useLocation } from 'react-router'
 import { authService } from '../services/authService'
 
 export function useAuth() {
   const [loggedUser, setLoggedUser] = useState(() => authService.getLoggedUser())
   const currentLocation = useLocation()
+  const [previousPathname, setPreviousPathname] = useState(currentLocation.pathname)
 
-  useEffect(() => {
+  if (currentLocation.pathname !== previousPathname) {
+    setPreviousPathname(currentLocation.pathname)
     setLoggedUser(authService.getLoggedUser())
-  }, [currentLocation.pathname])
+  }
 
   function login(email: string, password: string): boolean {
     const foundUser = authService.findUserByCredentials(email, password)
