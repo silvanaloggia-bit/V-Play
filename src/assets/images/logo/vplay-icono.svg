@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 112" role="img" aria-label="VPLAY">
+  <defs>
+    <linearGradient id="emblemFill" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#ffd772"/>
+      <stop offset="1" stop-color="#e8902a"/>
+    </linearGradient>
+    <linearGradient id="emblemShine" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.55"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="emblemGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="5"/>
+      <feFlood flood-color="#f5b83d" flood-opacity="0.45"/>
+      <feComposite operator="in" in2="SourceAlpha"/>
+      <feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+  <g filter="url(#emblemGlow)">
+    <path d="M16 16 H104 L60 96 Z" fill="url(#emblemFill)" stroke="url(#emblemFill)" stroke-width="14" stroke-linejoin="round"/>
+    <path d="M18 14 H102 L94 28 H26 Z" fill="url(#emblemShine)"/>
+    <path d="M19 19 L60 93 L101 19" fill="none" stroke="#5c4a33" stroke-opacity="0.55" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M53 28 L53 52 L73 40 Z" fill="#0d0c0b" stroke="#0d0c0b" stroke-width="6" stroke-linejoin="round"/>
+  </g>
+</svg>
