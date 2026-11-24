@@ -1,0 +1,53 @@
+name: React Build Check
+
+on:
+  pull_request:
+    branches: [main, dev]
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v7
+
+      - name: Detect package manager
+        id: package-manager
+        shell: bash
+        run: |
+          if [ -f pnpm-lock.yaml ] && [ -f package-lock.json ]; then
+            echo "::error::Multiple package manager lockfiles detected."
+            exit 1
+          elif [ -f pnpm-lock.yaml ]; then
+            echo "manager=pnpm" >> "$GITHUB_OUTPUT"
+          elif [ -f package-lock.json ]; then
+            echo "manager=npm" >> "$GITHUB_OUTPUT"
+          else
+            echo "::error::No supported lockfile found."
+            exit 1
+          fi
+
+      - name: Setup pnpm
+        if: steps.package-manager.outputs.manager == 'pnpm'
+        uses: pnpm/action-setup@v6
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: ${{ steps.package-manager.outputs.manager }}
+
+      - name: Install dependencies
+        run: |
+          if [ "${{ steps.package-manager.outputs.manager }}" = "pnpm" ]; then
+            pnpm install --frozen-lockfile
+          else
+            npm ci
+          fi
+
+      - name: Build project
+        run: ${{ steps.package-manager.outputs.manager }} run build
