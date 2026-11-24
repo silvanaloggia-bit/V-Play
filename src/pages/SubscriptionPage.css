@@ -1,0 +1,43 @@
+.subscription-page {
+  padding-top: var(--space-page);
+  padding-bottom: var(--space-page);
+}
+
+.subscription-header {
+  margin-bottom: 64px;
+  text-align: center;
+}
+
+.subscription-title {
+  margin: 0;
+  font-size: 3rem;
+}
+
+.subscription-subtitle {
+  margin: 12px 0 0;
+  font-size: 1.1rem;
+  color: var(--color-text-secondary);
+}
+
+.subscription-plans {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+  max-width: 1120px;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .subscription-plans {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 32px;
+  }
+}
+
+@media (min-width: 992px) {
+  .subscription-plans {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 48px;
+    align-items: center;
+  }
+}
