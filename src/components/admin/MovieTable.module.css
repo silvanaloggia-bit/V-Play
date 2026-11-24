@@ -149,6 +149,12 @@
   color: var(--color-text-muted);
 }
 
+/* Año · duración o temporadas · puntaje */
+.detailsRow {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
 /* Fila con el tipo (Película/Serie) + ID */
 .metaRow {
   display: flex;
