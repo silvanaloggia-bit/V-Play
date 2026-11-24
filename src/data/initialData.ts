@@ -151,6 +151,7 @@ export const initialData: Movie[] = [
     imageUrl: posters.reacher,
     published: true,
     isFeatured: false,
+    type: 'serie',
   },
   {
     id: '17',
@@ -160,6 +161,7 @@ export const initialData: Movie[] = [
     imageUrl: posters.theBoys,
     published: true,
     isFeatured: false,
+    type: 'serie',
   },
   {
     id: '18',
@@ -169,6 +171,7 @@ export const initialData: Movie[] = [
     imageUrl: posters.daredevil,
     published: true,
     isFeatured: false,
+    type: 'serie',
   },
   {
     id: '19',
@@ -178,6 +181,7 @@ export const initialData: Movie[] = [
     imageUrl: posters.agenteNocturno,
     published: true,
     isFeatured: false,
+    type: 'serie',
   },
   {
     id: '20',
@@ -187,6 +191,7 @@ export const initialData: Movie[] = [
     imageUrl: posters.jackRyan,
     published: true,
     isFeatured: false,
+    type: 'serie',
   },
   {
     id: '21',
@@ -196,6 +201,7 @@ export const initialData: Movie[] = [
     imageUrl: posters.tedLasso,
     published: true,
     isFeatured: false,
+    type: 'serie',
   },
   {
     id: '22',
@@ -205,6 +211,7 @@ export const initialData: Movie[] = [
     imageUrl: posters.soloAsesinatos,
     published: true,
     isFeatured: false,
+    type: 'serie',
   },
   {
     id: '23',
@@ -214,6 +221,7 @@ export const initialData: Movie[] = [
     imageUrl: posters.colegioAbbott,
     published: true,
     isFeatured: false,
+    type: 'serie',
   },
   {
     id: '24',
@@ -223,6 +231,7 @@ export const initialData: Movie[] = [
     imageUrl: posters.hacks,
     published: true,
     isFeatured: false,
+    type: 'serie',
   },
   {
     id: '25',
@@ -232,6 +241,7 @@ export const initialData: Movie[] = [
     imageUrl: posters.theStudio,
     published: true,
     isFeatured: false,
+    type: 'serie',
   },
   {
     id: '26',
@@ -241,6 +251,7 @@ export const initialData: Movie[] = [
     imageUrl: posters.strangerThings,
     published: true,
     isFeatured: false,
+    type: 'serie',
   },
   {
     id: '27',
@@ -250,6 +261,7 @@ export const initialData: Movie[] = [
     imageUrl: posters.theLastOfUs,
     published: true,
     isFeatured: false,
+    type: 'serie',
   },
   {
     id: '28',
@@ -259,6 +271,7 @@ export const initialData: Movie[] = [
     imageUrl: posters.fromSerie,
     published: true,
     isFeatured: false,
+    type: 'serie',
   },
   {
     id: '29',
@@ -268,6 +281,7 @@ export const initialData: Movie[] = [
     imageUrl: posters.casaUsher,
     published: true,
     isFeatured: false,
+    type: 'serie',
   },
   {
     id: '30',
@@ -277,6 +291,7 @@ export const initialData: Movie[] = [
     imageUrl: posters.bienvenidosDerry,
     published: true,
     isFeatured: false,
+    type: 'serie',
   },
 ]
 
