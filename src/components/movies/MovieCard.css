@@ -100,6 +100,11 @@
   color: var(--color-accent);
 }
 
+.movie-card__meta {
+  font-size: 0.7rem;
+  color: var(--color-text-muted);
+}
+
 @media (hover: hover) {
   .movie-card:hover,
   .movie-card:focus-within {

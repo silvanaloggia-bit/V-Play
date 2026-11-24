@@ -1,4 +1,5 @@
 import type { Movie } from '../../types/movie'
+import { formatTitleMeta } from '../../utils/movieMeta'
 import './MovieCard.css'
 
 type MovieCardProps = {
@@ -8,6 +9,7 @@ type MovieCardProps = {
 export default function MovieCard({ movie }: MovieCardProps) {
   const type = movie.type ?? 'pelicula'
   const typeLabel = type === 'serie' ? 'Serie' : 'Película'
+  const meta = formatTitleMeta(movie)
 
   return (
     <article className="movie-card" tabIndex={0} aria-label={`${movie.name} (${typeLabel})`}>
@@ -31,6 +33,7 @@ export default function MovieCard({ movie }: MovieCardProps) {
           <h3 className="movie-card__title">{movie.name}</h3>
           <p className="movie-card__description">{movie.description}</p>
           <span className="movie-card__category">{movie.category}</span>
+          {meta && <span className="movie-card__meta">{meta}</span>}
         </div>
       </div>
     </article>

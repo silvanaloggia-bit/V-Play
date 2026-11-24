@@ -2,6 +2,7 @@ import { useState } from 'react'
 import Dropdown from 'react-bootstrap/Dropdown'
 import { categories } from '../../config/constants'
 import type { Category, Movie } from '../../types/movie'
+import { formatTitleMeta } from '../../utils/movieMeta'
 import styles from './MovieTable.module.css'
 
 type CategoryFilter = Category | 'todas'
@@ -43,6 +44,11 @@ export default function MovieTable({
       : movies.filter((movie) => movie.category === categoryFilter)
 
   const filtering = categoryFilter !== 'todas'
+
+  const rows = filteredMovies.map((movie) => ({
+    movie,
+    meta: formatTitleMeta(movie),
+  }))
 
   return (
     <section>
@@ -120,7 +126,7 @@ export default function MovieTable({
               </tr>
             )}
 
-            {filteredMovies.map((movie) => (
+            {rows.map(({ movie, meta }) => (
               <tr key={movie.id}>
                 <td>
                   <img
@@ -146,6 +152,9 @@ export default function MovieTable({
                         ID: {formatShortId(movie.id)}
                       </span>
                     </span>
+                    {meta && (
+                      <span className={styles.detailsRow}>{meta}</span>
+                    )}
                     {movie.isFeatured && (
                       <span className={`badge ${styles.featuredBadge}`}>
                         ⭐ Destacada

@@ -26,6 +26,11 @@ interface FormValues {
   bannerUrl: string
   published: boolean
   isFeatured: boolean
+  duration: string
+  seasons: string
+  episodes: string
+  releaseYear: string
+  rating: string
 }
 
 const EMPTY_VALUES: FormValues = {
@@ -37,6 +42,32 @@ const EMPTY_VALUES: FormValues = {
   bannerUrl: '',
   published: true,
   isFeatured: false,
+  duration: '',
+  seasons: '',
+  episodes: '',
+  releaseYear: '',
+  rating: '',
+}
+
+function toOptionalNumber(value: string): number | undefined {
+  if (value.trim() === '') return undefined
+  const parsed = Number(value)
+  return Number.isFinite(parsed) ? parsed : undefined
+}
+
+function isPositiveInteger(value: string): boolean {
+  const parsed = Number(value)
+  return Number.isInteger(parsed) && parsed > 0
+}
+
+function isValidYear(value: string): boolean {
+  const parsed = Number(value)
+  return Number.isInteger(parsed) && parsed >= 1888 && parsed <= 2100
+}
+
+function isValidRating(value: string): boolean {
+  const parsed = Number(value)
+  return Number.isFinite(parsed) && parsed >= 0 && parsed <= 10
 }
 
 // El componente se monta cada vez que se abre el modal,
@@ -53,6 +84,11 @@ function toFormValues(movie: Movie | null): FormValues {
     bannerUrl: movie.bannerUrl ?? '',
     published: movie.published,
     isFeatured: movie.isFeatured,
+    duration: movie.duration ? String(movie.duration) : '',
+    seasons: movie.seasons ? String(movie.seasons) : '',
+    episodes: movie.episodes ? String(movie.episodes) : '',
+    releaseYear: movie.releaseYear ? String(movie.releaseYear) : '',
+    rating: movie.rating !== undefined ? String(movie.rating) : '',
   }
 }
 
@@ -76,6 +112,24 @@ export default function MovieFormModal({
   const nameError = submitted && values.name.trim() === ''
   const categoryError = submitted && values.category === ''
   const imageError = submitted && values.imageUrl.trim() === ''
+  const durationError =
+    submitted &&
+    values.duration.trim() !== '' &&
+    !isPositiveInteger(values.duration)
+  const seasonsError =
+    submitted &&
+    values.seasons.trim() !== '' &&
+    !isPositiveInteger(values.seasons)
+  const episodesError =
+    submitted &&
+    values.episodes.trim() !== '' &&
+    !isPositiveInteger(values.episodes)
+  const releaseYearError =
+    submitted &&
+    values.releaseYear.trim() !== '' &&
+    !isValidYear(values.releaseYear)
+  const ratingError =
+    submitted && values.rating.trim() !== '' && !isValidRating(values.rating)
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault()
@@ -85,7 +139,35 @@ export default function MovieFormModal({
     const category = values.category
     const imageUrl = values.imageUrl.trim()
 
-    if (!name || !category || !imageUrl) return
+    const durationValid =
+      values.type !== 'pelicula' ||
+      values.duration.trim() === '' ||
+      isPositiveInteger(values.duration)
+    const seasonsValid =
+      values.type !== 'serie' ||
+      values.seasons.trim() === '' ||
+      isPositiveInteger(values.seasons)
+    const episodesValid =
+      values.type !== 'serie' ||
+      values.episodes.trim() === '' ||
+      isPositiveInteger(values.episodes)
+    const releaseYearValid =
+      values.releaseYear.trim() === '' || isValidYear(values.releaseYear)
+    const ratingValid =
+      values.rating.trim() === '' || isValidRating(values.rating)
+
+    if (
+      !name ||
+      !category ||
+      !imageUrl ||
+      !durationValid ||
+      !seasonsValid ||
+      !episodesValid ||
+      !releaseYearValid ||
+      !ratingValid
+    ) {
+      return
+    }
 
     onSave({
       id: movie?.id ?? crypto.randomUUID(),
@@ -97,6 +179,17 @@ export default function MovieFormModal({
       bannerUrl: values.bannerUrl.trim() || undefined,
       published: values.published,
       isFeatured: values.isFeatured,
+      duration:
+        values.type === 'pelicula'
+          ? toOptionalNumber(values.duration)
+          : undefined,
+      seasons:
+        values.type === 'serie' ? toOptionalNumber(values.seasons) : undefined,
+      episodes:
+        values.type === 'serie' ? toOptionalNumber(values.episodes) : undefined,
+      releaseYear: toOptionalNumber(values.releaseYear),
+      rating: toOptionalNumber(values.rating),
+      tmdbId: movie?.tmdbId,
     })
   }
 
@@ -179,6 +272,114 @@ export default function MovieFormModal({
               </Form.Control.Feedback>
             )}
           </Form.Group>
+
+          <div className="row g-3 mb-3">
+            {values.type === 'pelicula' ? (
+              <div className="col-12 col-sm-6">
+                <Form.Group controlId="movie-duration">
+                  <Form.Label>Duración (min)</Form.Label>
+                  <Form.Control
+                    type="number"
+                    min={1}
+                    step={1}
+                    placeholder="Ej. 167"
+                    value={values.duration}
+                    onChange={(event) => update('duration', event.target.value)}
+                    isInvalid={durationError}
+                  />
+                  {durationError && (
+                    <Form.Control.Feedback type="invalid">
+                      Ingresá los minutos como número entero.
+                    </Form.Control.Feedback>
+                  )}
+                </Form.Group>
+              </div>
+            ) : (
+              <>
+                <div className="col-6">
+                  <Form.Group controlId="movie-seasons">
+                    <Form.Label>Temporadas</Form.Label>
+                    <Form.Control
+                      type="number"
+                      min={1}
+                      step={1}
+                      placeholder="Ej. 3"
+                      value={values.seasons}
+                      onChange={(event) => update('seasons', event.target.value)}
+                      isInvalid={seasonsError}
+                    />
+                    {seasonsError && (
+                      <Form.Control.Feedback type="invalid">
+                        Ingresá un número entero.
+                      </Form.Control.Feedback>
+                    )}
+                  </Form.Group>
+                </div>
+                <div className="col-6">
+                  <Form.Group controlId="movie-episodes">
+                    <Form.Label>Episodios</Form.Label>
+                    <Form.Control
+                      type="number"
+                      min={1}
+                      step={1}
+                      placeholder="Ej. 24"
+                      value={values.episodes}
+                      onChange={(event) => update('episodes', event.target.value)}
+                      isInvalid={episodesError}
+                    />
+                    {episodesError && (
+                      <Form.Control.Feedback type="invalid">
+                        Ingresá un número entero.
+                      </Form.Control.Feedback>
+                    )}
+                  </Form.Group>
+                </div>
+              </>
+            )}
+          </div>
+
+          <div className="row g-3 mb-4">
+            <div className="col-6">
+              <Form.Group controlId="movie-year">
+                <Form.Label>Año</Form.Label>
+                <Form.Control
+                  type="number"
+                  min={1888}
+                  max={2100}
+                  step={1}
+                  placeholder="Ej. 2024"
+                  value={values.releaseYear}
+                  onChange={(event) => update('releaseYear', event.target.value)}
+                  isInvalid={releaseYearError}
+                />
+                {releaseYearError && (
+                  <Form.Control.Feedback type="invalid">
+                    Ingresá un año entre 1888 y 2100.
+                  </Form.Control.Feedback>
+                )}
+              </Form.Group>
+            </div>
+            <div className="col-6">
+              <Form.Group controlId="movie-rating">
+                <Form.Label>Puntaje</Form.Label>
+                <Form.Control
+                  type="number"
+                  min={0}
+                  max={10}
+                  step={0.1}
+                  placeholder="Ej. 8.2"
+                  value={values.rating}
+                  onChange={(event) => update('rating', event.target.value)}
+                  isInvalid={ratingError}
+                />
+                {ratingError && (
+                  <Form.Control.Feedback type="invalid">
+                    Tiene que estar entre 0 y 10.
+                  </Form.Control.Feedback>
+                )}
+              </Form.Group>
+            </div>
+          </div>
 
           <Form.Group className="mb-4" controlId="movie-image">
             <div className="d-flex justify-content-between align-items-center mb-1">
