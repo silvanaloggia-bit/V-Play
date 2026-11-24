@@ -6,10 +6,10 @@ import TopsPanel from '../components/admin/TopsPanel'
 import TopPickerModal from '../components/admin/TopPickerModal'
 import { useAuth } from '../hooks/useAuth'
 import { useMovies } from '../hooks/useMovies'
+import { TOP_LIMIT, useTops } from '../hooks/useTops'
 import type { Movie, MovieType } from '../types/movie'
 import styles from './AdminPage.module.css'
 
-const TOP_LIMIT = 5
 const FEATURED_LIMIT = 3
 
 const TABS = [
@@ -29,28 +29,19 @@ export default function AdminPage() {
   const { loggedUser } = useAuth()
   const canDelete = loggedUser?.role === 'admin'
 
-  // Top (orden por ids; la persistencia real viene con la lógica)
-  const [topIds, setTopIds] = useState<string[]>(() =>
-    movies
-      .filter((movie) => (movie.type ?? 'pelicula') === 'pelicula')
-      .slice(0, TOP_LIMIT)
-      .map((movie) => movie.id),
-  )
-  const [topSerieIds, setTopSerieIds] = useState<string[]>(() =>
-    movies
-      .filter((movie) => movie.type === 'serie')
-      .slice(0, TOP_LIMIT)
-      .map((movie) => movie.id),
-  )
+  // Top: CRUD propio, persistido en localStorage a través de useTops
+  const {
+    topIds,
+    topSerieIds,
+    topMovies,
+    topSeries,
+    addToTop,
+    removeFromTop,
+    removeById,
+    moveInTop,
+  } = useTops(movies)
+
   const [pickerType, setPickerType] = useState<MovieType | null>(null)
-
-  const topMovies = topIds
-    .map((id) => movies.find((movie) => movie.id === id))
-    .filter((movie): movie is Movie => Boolean(movie))
-
-  const topSeries = topSerieIds
-    .map((id) => movies.find((movie) => movie.id === id))
-    .filter((movie): movie is Movie => Boolean(movie))
 
   const pickerMovies = pickerType
     ? movies.filter((movie) => {
@@ -114,10 +105,7 @@ export default function AdminPage() {
       ? (previousMovie.type ?? 'pelicula')
       : null
     if (previousType !== null && previousType !== normalized.type) {
-      setTopIds((previous) => previous.filter((id) => id !== normalized.id))
-      setTopSerieIds((previous) =>
-        previous.filter((id) => id !== normalized.id),
-      )
+      removeById(normalized.id)
     }
 
     setFormOpen(false)
@@ -144,53 +132,21 @@ export default function AdminPage() {
 
     updateMovies(movies.filter((item) => item.id !== movieToDelete.id))
     // Si estaba en algún top, también sale de ahí
-    setTopIds((previous) => previous.filter((id) => id !== movieToDelete.id))
-    setTopSerieIds((previous) =>
-      previous.filter((id) => id !== movieToDelete.id),
-    )
+    removeById(movieToDelete.id)
     setMovieToDelete(null)
   }
 
   const handleAddToTop = (movie: Movie) => {
-    const add = (previous: string[]) =>
-      previous.length >= TOP_LIMIT || previous.includes(movie.id)
-        ? previous
-        : [...previous, movie.id]
-
-    if ((movie.type ?? 'pelicula') === 'serie') {
-      setTopSerieIds(add)
-    } else {
-      setTopIds(add)
-    }
+    addToTop(movie)
     setPickerType(null)
   }
 
   const handleRemoveFromTop = (movie: Movie) => {
-    if ((movie.type ?? 'pelicula') === 'serie') {
-      setTopSerieIds((previous) => previous.filter((id) => id !== movie.id))
-    } else {
-      setTopIds((previous) => previous.filter((id) => id !== movie.id))
-    }
+    removeFromTop(movie)
   }
 
   const handleMoveInTop = (movie: Movie, direction: 'up' | 'down') => {
-    const move = (previous: string[]) => {
-      const index = previous.indexOf(movie.id)
-      if (index === -1) return previous
-
-      const target = direction === 'up' ? index - 1 : index + 1
-      if (target < 0 || target >= previous.length) return previous
-
-      const next = [...previous]
-      ;[next[index], next[target]] = [next[target], next[index]]
-      return next
-    }
-
-    if ((movie.type ?? 'pelicula') === 'serie') {
-      setTopSerieIds(move)
-    } else {
-      setTopIds(move)
-    }
+    moveInTop(movie, direction)
   }
 
   return (
