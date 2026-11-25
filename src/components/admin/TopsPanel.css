@@ -1,0 +1,147 @@
+/* Panel de Tops (películas y series) */
+
+.tops-panel__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.tops-panel__header--spaced {
+  margin-top: 2.5rem;
+}
+
+.tops-panel__heading {
+  font-family: var(--font-display);
+  color: var(--color-text);
+  font-size: 1.5rem;
+  margin: 0;
+}
+
+.tops-panel__add-btn {
+  background: #f5b83d;
+  color: #241c00;
+  font-weight: 600;
+  border: none;
+  border-radius: var(--radius-sm);
+  height: var(--height-btn);
+  padding-inline: 1rem;
+  transition: filter 0.15s ease;
+}
+
+.tops-panel__add-btn:hover {
+  filter: brightness(1.12);
+}
+
+.tops-panel__add-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  filter: none;
+}
+
+/* --- Tabla del top --- */
+.tops-panel__list-wrapper {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.tops-panel__table {
+  --bs-table-bg: var(--color-surface);
+  --bs-table-color: var(--color-text-base);
+  --bs-table-hover-bg: var(--color-bg-header);
+  --bs-table-hover-color: var(--color-text);
+  --bs-table-border-color: var(--color-border);
+}
+
+.tops-panel__rank-col {
+  width: 64px;
+}
+
+/* Número de puesto (1 a 5) */
+.tops-panel__rank-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(245, 184, 61, 0.45);
+  background: rgba(245, 184, 61, 0.12);
+  color: #f5b83d;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  line-height: 1;
+}
+
+.tops-panel__thumb {
+  height: 48px;
+  width: 84px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+}
+
+.tops-panel__name {
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.tops-panel__category {
+  color: #ffffff;
+}
+
+.tops-panel__actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* Botón de acción: ícono de basura (igual que en el CRUD) */
+.tops-panel__icon-btn {
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid var(--color-border-strong);
+  color: var(--color-text-secondary);
+  border-radius: var(--radius-sm);
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.tops-panel__icon-btn:hover,
+.tops-panel__icon-btn:focus-visible {
+  background: transparent;
+  border-color: #f5b83d;
+  color: #f5b83d;
+}
+
+.tops-panel__delete-btn:hover,
+.tops-panel__delete-btn:focus-visible {
+  border-color: #dc3545;
+  color: #dc3545;
+}
+
+.tops-panel__icon-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  filter: none;
+}
+
+/* Puestos vacíos del top de series */
+.tops-panel__placeholder-thumb {
+  height: 48px;
+  width: 84px;
+  border-radius: var(--radius-sm);
+  border: 1px dashed var(--color-border-strong);
+}
+
+.tops-panel__placeholder-text {
+  color: var(--color-text-muted);
+}
+
+.tops-panel__note {
+  margin-top: 1rem;
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+}

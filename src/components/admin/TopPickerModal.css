@@ -1,0 +1,125 @@
+/* Modal selector de títulos para el top */
+
+.top-picker__content {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-base);
+}
+
+.top-picker__header {
+  border-bottom-color: var(--color-border);
+}
+
+.top-picker__footer {
+  border-top-color: var(--color-border);
+}
+
+.top-picker__title {
+  font-family: var(--font-display);
+  color: var(--color-text);
+  font-size: 1.5rem;
+}
+
+/* Buscador */
+.top-picker__search-box {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  padding: 0 0.75rem;
+  height: var(--height-field);
+  color: var(--color-text-muted);
+  margin-bottom: 1rem;
+}
+
+.top-picker__search-box:focus-within {
+  border-color: #f5b83d;
+}
+
+.top-picker__search-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--color-text);
+  font: inherit;
+}
+
+.top-picker__search-input::placeholder {
+  color: var(--color-text-muted);
+}
+
+.top-picker__message {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+}
+
+/* Lista de títulos */
+.top-picker__list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-height: 360px;
+  overflow-y: auto;
+}
+
+.top-picker__row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+}
+
+.top-picker__thumb {
+  height: 44px;
+  width: 76px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+  flex-shrink: 0;
+}
+
+.top-picker__info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.top-picker__name {
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.top-picker__category {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+.top-picker__add-row-btn {
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #f5b83d;
+  color: #241c00;
+  border: none;
+  border-radius: var(--radius-sm);
+}
+
+.top-picker__add-row-btn:hover {
+  filter: brightness(1.1);
+}
+
+.top-picker__add-row-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}

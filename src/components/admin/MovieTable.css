@@ -1,0 +1,286 @@
+/* Estilos del panel de administración (MovieTable).
+   Todos los colores salen de las variables definidas en src/styles/global.css */
+
+/* --- Toolbar --- */
+.movie-table__toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.movie-table__counter {
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+/* Buscador (visual) */
+.movie-table__search-box {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1;
+  min-width: 240px;
+  max-width: 520px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  padding: 0 0.75rem;
+  height: var(--height-field);
+  color: var(--color-text-muted);
+}
+
+.movie-table__search-box:focus-within {
+  border-color: #f5b83d;
+}
+
+.movie-table__search-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--color-text);
+  font: inherit;
+}
+
+.movie-table__search-input::placeholder {
+  color: var(--color-text-muted);
+}
+
+/* Dropdown de categorías integrado en el encabezado de la tabla */
+.movie-table__header-dropdown {
+  background: transparent;
+  border: 0;
+  padding: 0;
+  color: inherit;
+  font: inherit;
+  font-family: inherit;
+  font-weight: inherit;
+  text-transform: inherit;
+  letter-spacing: inherit;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.movie-table__header-dropdown:hover,
+.movie-table__header-dropdown:focus,
+.movie-table__header-dropdown:active {
+  background: transparent;
+  color: #f5b83d;
+}
+
+/* Cuando hay un filtro activo, el encabezado se marca en cian */
+.movie-table__header-dropdown--active,
+.movie-table__header-dropdown--active:hover,
+.movie-table__header-dropdown--active:focus {
+  color: #f5b83d;
+}
+
+/* Menú del dropdown: lista de texto blanco, sin aspecto de botones */
+.movie-table__dropdown-menu {
+  --bs-dropdown-bg: var(--color-surface);
+  --bs-dropdown-border-color: var(--color-border);
+  --bs-dropdown-link-color: #ffffff;
+  --bs-dropdown-link-hover-bg: transparent;
+  --bs-dropdown-link-hover-color: #f5b83d;
+  --bs-dropdown-link-active-bg: transparent;
+  --bs-dropdown-link-active-color: #f5b83d;
+  --bs-dropdown-divider-bg: var(--color-border);
+  font-family: var(--font-main);
+  font-size: 0.9rem;
+}
+
+/* Ítems con la misma tipografía del resto de la tabla */
+.movie-table__dropdown-menu .dropdown-item {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+/* --- Tabla --- */
+.movie-table__table-wrapper {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+/* Se pisan las variables de Bootstrap para adaptar la tabla al tema */
+.movie-table__table {
+  --bs-table-bg: var(--color-surface);
+  --bs-table-color: var(--color-text-base);
+  --bs-table-hover-bg: var(--color-bg-header);
+  --bs-table-hover-color: var(--color-text);
+  --bs-table-border-color: var(--color-border);
+}
+
+/* Encabezados en mayúsculas chicas, como la referencia */
+.movie-table__table thead th {
+  text-transform: uppercase;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--color-text-muted);
+}
+
+.movie-table__thumb {
+  height: 48px;
+  width: 84px;
+  object-fit: cover;
+  border-radius: var(--radius-sm);
+}
+
+.movie-table__name {
+  display: block;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+/* Celda del título: nombre, id y "Destacada" apilados */
+.movie-table__title-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.15rem;
+}
+
+.movie-table__movie-id {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+/* Año · duración o temporadas · puntaje */
+.movie-table__details-row {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+/* Fila con el tipo (Película/Serie) + ID */
+.movie-table__meta-row {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+}
+
+.movie-table__type-badge {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  border: 1px solid transparent;
+}
+
+.movie-table__type-pelicula {
+  background: rgba(108, 117, 125, 0.2);
+  border-color: rgba(108, 117, 125, 0.45);
+  color: #c3c9d1;
+}
+
+.movie-table__type-serie {
+  background: rgba(245, 184, 61, 0.12);
+  border-color: rgba(245, 184, 61, 0.45);
+  color: #f5b83d;
+}
+
+/* Categoría de cada fila: texto blanco plano, sin badge de color */
+.movie-table__category-text {
+  color: #ffffff;
+}
+
+.movie-table__badges {
+  display: flex;
+  gap: 0.25rem;
+  align-items: center;
+}
+
+.movie-table__actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+/* --- Badges de estado --- */
+.movie-table__badge-published {
+  background: rgba(25, 135, 84, 0.18);
+  border: 1px solid rgba(25, 135, 84, 0.5);
+  color: #6ee7a8;
+  font-weight: 600;
+}
+
+.movie-table__badge-in--active {
+  background: rgba(108, 117, 125, 0.2);
+  border: 1px solid rgba(108, 117, 125, 0.5);
+  color: #c3c9d1;
+  font-weight: 600;
+}
+
+/* Punto del badge de estado */
+.movie-table__dot {
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+  margin-right: 0.4rem;
+  vertical-align: middle;
+}
+
+/* Badge "Destacada" debajo del título */
+.movie-table__featured-badge {
+  background: rgba(245, 184, 61, 0.15);
+  border: 1px solid rgba(245, 184, 61, 0.45);
+  color: #f5b83d;
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+/* --- Botones de fila: íconos cuadrados --- */
+.movie-table__icon-btn {
+  width: 36px;
+  height: 36px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: 1px solid var(--color-border-strong);
+  color: var(--color-text-secondary);
+  border-radius: var(--radius-sm);
+  transition: border-color 0.15s ease, color 0.15s ease;
+}
+
+.movie-table__icon-btn:hover,
+.movie-table__icon-btn:focus-visible {
+  background: transparent;
+  border-color: #f5b83d;
+  color: #f5b83d;
+}
+
+/* Estrella activa: la película destacada */
+.movie-table__star--active,
+.movie-table__star--active:hover,
+.movie-table__star--active:focus-visible {
+  border-color: #f5b83d;
+  color: #f5b83d;
+}
+
+/* Estrella deshabilitada (borradores no pueden destacarse) */
+.movie-table__icon-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  border-color: var(--color-border);
+  color: var(--color-text-muted);
+}
+
+/* Eliminar: hover en rojo */
+.movie-table__delete-btn:hover,
+.movie-table__delete-btn:focus-visible {
+  border-color: #dc3545;
+  color: #dc3545;
+}
+
+/* --- Estado vacío --- */
+.movie-table__empty {
+  text-align: center;
+  padding: 3rem 0;
+  color: var(--color-text-muted);
+}
