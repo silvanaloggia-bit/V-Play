@@ -1,5 +1,5 @@
 import type { Movie, MovieType } from '../../types/movie'
-import styles from './TopsPanel.module.css'
+import './TopsPanel.css'
 
 const TOP_SIZE = 5
 const TOP_SLOTS = Array.from({ length: TOP_SIZE }, (_, index) => index + 1)
@@ -33,14 +33,14 @@ function TopList({
 }: TopListProps) {
   return (
     <>
-      <div className={`${styles.header} ${spaced ? styles.headerSpaced : ''}`}>
-        <h2 className={styles.heading}>
+      <div className={`tops-panel__header ${spaced ? 'tops-panel__header--spaced' : ''}`}>
+        <h2 className="tops-panel__heading">
           <i className="bi bi-trophy me-2" aria-hidden="true" />
           {title}
         </h2>
         <button
           type="button"
-          className={styles.addBtn}
+          className="tops-panel__add-btn"
           onClick={onAdd}
           disabled={items.length >= TOP_SIZE}
           title={
@@ -54,11 +54,11 @@ function TopList({
         </button>
       </div>
 
-      <div className={styles.listWrapper}>
-        <table className={`table table-hover align-middle mb-0 ${styles.table}`}>
+      <div className="tops-panel__list-wrapper">
+        <table className="table table-hover align-middle mb-0 tops-panel__table">
           <thead>
             <tr>
-              <th scope="col" className={styles.rankCol}>
+              <th scope="col" className="tops-panel__rank-col">
                 #
               </th>
               <th scope="col"></th>
@@ -75,35 +75,35 @@ function TopList({
               return (
                 <tr key={movie?.id ?? `empty-${position}`}>
                   <td>
-                    <span className={styles.rankBadge}>{position}</span>
+                    <span className="tops-panel__rank-badge">{position}</span>
                   </td>
                   <td>
                     {movie ? (
                       <img
                         src={movie.imageUrl}
                         alt={movie.name}
-                        className={styles.thumb}
+                        className="tops-panel__thumb"
                       />
                     ) : (
-                      <div className={styles.placeholderThumb} />
+                      <div className="tops-panel__placeholder-thumb" />
                     )}
                   </td>
-                  <td className={movie ? styles.name : styles.placeholderText}>
+                  <td className={movie ? 'tops-panel__name' : 'tops-panel__placeholder-text'}>
                     {movie?.name ?? 'Sin asignar'}
                   </td>
                   <td
                     className={
-                      movie ? styles.category : styles.placeholderText
+                      movie ? 'tops-panel__category' : 'tops-panel__placeholder-text'
                     }
                   >
                     {movie?.category ?? '—'}
                   </td>
                   <td>
                     {movie ? (
-                      <div className={styles.actions}>
+                      <div className="tops-panel__actions">
                         <button
                           type="button"
-                          className={`btn btn-sm ${styles.iconBtn}`}
+                          className="btn btn-sm tops-panel__icon-btn"
                           aria-label={`Subir ${movie.name}`}
                           title="Subir"
                           disabled={position === 1}
@@ -113,7 +113,7 @@ function TopList({
                         </button>
                         <button
                           type="button"
-                          className={`btn btn-sm ${styles.iconBtn}`}
+                          className="btn btn-sm tops-panel__icon-btn"
                           aria-label={`Bajar ${movie.name}`}
                           title="Bajar"
                           disabled={lastFilled || position === TOP_SIZE}
@@ -123,7 +123,7 @@ function TopList({
                         </button>
                         <button
                           type="button"
-                          className={`btn btn-sm ${styles.iconBtn} ${styles.deleteBtn}`}
+                          className="btn btn-sm tops-panel__icon-btn tops-panel__delete-btn"
                           aria-label={`Quitar ${movie.name} del top`}
                           title="Quitar del top"
                           onClick={() => onRemove(movie)}
@@ -134,7 +134,7 @@ function TopList({
                     ) : (
                       <button
                         type="button"
-                        className={`btn btn-sm ${styles.iconBtn} ${styles.deleteBtn}`}
+                        className="btn btn-sm tops-panel__icon-btn tops-panel__delete-btn"
                         aria-label={`Puesto ${position} libre`}
                         title="Puesto libre"
                         disabled
@@ -182,7 +182,7 @@ export default function TopsPanel({
       />
 
       {series.length === 0 && (
-        <p className={styles.note}>
+        <p className="tops-panel__note">
           Todavía no hay series en el top. Cargá una desde la pestaña
           “Títulos” eligiendo el tipo “Serie”.
         </p>
