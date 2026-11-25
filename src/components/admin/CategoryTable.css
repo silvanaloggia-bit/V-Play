@@ -62,13 +62,13 @@
   border-color: var(--color-accent);
 }
 
-.category-table__delete:hover:not(:disabled),
-.category-table__delete:focus-visible:not(:disabled) {
+.category-table__action--delete:hover:not(:disabled),
+.category-table__action--delete:focus-visible:not(:disabled) {
   color: var(--color-error);
   border-color: var(--color-error-border);
 }
 
-.category-table__delete:disabled {
+.category-table__action--delete:disabled {
   opacity: 0.4;
   cursor: not-allowed;
 }
