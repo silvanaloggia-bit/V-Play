@@ -42,7 +42,7 @@ return (
             </Nav.Link>
 
             <Nav.Link as={Link} to="/">
-              Tendencias
+              Top V-Play
             </Nav.Link>
 
             <NavDropdown title="Categorías" id="navbarCategoriesDropdown">
