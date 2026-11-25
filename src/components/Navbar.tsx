@@ -41,7 +41,7 @@ return (
               Inicio
             </Nav.Link>
 
-            <Nav.Link as={Link} to="/">
+            <Nav.Link as={Link} to="/" className="navbar-top-link">
               Top V-Play
             </Nav.Link>
 
