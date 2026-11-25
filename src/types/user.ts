@@ -1,4 +1,3 @@
-
 export type Role = 'admin' | 'editor' | 'subscriber'
 
 export interface User {
@@ -9,4 +8,6 @@ export interface User {
   password: string
   role: Role
   planId?: string
+  isActive?: boolean
+  planEndDate?: string
 }
