@@ -54,7 +54,8 @@
   height: var(--height-field);
   background: var(--color-surface);
   border: 1px solid var(--color-border-strong);
-  border-radius: 0;
+  border-radius: var(--radius-pill);
+  padding-inline: var(--space-sm);
   color: var(--color-text);
 }
 @media (min-width: 1200px) {
@@ -99,7 +100,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 0;
+  border-radius: var(--radius-pill);
 }
 .navbar-search-button:focus-visible,
 .navbar-icon-button:focus-visible {
@@ -119,7 +120,7 @@
   --bs-btn-active-border-color: var(--color-accent-hover, var(--color-accent));
   height: var(--height-field);
   padding-inline: 1.25rem;
-  border-radius: 0;
+  border-radius: var(--radius-pill);
   font-weight: 700;
   text-transform: uppercase;
   white-space: nowrap;
@@ -147,7 +148,7 @@
 --bs-btn-hover-border-color: var(--color-accent);
 height: var(--height-field);
 padding-inline: 1rem;
-border-radius: 0;
+border-radius: var(--radius-pill);
 font-weight: 700;
 text-transform: uppercase;
 white-space: nowrap;
