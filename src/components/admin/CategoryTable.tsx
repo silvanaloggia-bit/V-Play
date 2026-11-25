@@ -78,7 +78,7 @@ export default function CategoryTable({
                       </button>
                       <button
                         type="button"
-                        className="btn btn-sm category-table__action category-table__delete"
+                        className="btn btn-sm category-table__action category-table__action--delete"
                         aria-label={deleteLabel}
                         title={
                           count > 0
