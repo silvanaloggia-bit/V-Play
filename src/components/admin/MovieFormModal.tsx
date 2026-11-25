@@ -1,7 +1,7 @@
 import { useState, type FormEvent } from 'react'
 import Form from 'react-bootstrap/Form'
 import Modal from 'react-bootstrap/Modal'
-import { categories } from '../../config/constants'
+import { useCategories } from '../../hooks/useCategories'
 import type { Category, Movie, MovieType } from '../../types/movie'
 import ImagePickerModal from './ImagePickerModal'
 import './MovieFormModal.css'
@@ -99,6 +99,7 @@ export default function MovieFormModal({
   onClose,
   onSave,
 }: MovieFormModalProps) {
+  const { categories } = useCategories()
   const [values, setValues] = useState<FormValues>(() => toFormValues(movie))
   const [submitted, setSubmitted] = useState(false)
   const [imagePickerOpen, setImagePickerOpen] = useState(false)
@@ -261,8 +262,8 @@ export default function MovieFormModal({
             >
               <option value="">Seleccioná una categoría…</option>
               {categories.map((category) => (
-                <option key={category} value={category}>
-                  {category}
+                <option key={category.id} value={category.name}>
+                  {category.name}
                 </option>
               ))}
             </Form.Select>

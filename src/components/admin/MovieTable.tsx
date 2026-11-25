@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import Dropdown from 'react-bootstrap/Dropdown'
-import { categories } from '../../config/constants'
+import { useCategories } from '../../hooks/useCategories'
 import type { Category, Movie } from '../../types/movie'
 import { formatTitleMeta } from '../../utils/movieMeta'
 import './MovieTable.css'
@@ -36,6 +36,7 @@ export default function MovieTable({
   featuredCount,
   featuredLimit,
 }: MovieTableProps) {
+  const { categories } = useCategories()
   const [categoryFilter, setCategoryFilter] = useState<CategoryFilter>('todas')
 
   const filteredMovies =
@@ -101,11 +102,11 @@ export default function MovieTable({
                     <Dropdown.Divider />
                     {categories.map((category) => (
                       <Dropdown.Item
-                        key={category}
-                        eventKey={category}
-                        active={categoryFilter === category}
+                        key={category.id}
+                        eventKey={category.name}
+                        active={categoryFilter === category.name}
                       >
-                        {category}
+                        {category.name}
                       </Dropdown.Item>
                     ))}
                   </Dropdown.Menu>

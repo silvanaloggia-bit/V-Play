@@ -6,7 +6,3 @@ export const storageKey = {
   categories: 'categories',
 } as const
 
-export const categories = ['Acción', 'Comedia', 'Drama', 'Terror', 'Ciencia ficción'] as const
-
-
-
