@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react'
-import { topService } from '../services/topService'
+import { TOPS_VERSION, topService } from '../services/topService'
 import type { Movie } from '../types/movie'
 import type { Tops } from '../types/top'
 
@@ -24,6 +24,36 @@ function seedTops(movies: Movie[]): Tops {
   }
 }
 
+/**
+ * Migración v2: descarta ids que ya no existen y rellena los puestos libres
+ * con títulos válidos del mismo tipo, sin tocar el orden de los ids buenos.
+ */
+function migrateTops(tops: Tops, movies: Movie[]): Tops {
+  const existingIds = new Set(movies.map((movie) => movie.id))
+  const moviesByType = {
+    peliculas: movies.filter((movie) => (movie.type ?? 'pelicula') === 'pelicula'),
+    series: movies.filter((movie) => movie.type === 'serie'),
+  }
+
+  function repair(savedIds: string[], available: Movie[]): string[] {
+    const kept = savedIds.filter((id) => existingIds.has(id))
+    const missing = TOP_LIMIT - kept.length
+    if (missing <= 0) return kept
+
+    const additions = available
+      .filter((movie) => !kept.includes(movie.id))
+      .slice(0, missing)
+      .map((movie) => movie.id)
+
+    return [...kept, ...additions]
+  }
+
+  return {
+    peliculas: repair(tops.peliculas, moviesByType.peliculas),
+    series: repair(tops.series, moviesByType.series),
+  }
+}
+
 function toMovies(ids: string[], movies: Movie[]): Movie[] {
   return ids
     .map((id) => movies.find((movie) => movie.id === id))
@@ -35,9 +65,23 @@ function toMovies(ids: string[], movies: Movie[]): Movie[] {
  * El estado se persiste en localStorage a través de topService.
  */
 export function useTops(movies: Movie[]) {
-  const [tops, setTops] = useState<Tops>(
-    () => topService.getTops() ?? seedTops(movies),
-  )
+  const [tops, setTops] = useState<Tops>(() => {
+    const saved = topService.getTops()
+
+    if (!saved) {
+      topService.markTopsVersion(TOPS_VERSION)
+      return seedTops(movies)
+    }
+
+    if (topService.getTopsVersion() < TOPS_VERSION) {
+      const migrated = migrateTops(saved, movies)
+      topService.saveTops(migrated)
+      topService.markTopsVersion(TOPS_VERSION)
+      return migrated
+    }
+
+    return saved
+  })
 
   useEffect(() => {
     topService.saveTops(tops)
