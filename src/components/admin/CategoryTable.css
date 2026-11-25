@@ -1,0 +1,86 @@
+/* Tabla de categorías del panel: CSS plano con prefijo category-table__ */
+
+.category-table__wrapper {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+}
+
+.category-table__table {
+  --bs-table-bg: var(--color-surface);
+  --bs-table-color: var(--color-text-base);
+  --bs-table-hover-bg: var(--color-bg-header);
+  --bs-table-hover-color: var(--color-text);
+  --bs-table-border-color: var(--color-border);
+}
+
+.category-table__table thead th {
+  text-transform: uppercase;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--color-text-muted);
+}
+
+.category-table__name {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-xs);
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.category-table__icon {
+  color: var(--color-accent);
+  font-size: 1.1rem;
+}
+
+.category-table__id {
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+}
+
+.category-table__usage {
+  color: var(--color-text-secondary);
+  font-size: 0.85rem;
+}
+
+.category-table__actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.category-table__action {
+  border: 1px solid var(--color-border-strong);
+  background: transparent;
+  color: var(--color-text-secondary);
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+
+.category-table__action:hover,
+.category-table__action:focus-visible {
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.category-table__delete:hover:not(:disabled),
+.category-table__delete:focus-visible:not(:disabled) {
+  color: var(--color-error);
+  border-color: var(--color-error-border);
+}
+
+.category-table__delete:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.category-table__empty {
+  text-align: center;
+  color: var(--color-text-muted);
+  padding: var(--space-md);
+}
+
+.category-table__note {
+  margin: var(--space-sm) 0 0;
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+}

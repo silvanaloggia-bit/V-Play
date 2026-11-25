@@ -1,0 +1,105 @@
+/* Modal de alta/edición de categorías: CSS plano con prefijo category-form__ */
+
+.category-form__content {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-base);
+}
+
+.category-form__header {
+  border-bottom-color: var(--color-border);
+}
+
+.category-form__title {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  color: var(--color-text);
+}
+
+.category-form__content .form-label {
+  color: var(--color-text-muted);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 0.35rem;
+}
+
+.category-form__content .form-control,
+.category-form__content .form-select {
+  background: var(--color-bg);
+  border-color: var(--color-border-strong);
+  color: var(--color-text);
+}
+
+.category-form__content .form-control::placeholder {
+  color: var(--color-text-muted);
+}
+
+.category-form__content .form-control:focus,
+.category-form__content .form-select:focus {
+  background: var(--color-bg);
+  border-color: var(--color-accent);
+  color: var(--color-text);
+  box-shadow: 0 0 0 0.2rem color-mix(in srgb, var(--color-accent) 20%, transparent);
+}
+
+.category-form__content .form-select option {
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+.category-form__content .invalid-feedback {
+  color: var(--color-error);
+}
+
+.category-form__icon-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+}
+
+.category-form__icon-preview {
+  flex: 0 0 auto;
+  width: var(--height-field);
+  height: var(--height-field);
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--color-bg);
+  color: var(--color-accent);
+}
+
+.category-form__hint {
+  color: var(--color-text-muted);
+}
+
+.category-form__error {
+  margin: 0;
+  padding: var(--space-xs) var(--space-sm);
+  border: 1px solid var(--color-error-border);
+  border-radius: var(--radius-sm);
+  background: var(--color-error-bg);
+  color: var(--color-error);
+  font-size: 0.875rem;
+}
+
+.category-form__footer {
+  border-top-color: var(--color-border);
+}
+
+.category-form__submit {
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+  font-weight: 600;
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 0.45rem 1rem;
+  transition: filter 0.15s ease;
+}
+
+.category-form__submit:hover,
+.category-form__submit:focus-visible {
+  filter: brightness(1.1);
+}

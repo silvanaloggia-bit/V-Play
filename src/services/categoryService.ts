@@ -1,0 +1,62 @@
+import { storageKey } from '../config/constants'
+import type { Category } from '../types/category'
+import { slugify } from '../utils/slugify'
+
+const seedCategories: Category[] = [
+  { id: slugify('Acción'), name: 'Acción', icon: 'bi-lightning-charge' },
+  { id: slugify('Comedia'), name: 'Comedia', icon: 'bi-emoji-smile' },
+  { id: slugify('Drama'), name: 'Drama', icon: 'bi-film' },
+  { id: slugify('Terror'), name: 'Terror', icon: 'bi-ghost' },
+  { id: slugify('Ciencia ficción'), name: 'Ciencia ficción', icon: 'bi-rocket-takeoff' },
+]
+
+/** NFD + sin diacríticos + minúsculas + solo alfanuméricos. */
+function normalizeName(name: string): string {
+  return name
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]/g, '')
+}
+
+function isCategory(value: unknown): value is Category {
+  if (typeof value !== 'object' || value === null) return false
+  const candidate = value as Record<string, unknown>
+  return (
+    typeof candidate.id === 'string' &&
+    typeof candidate.name === 'string' &&
+    (candidate.icon === undefined || typeof candidate.icon === 'string')
+  )
+}
+
+function saveCategories(categories: Category[]): void {
+  localStorage.setItem(storageKey.categories, JSON.stringify(categories))
+}
+
+export const categoryService = {
+  normalizeName,
+
+  getCategories(): Category[] {
+    const stored = localStorage.getItem(storageKey.categories)
+    if (stored) {
+      try {
+        const parsed: unknown = JSON.parse(stored)
+        if (
+          Array.isArray(parsed) &&
+          parsed.length > 0 &&
+          parsed.every(isCategory)
+        ) {
+          return parsed
+        }
+      } catch {
+        // Un valor corrupto se trata como si no hubiera categorías guardadas.
+      }
+    }
+
+    const seeded = seedCategories.map((category) => ({ ...category }))
+    saveCategories(seeded)
+    return seeded
+  },
+
+  saveCategories,
+}
