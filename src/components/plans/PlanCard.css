@@ -91,6 +91,10 @@
   color: var(--plan-color);
 }
 
+.plan-card-benefits li {
+  display: flex;
+  gap: 6px;
+}
 .plan-card-button {
   height: var(--height-btn);
   margin-top: auto;
@@ -112,8 +116,25 @@
     padding: var(--space-lg) var(--space-md) var(--space-md);
   }
 }
+@media (min-width: 1200px) {
+  .plan-card {
+    padding: var(--space-md);
+  }
 
-@media (min-width: 992px) {
+  .plan-card-name {
+    font-size: 1.75rem;
+  }
+
+  .plan-card-price {
+    margin-bottom: var(--space-sm);
+    font-size: 1.5rem;
+  }
+
+  .plan-card-benefits {
+    margin-bottom: var(--space-sm);
+    line-height: 1.9;
+  }
+
   .plan-card-recommended {
     transform: scale(1.05);
   }

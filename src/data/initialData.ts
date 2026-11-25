@@ -300,20 +300,20 @@ export const plans: Plan[] = [
     id: 'basico',
     name: 'Básico',
     price: 15000,
-        benefits: ['1 usuario', 'Calidad HD', 'Catálogo completo'],
+        benefits: ['Hasta 2 usuarios', 'Calidad HD', 'Catálogo completo'],
   },
   {
     id: 'estandar',
     name: 'Estándar',
     price: 25000,
-    benefits: ['Hasta 2 usuarios', 'Calidad Full HD', 'Descargas en 2 dispositivos'],
+    benefits: ['Hasta 4 usuarios', 'Calidad Full HD', 'Descargas en 3 dispositivos'],
     isRecommended: true,
   },
   {
     id: 'premium',
     name: 'Premium',
     price: 40000,
-    benefits: ['Hasta 4 usuarios', 'Calidad 4K', 'Descargas en 6 dispositivos'],
+    benefits: ['Hasta 6 usuarios', 'Calidad 4K', 'Descargas en 6 dispositivos'],
   },
 ]
 
