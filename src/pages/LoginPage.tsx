@@ -43,7 +43,8 @@ return (
               type="email"
               className="form-control login-input"
               placeholder="tu@email.com"
-              {...register('email')}
+              autoComplete="email"
+              {...register('email', { onChange: () => setHasLoginFailed(false) })}
             />
             {errors.email && <div className="login-error">{errors.email.message}</div>}
           </div>
@@ -56,8 +57,9 @@ return (
               id="login-password"
               type="password"
               className="form-control login-input"
-              placeholder="••••••••"
-              {...register('password')}
+              placeholder="Tu contraseña"
+              autoComplete="current-password"
+              {...register('password', { onChange: () => setHasLoginFailed(false) })}
             />
             {errors.password && <div className="login-error">{errors.password.message}</div>}
           </div>
