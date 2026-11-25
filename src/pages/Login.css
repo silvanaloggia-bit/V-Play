@@ -1,52 +1,70 @@
 .login-page {
-  min-height: 70vh;
-  background-color: var(--color-bg);
+  min-height: 80vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 40px 16px;
+  padding: var(--space-lg) var(--space-sm);
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--color-bg) 60%, transparent) 0%,
+      var(--color-bg) 100%
+    ),
+    url('../assets/images/banners/stranger-things.webp') center / cover no-repeat;
 }
 
 .login-card {
   width: 100%;
   max-width: 440px;
-  padding: clamp(20px, 5vw, 32px);
-  background-color: var(--color-surface);
-  border: 2px solid var(--color-accent);
-  border-radius: 0;
+  padding: var(--space-lg) var(--space-md);
+  background-color: color-mix(in srgb, var(--color-surface) 92%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-text) 10%, transparent);
+  border-radius: var(--radius-xl);
 }
 
 .login-title {
+  margin-bottom: var(--space-xs);
+  font-family: var(--font-main);
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
   color: var(--color-text);
-  font-family: var(--font-display);
 }
 
 .login-subtitle {
+  margin-bottom: var(--space-md);
   color: var(--color-text-secondary);
 }
 
 .login-label {
+  font-size: 0.9rem;
+  font-weight: 600;
   color: var(--color-text-base);
 }
 
 .login-input {
   height: var(--height-field);
   background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
   color: var(--color-text);
-  border: none;
 }
-
 
 .login-input:focus {
-box-shadow: 0 0 0 2px var(--color-accent);
-border-color: transparent;
+  background-color: var(--color-bg);
+  border-color: var(--color-accent);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent) 25%, transparent);
+  color: var(--color-text);
 }
 
+.login-input::placeholder {
+  color: var(--color-text-muted);
+}
 
 .login-error {
-  color: var(--color-error);
-  font-size: 0.85rem;
   margin-top: 4px;
+  font-size: 0.85rem;
+  color: var(--color-error);
 }
 
 .login-title,
@@ -59,8 +77,21 @@ border-color: transparent;
 
 .login-button {
   height: var(--height-btn);
+  margin-top: var(--space-xs);
+  border: 0;
+  border-radius: var(--radius-pill);
   background-color: var(--color-accent);
   color: var(--color-on-accent);
-  border: 0;
   font-weight: 700;
+}
+
+.login-button:hover {
+  background-color: var(--color-accent-hover);
+  color: var(--color-on-accent);
+}
+
+@media (min-width: 768px) {
+  .login-card {
+    padding: var(--space-lg);
+  }
 }
