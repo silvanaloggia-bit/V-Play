@@ -1,6 +1,6 @@
 import { useEffect, useState, type FormEvent } from 'react'
 import Modal from 'react-bootstrap/Modal'
-import styles from './ImagePickerModal.module.css'
+import './ImagePickerModal.css'
 
 const API_KEY = import.meta.env.VITE_TMDB_API_KEY as string | undefined
 const TMDB_SEARCH_URL = 'https://api.themoviedb.org/3/search/multi'
@@ -110,61 +110,61 @@ export default function ImagePickerModal({
       size="lg"
       fullscreen="sm-down"
       scrollable
-      contentClassName={styles.content}
+      contentClassName="image-picker__content"
     >
-      <Modal.Header closeButton closeVariant="white" className={styles.header}>
-        <Modal.Title className={styles.title}>Buscar imagen en TMDb</Modal.Title>
+      <Modal.Header closeButton closeVariant="white" className="image-picker__header">
+        <Modal.Title className="image-picker__title">Buscar imagen en TMDb</Modal.Title>
       </Modal.Header>
 
       <Modal.Body>
         {!API_KEY ? (
-          <p className={styles.message}>
+          <p className="image-picker__message">
             Falta configurar <code>VITE_TMDB_API_KEY</code> en el archivo{' '}
             <code>.env</code>.
           </p>
         ) : (
           <>
-            <form className={styles.searchForm} onSubmit={runSearch}>
-              <div className={styles.searchBox}>
+            <form className="image-picker__search-form" onSubmit={runSearch}>
+              <div className="image-picker__search-box">
                 <i className="bi bi-search" aria-hidden="true" />
                 <input
                   type="search"
-                  className={styles.searchInput}
+                  className="image-picker__search-input"
                   placeholder="Buscar película o serie…"
                   aria-label="Buscar película o serie en TMDb"
                   value={query}
                   onChange={(event) => setQuery(event.target.value)}
                 />
               </div>
-              <button type="submit" className={styles.searchBtn} disabled={loading}>
+              <button type="submit" className="image-picker__search-btn" disabled={loading}>
                 {loading ? 'Buscando…' : 'Buscar'}
               </button>
             </form>
 
-            {error && <p className={styles.error}>{error}</p>}
+            {error && <p className="image-picker__error">{error}</p>}
 
             {!loading && !error && results.length === 0 && (
-              <p className={styles.message}>
+              <p className="image-picker__message">
                 Escribí un título y presioná Buscar.
               </p>
             )}
 
-            <ul className={styles.grid}>
+            <ul className="image-picker__grid">
               {results.map((result) => (
                 <li key={`${result.media_type}-${result.id}`}>
                   <button
                     type="button"
-                    className={styles.resultBtn}
+                    className="image-picker__result-btn"
                     onClick={() => handlePick(result)}
                     title={result.title ?? result.name ?? 'Seleccionar'}
                   >
                     <img
                       src={`${TMDB_IMAGE_BASE}/w342${result.poster_path}`}
                       alt={result.title ?? result.name ?? 'Poster'}
-                      className={styles.poster}
+                      className="image-picker__poster"
                       loading="lazy"
                     />
-                    <span className={styles.resultTitle}>
+                    <span className="image-picker__result-title">
                       {result.title ?? result.name}
                     </span>
                   </button>
@@ -175,7 +175,7 @@ export default function ImagePickerModal({
         )}
       </Modal.Body>
 
-      <Modal.Footer className={styles.footer}>
+      <Modal.Footer className="image-picker__footer">
         <button type="button" className="btn btn-outline-secondary" onClick={onClose}>
           Cancelar
         </button>

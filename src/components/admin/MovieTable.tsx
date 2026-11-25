@@ -3,7 +3,7 @@ import Dropdown from 'react-bootstrap/Dropdown'
 import { categories } from '../../config/constants'
 import type { Category, Movie } from '../../types/movie'
 import { formatTitleMeta } from '../../utils/movieMeta'
-import styles from './MovieTable.module.css'
+import './MovieTable.css'
 
 type CategoryFilter = Category | 'todas'
 
@@ -52,26 +52,26 @@ export default function MovieTable({
 
   return (
     <section>
-      <div className={styles.toolbar}>
+      <div className="movie-table__toolbar">
         {/* Buscador: por ahora solo visual. TODO: conectarlo al filtro de la tabla. */}
-        <div className={styles.searchBox}>
+        <div className="movie-table__search-box">
           <i className="bi bi-search" aria-hidden="true" />
           <input
             type="search"
-            className={styles.searchInput}
+            className="movie-table__search-input"
             placeholder="Buscar por nombre o código"
             aria-label="Buscar por nombre o código"
           />
         </div>
-        <span className={styles.counter}>
+        <span className="movie-table__counter">
           {filtering
             ? `${filteredMovies.length} de ${movies.length} en "${categoryFilter}"`
             : `${movies.length} título${movies.length === 1 ? '' : 's'}`}
         </span>
       </div>
 
-      <div className={`table-responsive ${styles.tableWrapper}`}>
-        <table className={`table table-hover align-middle mb-0 ${styles.table}`}>
+      <div className="table-responsive movie-table__table-wrapper">
+        <table className="table table-hover align-middle mb-0 movie-table__table">
           <thead>
             <tr>
               <th scope="col"></th>
@@ -84,14 +84,14 @@ export default function MovieTable({
                   }
                 >
                   <Dropdown.Toggle
-                    className={`${styles.headerDropdown} ${
-                      filtering ? styles.headerDropdownActive : ''
+                    className={`movie-table__header-dropdown ${
+                      filtering ? 'movie-table__header-dropdown--active' : ''
                     }`}
                     id="categoryFilter"
                   >
                     {filtering ? categoryFilter : 'Categoría'}
                   </Dropdown.Toggle>
-                  <Dropdown.Menu className={styles.dropdownMenu}>
+                  <Dropdown.Menu className="movie-table__dropdown-menu">
                     <Dropdown.Item
                       eventKey="todas"
                       active={categoryFilter === 'todas'}
@@ -118,7 +118,7 @@ export default function MovieTable({
           <tbody>
             {filteredMovies.length === 0 && (
               <tr>
-                <td colSpan={5} className={styles.empty}>
+                <td colSpan={5} className="movie-table__empty">
                   {movies.length === 0
                     ? 'No hay títulos cargados todavía.'
                     : 'No hay títulos en esta categoría.'}
@@ -132,58 +132,58 @@ export default function MovieTable({
                   <img
                     src={movie.imageUrl}
                     alt={movie.name}
-                    className={styles.thumb}
+                    className="movie-table__thumb"
                   />
                 </td>
                 <td>
-                  <div className={styles.titleCell}>
-                    <span className={styles.name}>{movie.name}</span>
-                    <span className={styles.metaRow}>
+                  <div className="movie-table__title-cell">
+                    <span className="movie-table__name">{movie.name}</span>
+                    <span className="movie-table__meta-row">
                       <span
-                        className={`badge ${styles.typeBadge} ${
+                        className={`badge movie-table__type-badge ${
                           movie.type === 'serie'
-                            ? styles.typeSerie
-                            : styles.typePelicula
+                            ? 'movie-table__type-serie'
+                            : 'movie-table__type-pelicula'
                         }`}
                       >
                         {movie.type === 'serie' ? 'Serie' : 'Película'}
                       </span>
-                      <span className={styles.movieId}>
+                      <span className="movie-table__movie-id">
                         ID: {formatShortId(movie.id)}
                       </span>
                     </span>
                     {meta && (
-                      <span className={styles.detailsRow}>{meta}</span>
+                      <span className="movie-table__details-row">{meta}</span>
                     )}
                     {movie.isFeatured && (
-                      <span className={`badge ${styles.featuredBadge}`}>
+                      <span className="badge movie-table__featured-badge">
                         ⭐ Destacada
                       </span>
                     )}
                   </div>
                 </td>
-                <td className={styles.categoryText}>{movie.category}</td>
+                <td className="movie-table__category-text">{movie.category}</td>
                 <td>
-                  <div className={styles.badges}>
+                  <div className="movie-table__badges">
                     {movie.published ? (
-                      <span className={`badge ${styles.badgePublished}`}>
-                        <span className={styles.dot} aria-hidden="true" />
+                      <span className="badge movie-table__badge-published">
+                        <span className="movie-table__dot" aria-hidden="true" />
                         Publicada
                       </span>
                     ) : (
-                      <span className={`badge ${styles.badgeInactive}`}>
-                        <span className={styles.dot} aria-hidden="true" />
+                      <span className="badge movie-table__badge-in--active">
+                        <span className="movie-table__dot" aria-hidden="true" />
                         Borrador
                       </span>
                     )}
                   </div>
                 </td>
                 <td>
-                  <div className={styles.actions}>
+                  <div className="movie-table__actions">
                     <button
                       type="button"
-                      className={`btn btn-sm ${styles.iconBtn} ${
-                        movie.isFeatured ? styles.starActive : ''
+                      className={`btn btn-sm movie-table__icon-btn ${
+                        movie.isFeatured ? 'movie-table__star--active' : ''
                       }`}
                       aria-label={
                         movie.isFeatured
@@ -215,7 +215,7 @@ export default function MovieTable({
                     </button>
                     <button
                       type="button"
-                      className={`btn btn-sm ${styles.iconBtn}`}
+                      className="btn btn-sm movie-table__icon-btn"
                       aria-label={`Editar ${movie.name}`}
                       title="Editar"
                       onClick={() => onEdit(movie)}
@@ -225,7 +225,7 @@ export default function MovieTable({
                     {canDelete && (
                       <button
                         type="button"
-                        className={`btn btn-sm ${styles.iconBtn} ${styles.deleteBtn}`}
+                        className="btn btn-sm movie-table__icon-btn movie-table__delete-btn"
                         aria-label={`Eliminar ${movie.name}`}
                         title="Eliminar"
                         onClick={() => onDelete(movie)}

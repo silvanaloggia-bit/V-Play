@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import Modal from 'react-bootstrap/Modal'
 import type { Movie, MovieType } from '../../types/movie'
-import styles from './TopPickerModal.module.css'
+import './TopPickerModal.css'
 
 interface TopPickerModalProps {
   /** Títulos que todavía no están en el top */
@@ -39,20 +39,20 @@ export default function TopPickerModal({
       size="lg"
       fullscreen="sm-down"
       scrollable
-      contentClassName={styles.content}
+      contentClassName="top-picker__content"
     >
-      <Modal.Header closeButton closeVariant="white" className={styles.header}>
-        <Modal.Title className={styles.title}>
+      <Modal.Header closeButton closeVariant="white" className="top-picker__header">
+        <Modal.Title className="top-picker__title">
           Agregar {label} al top
         </Modal.Title>
       </Modal.Header>
 
       <Modal.Body>
-        <div className={styles.searchBox}>
+        <div className="top-picker__search-box">
           <i className="bi bi-search" aria-hidden="true" />
           <input
             type="search"
-            className={styles.searchInput}
+            className="top-picker__search-input"
             placeholder={`Buscar ${label}…`}
             aria-label={`Buscar ${label}`}
             value={search}
@@ -61,38 +61,38 @@ export default function TopPickerModal({
         </div>
 
         {full && (
-          <p className={styles.message}>
+          <p className="top-picker__message">
             El top está completo ({currentCount}/{limit}). Quitá un título para
             agregar otro.
           </p>
         )}
 
         {!full && filtered.length === 0 && (
-          <p className={styles.message}>
+          <p className="top-picker__message">
             {type === 'serie'
               ? 'No hay series cargadas. Creá una desde la pestaña “Títulos” eligiendo el tipo “Serie”.'
               : 'No hay películas disponibles para agregar al top.'}
           </p>
         )}
 
-        <ul className={styles.list}>
+        <ul className="top-picker__list">
           {filtered.map((movie) => (
-            <li key={movie.id} className={styles.row}>
+            <li key={movie.id} className="top-picker__row">
               <img
                 src={movie.imageUrl}
                 alt={movie.name}
-                className={styles.thumb}
+                className="top-picker__thumb"
               />
-              <div className={styles.info}>
-                <span className={styles.name}>{movie.name}</span>
-                <span className={styles.category}>
+              <div className="top-picker__info">
+                <span className="top-picker__name">{movie.name}</span>
+                <span className="top-picker__category">
                   {movie.type === 'serie' ? 'Serie' : 'Película'} ·{' '}
                   {movie.category}
                 </span>
               </div>
               <button
                 type="button"
-                className={`btn btn-sm ${styles.addRowBtn}`}
+                className="btn btn-sm top-picker__add-row-btn"
                 disabled={full}
                 aria-label={`Agregar ${movie.name} al top`}
                 onClick={() => onAdd(movie)}
@@ -104,7 +104,7 @@ export default function TopPickerModal({
         </ul>
       </Modal.Body>
 
-      <Modal.Footer className={styles.footer}>
+      <Modal.Footer className="top-picker__footer">
         <button type="button" className="btn btn-outline-secondary" onClick={onClose}>
           Cerrar
         </button>

@@ -1,25 +1,25 @@
 /* Modal de confirmación con el tema oscuro */
 
-.content {
+.delete-modal__content {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   color: var(--color-text-base);
 }
 
-.header {
+.delete-modal__header {
   border-bottom-color: var(--color-border);
 }
 
-.title {
+.delete-modal__title {
   font-family: var(--font-display);
   color: var(--color-text);
   font-size: 1.5rem;
 }
 
-.body {
+.delete-modal__body {
   color: var(--color-text-secondary);
 }
 
-.footer {
+.delete-modal__footer {
   border-top-color: var(--color-border);
 }

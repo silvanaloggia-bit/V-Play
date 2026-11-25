@@ -1,17 +1,17 @@
 /* Layout del panel de administración */
 
-.page {
+.admin-page__page {
   background: var(--color-bg);
   min-height: 100vh;
   padding-block: var(--space-page);
 }
 
-.main {
+.admin-page__main {
   max-width: var(--container-max);
 }
 
 /* --- Encabezado de página --- */
-.headerRow {
+.admin-page__header-row {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
@@ -20,19 +20,19 @@
   margin-bottom: 1.5rem;
 }
 
-.title {
+.admin-page__title {
   font-family: var(--font-display);
   color: var(--color-text);
   margin: 0;
 }
 
-.subtitle {
+.admin-page__subtitle {
   margin: 0.25rem 0 0;
   color: var(--color-text-muted);
   font-size: 0.9rem;
 }
 
-.addBtn {
+.admin-page__add-btn {
   background: #f5b83d;
   color: #241c00;
   font-weight: 600;
@@ -43,13 +43,13 @@
   transition: filter 0.15s ease;
 }
 
-.addBtn:hover,
-.addBtn:focus-visible {
+.admin-page__add-btn:hover,
+.admin-page__add-btn:focus-visible {
   filter: brightness(1.1);
 }
 
 /* --- Tabs --- */
-.tabs {
+.admin-page__tabs {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
@@ -57,7 +57,7 @@
   margin-bottom: 1.5rem;
 }
 
-.tab {
+.admin-page__tab {
   background: transparent;
   border: none;
   border-bottom: 2px solid transparent;
@@ -67,12 +67,12 @@
   transition: color 0.15s ease, border-color 0.15s ease;
 }
 
-.tab:hover,
-.tab:focus-visible {
+.admin-page__tab:hover,
+.admin-page__tab:focus-visible {
   color: #f5b83d;
 }
 
-.tabActive {
+.admin-page__tab--active {
   color: #f5b83d;
   border-bottom-color: #f5b83d;
   font-weight: 600;

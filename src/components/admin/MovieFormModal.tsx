@@ -4,7 +4,7 @@ import Modal from 'react-bootstrap/Modal'
 import { categories } from '../../config/constants'
 import type { Category, Movie, MovieType } from '../../types/movie'
 import ImagePickerModal from './ImagePickerModal'
-import styles from './MovieFormModal.module.css'
+import './MovieFormModal.css'
 
 interface MovieFormModalProps {
   /** null = crear un título nuevo; con movie = editar ese título */
@@ -201,10 +201,10 @@ export default function MovieFormModal({
         centered
         fullscreen="sm-down"
         scrollable
-        contentClassName={styles.content}
+        contentClassName="movie-form__content"
       >
-        <Modal.Header closeButton closeVariant="white" className={styles.header}>
-          <Modal.Title className={styles.title}>
+        <Modal.Header closeButton closeVariant="white" className="movie-form__header">
+          <Modal.Title className="movie-form__title">
             {editing ? 'Editar título' : 'Agregar título'}
           </Modal.Title>
         </Modal.Header>
@@ -386,7 +386,7 @@ export default function MovieFormModal({
               <Form.Label className="mb-0">Imagen</Form.Label>
               <button
                 type="button"
-                className={styles.pickImageBtn}
+                className="movie-form__pick-image-btn"
                 onClick={() => setImagePickerOpen(true)}
               >
                 <i className="bi bi-search me-1" aria-hidden="true" />
@@ -409,7 +409,7 @@ export default function MovieFormModal({
               <img
                 src={values.imageUrl}
                 alt="Vista previa del poster"
-                className={styles.posterPreview}
+                className="movie-form__poster-preview"
                 onError={(event) => {
                   event.currentTarget.style.display = 'none'
                 }}
@@ -455,7 +455,7 @@ export default function MovieFormModal({
           </Form>
         </Modal.Body>
 
-        <Modal.Footer className={styles.footer}>
+        <Modal.Footer className="movie-form__footer">
           <button
             type="button"
             className="btn btn-outline-secondary"
@@ -466,7 +466,7 @@ export default function MovieFormModal({
           <button
             type="submit"
             form="movie-form"
-            className={styles.submitBtn}
+            className="movie-form__submit-btn"
           >
             {editing ? 'Guardar cambios' : 'Crear título'}
           </button>

@@ -12,7 +12,7 @@ import { useMovies } from '../hooks/useMovies'
 import { TOP_LIMIT, useTops } from '../hooks/useTops'
 import type { Category } from '../types/category'
 import type { Movie, MovieType } from '../types/movie'
-import styles from './AdminPage.module.css'
+import './AdminPage.css'
 
 const FEATURED_LIMIT = 3
 
@@ -212,12 +212,12 @@ export default function AdminPage() {
   }
 
   return (
-    <div className={styles.page}>
-      <main className={`container ${styles.main}`}>
-        <div className={styles.headerRow}>
+    <div className="admin-page__page">
+      <main className="container admin-page__main">
+        <div className="admin-page__header-row">
           <div>
-            <h1 className={styles.title}>Panel — Películas y Series</h1>
-            <p className={styles.subtitle}>
+            <h1 className="admin-page__title">Panel — Películas y Series</h1>
+            <p className="admin-page__subtitle">
               {movies.length} título{movies.length === 1 ? '' : 's'} ·{' '}
               {publishedCount} publicado{publishedCount === 1 ? '' : 's'}
             </p>
@@ -225,7 +225,7 @@ export default function AdminPage() {
           {activeTab === 'titulos' && (
             <button
               type="button"
-              className={styles.addBtn}
+              className="admin-page__add-btn"
               onClick={handleOpenCreate}
             >
               <i className="bi bi-plus-lg me-1" aria-hidden="true" />
@@ -235,7 +235,7 @@ export default function AdminPage() {
           {activeTab === 'categorias' && (
             <button
               type="button"
-              className={styles.addBtn}
+              className="admin-page__add-btn"
               onClick={handleOpenCreateCategory}
             >
               <i className="bi bi-plus-lg me-1" aria-hidden="true" />
@@ -244,13 +244,13 @@ export default function AdminPage() {
           )}
         </div>
 
-        <nav className={styles.tabs} aria-label="Secciones del panel">
+        <nav className="admin-page__tabs" aria-label="Secciones del panel">
           {TABS.map((tab) => (
             <button
               key={tab.id}
               type="button"
-              className={`${styles.tab} ${
-                activeTab === tab.id ? styles.tabActive : ''
+              className={`admin-page__tab ${
+                activeTab === tab.id ? 'admin-page__tab--active' : ''
               }`}
               onClick={() => setActiveTab(tab.id)}
             >

@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react'
 import Modal from 'react-bootstrap/Modal'
-import styles from './DeleteMovieModal.module.css'
+import './DeleteMovieModal.css'
 
 interface DeleteMovieModalProps {
   open: boolean
@@ -24,13 +24,13 @@ export default function DeleteMovieModal({
       show={open}
       onHide={onCancel}
       centered
-      contentClassName={styles.content}
+      contentClassName="delete-modal__content"
     >
-      <Modal.Header closeButton closeVariant="white" className={styles.header}>
-        <Modal.Title className={styles.title}>{title}</Modal.Title>
+      <Modal.Header closeButton closeVariant="white" className="delete-modal__header">
+        <Modal.Title className="delete-modal__title">{title}</Modal.Title>
       </Modal.Header>
-      <Modal.Body className={styles.body}>{children}</Modal.Body>
-      <Modal.Footer className={styles.footer}>
+      <Modal.Body className="delete-modal__body">{children}</Modal.Body>
+      <Modal.Footer className="delete-modal__footer">
         <button
           type="button"
           className="btn btn-outline-secondary"

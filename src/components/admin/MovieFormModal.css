@@ -1,27 +1,27 @@
 /* Modal de formulario (agregar/editar) con el tema oscuro */
 
-.content {
+.movie-form__content {
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   color: var(--color-text-base);
 }
 
-.header {
+.movie-form__header {
   border-bottom-color: var(--color-border);
 }
 
-.title {
+.movie-form__title {
   font-family: var(--font-display);
   color: var(--color-text);
   font-size: 1.5rem;
 }
 
-.footer {
+.movie-form__footer {
   border-top-color: var(--color-border);
 }
 
 /* Campos del formulario adaptados al tema oscuro */
-.content :global(.form-label) {
+.movie-form__content .form-label {
   color: var(--color-text-muted);
   font-size: 0.72rem;
   font-weight: 600;
@@ -30,54 +30,54 @@
   margin-bottom: 0.35rem;
 }
 
-.content :global(.form-control),
-.content :global(.form-select) {
+.movie-form__content .form-control,
+.movie-form__content .form-select {
   background: var(--color-bg);
   border-color: var(--color-border-strong);
   color: var(--color-text);
 }
 
-.content :global(.form-control::placeholder) {
+.movie-form__content .form-control::placeholder {
   color: var(--color-text-muted);
 }
 
-.content :global(.form-control:focus),
-.content :global(.form-select:focus) {
+.movie-form__content .form-control:focus,
+.movie-form__content .form-select:focus {
   background: var(--color-bg);
   border-color: #f5b83d;
   color: var(--color-text);
   box-shadow: 0 0 0 0.2rem rgba(245, 184, 61, 0.2);
 }
 
-.content :global(.form-select option) {
+.movie-form__content .form-select option {
   background: var(--color-surface);
   color: var(--color-text);
 }
 
-.content :global(.form-text) {
+.movie-form__content .form-text {
   color: var(--color-text-muted);
 }
 
-.content :global(.form-check-label) {
+.movie-form__content .form-check-label {
   color: var(--color-text-secondary);
 }
 
-.content :global(.form-check-input:checked) {
+.movie-form__content .form-check-input:checked {
   background-color: #f5b83d;
   border-color: #f5b83d;
 }
 
-.content :global(.form-check-input:focus) {
+.movie-form__content .form-check-input:focus {
   border-color: #f5b83d;
   box-shadow: 0 0 0 0.2rem rgba(245, 184, 61, 0.2);
 }
 
-.content :global(.invalid-feedback) {
+.movie-form__content .invalid-feedback {
   color: var(--color-error);
 }
 
 /* --- Vista previa de imágenes --- */
-.posterPreview {
+.movie-form__poster-preview {
   display: block;
   margin-top: 0.5rem;
   height: 120px;
@@ -88,7 +88,7 @@
 }
 
 /* Botón "Buscar en TMDb" */
-.pickImageBtn {
+.movie-form__pick-image-btn {
   background: transparent;
   border: 1px solid var(--color-border-strong);
   color: var(--color-text-secondary);
@@ -98,13 +98,13 @@
   transition: border-color 0.15s ease, color 0.15s ease;
 }
 
-.pickImageBtn:hover,
-.pickImageBtn:focus-visible {
+.movie-form__pick-image-btn:hover,
+.movie-form__pick-image-btn:focus-visible {
   border-color: #f5b83d;
   color: #f5b83d;
 }
 
-.bannerPreview {
+.movie-form__banner-preview {
   display: block;
   margin-top: 0.5rem;
   width: 100%;
@@ -114,7 +114,7 @@
   border: 1px solid var(--color-border);
 }
 
-.submitBtn {
+.movie-form__submit-btn {
   background: #f5b83d;
   color: #241c00;
   font-weight: 600;
@@ -124,6 +124,6 @@
   transition: filter 0.15s ease;
 }
 
-.submitBtn:hover {
+.movie-form__submit-btn:hover {
   filter: brightness(1.1);
 }
