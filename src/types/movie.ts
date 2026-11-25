@@ -1,6 +1,4 @@
-import { categories } from '../config/constants'
-
-export type Category = (typeof categories)[number]
+export type Category = string
 
 export type MovieType = 'pelicula' | 'serie'
 
