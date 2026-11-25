@@ -26,7 +26,7 @@ logout()
 navigate('/')
 }
 return (
-<Navbar expand="lg" sticky="top" className="main-navbar">
+<Navbar expand="xl" sticky="top" className="main-navbar">
 <Container fluid>
 <Navbar.Brand as={Link} to="/">
 <img src={vplayLogo} alt="VPLAY" className="navbar-logo" />
@@ -34,7 +34,7 @@ return (
         <Navbar.Toggle aria-controls="mainNavbar" />
 
         <Navbar.Collapse id="mainNavbar">
-          <Nav className="mx-auto my-2 my-lg-0">
+          <Nav className="mx-auto my-2 my-xl-0">
             <Nav.Link as={Link} to="/">
               Inicio
             </Nav.Link>
@@ -52,7 +52,7 @@ return (
             </NavDropdown>
           </Nav>
 
-          <div className="d-flex flex-column flex-lg-row align-items-lg-center gap-3">
+          <div className="d-flex flex-column flex-xl-row align-items-xl-center gap-3">
             <Form
               className="d-flex"
               role="search"
@@ -72,7 +72,7 @@ return (
             <div className="navbar-session">
               {!loggedUser && (
                 <Button
-                  className="navbar-subscribe-button flex-grow-1 flex-lg-grow-0"
+                  className="navbar-subscribe-button flex-grow-1 flex-xl-grow-0"
                   onClick={() => navigate('/suscripcion')}
                 >
                   Suscripción
@@ -81,7 +81,7 @@ return (
 
               {isStaff && (
                 <Button
-                  className="navbar-admin-button flex-grow-1 flex-lg-grow-0"
+                  className="navbar-admin-button flex-grow-1 flex-xl-grow-0"
                   onClick={() => navigate('/admin')}
                 >
                   <i className="bi bi-gear-fill" aria-hidden="true"></i>
