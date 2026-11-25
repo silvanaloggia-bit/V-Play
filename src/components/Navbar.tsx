@@ -5,9 +5,10 @@ import Nav from 'react-bootstrap/Nav'
 import Navbar from 'react-bootstrap/Navbar'
 import NavDropdown from 'react-bootstrap/NavDropdown'
 import { Link, useNavigate } from 'react-router'
-import { categories } from '../config/constants'
 import { plans } from '../data/initialData'
 import { useAuth } from '../hooks/useAuth'
+import { useCategories } from '../hooks/useCategories'
+import { slugify } from '../utils/slugify'
 import vplayLogo from '../assets/images/logo/vplay-logo-navbar.svg'
 import './Navbar.css'
 const roleLabels = {
@@ -18,6 +19,7 @@ subscriber: 'Suscriptor',
 function AppNavbar() {
 const navigate = useNavigate()
 const { loggedUser, logout } = useAuth()
+const { categories } = useCategories()
 const isStaff = loggedUser?.role === 'admin' || loggedUser?.role === 'editor'
 const isSubscriber = loggedUser?.role === 'subscriber'
 const userPlan = plans.find((plan) => plan.id === loggedUser?.planId)
@@ -45,8 +47,11 @@ return (
 
             <NavDropdown title="Categorías" id="navbarCategoriesDropdown">
               {categories.map((category) => (
-                <NavDropdown.Item key={category} href={`#${category}`}>
-                  {category}
+                <NavDropdown.Item
+                  key={category.id}
+                  href={`#categoria-${slugify(category.name)}`}
+                >
+                  {category.name}
                 </NavDropdown.Item>
               ))}
             </NavDropdown>

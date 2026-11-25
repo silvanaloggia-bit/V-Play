@@ -1,20 +1,22 @@
 import CategoryRow from '../components/movies/CategoryRow'
 import HeroBanner from '../components/movies/HeroBanner'
 import TopRow from '../components/movies/TopRow'
-import { categories } from '../config/constants'
+import { useCategories } from '../hooks/useCategories'
 import { useMovies } from '../hooks/useMovies'
 import { useTops } from '../hooks/useTops'
 import './HomePage.css'
 
 export default function HomePage() {
   const { movies } = useMovies()
+  const { categories } = useCategories()
   const { topMovies, topSeries } = useTops(movies)
   const publishedMovies = movies.filter((movie) => movie.published)
 
+  // Solo se muestran filas con títulos publicados.
   const rows = categories
     .map((category) => ({
       category,
-      movies: publishedMovies.filter((movie) => movie.category === category),
+      movies: publishedMovies.filter((movie) => movie.category === category.name),
     }))
     .filter((row) => row.movies.length > 0)
 
@@ -44,8 +46,8 @@ export default function HomePage() {
           <>
             {rows.map((row) => (
               <CategoryRow
-                key={row.category}
-                title={row.category}
+                key={row.category.id}
+                title={row.category.name}
                 movies={row.movies}
               />
             ))}
