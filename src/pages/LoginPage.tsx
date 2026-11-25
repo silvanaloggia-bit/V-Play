@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useNavigate } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 import { loginSchema } from '../schemas/loginSchema'
 import { useAuth } from '../hooks/useAuth'
 import { authService } from '../services/authService'
@@ -72,6 +72,10 @@ return (
             </div>
           )}
         </form>
+  
+        <p className="login-register">
+          ¿No tenés cuenta? <Link to="/registro">Registrate gratis</Link>
+        </p>
       </div>
     </main>
 )
