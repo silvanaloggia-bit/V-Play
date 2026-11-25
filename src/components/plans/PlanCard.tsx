@@ -10,7 +10,7 @@ interface PlanCardProps {
 export default function PlanCard({ plan, isSelected, onSelectPlan }: PlanCardProps) {
   const formattedPrice = plan.price.toLocaleString('es-AR')
 
-  let cardClassName = 'plan-card'
+  let cardClassName = `plan-card plan-card-${plan.id}`
   if (plan.isRecommended) {
     cardClassName += ' plan-card-recommended'
   }
