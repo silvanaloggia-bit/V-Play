@@ -1,16 +1,37 @@
+import { useSearchParams } from 'react-router'
 import CategoryRow from '../components/movies/CategoryRow'
 import HeroBanner from '../components/movies/HeroBanner'
+import MovieCard from '../components/movies/MovieCard'
 import TopRow from '../components/movies/TopRow'
 import { useCategories } from '../hooks/useCategories'
+import { useDebouncedText } from '../hooks/useDebouncedText'
 import { useMovies } from '../hooks/useMovies'
 import { useTops } from '../hooks/useTops'
 import './HomePage.css'
+
+const SEARCH_DELAY_IN_MILLISECONDS = 400
+
+function normalizeText(text: string): string {
+  return text
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .trim()
+}
 
 export default function HomePage() {
   const { movies } = useMovies()
   const { categories } = useCategories()
   const { topMovies, topSeries } = useTops(movies)
   const publishedMovies = movies.filter((movie) => movie.published)
+
+  const [searchParams] = useSearchParams()
+  const searchText = searchParams.get('buscar') ?? ''
+  const debouncedSearchText = useDebouncedText(searchText, SEARCH_DELAY_IN_MILLISECONDS)
+  const normalizedSearchText = normalizeText(debouncedSearchText)
+  const searchResults = publishedMovies.filter((movie) =>
+    normalizeText(movie.name).includes(normalizedSearchText),
+  )
 
   // Solo se muestran filas con títulos publicados.
   const rows = categories
@@ -26,42 +47,57 @@ export default function HomePage() {
 
   return (
     <main className="home-page">
-      <div className="container">
-        <h1 className="home-page__title">Cartelera</h1>
-        <p className="home-page__subtitle">
-          {publishedMovies.length} título
-          {publishedMovies.length === 1 ? '' : 's'} disponibles
-        </p>
-      </div>
+      {normalizedSearchText ? (
+        <section className="container home-page__search" aria-live="polite">
+          <h2 className="home-page__search-title">
+            Resultados para <span>"{debouncedSearchText.trim()}"</span>
+          </h2>
 
-      <HeroBanner />
+          {searchResults.length === 0 ? (
+            <p className="home-page__empty">
+              <i className="bi bi-search" aria-hidden="true" />
+              No encontramos títulos con ese nombre. Probá con otra palabra.
+            </p>
+          ) : (
+            <div className="home-page__search-results">
+              {searchResults.map((movie) => (
+                <MovieCard key={movie.id} movie={movie} />
+              ))}
+            </div>
+          )}
+        </section>
+      ) : (
+        <>
+          <HeroBanner />
 
-      <div className="container home-page__rows">
-        {publishedMovies.length === 0 ? (
-          <p className="home-page__empty">
-            <i className="bi bi-collection-play" aria-hidden="true" />
-            Todavía no hay títulos publicados.
-          </p>
-        ) : (
-          <>
-            {rows.map((row) => (
-              <CategoryRow
-                key={row.category.id}
-                title={row.category.name}
-                movies={row.movies}
-              />
-            ))}
+          <div className="container home-page__rows">
+            {publishedMovies.length === 0 ? (
+              <p className="home-page__empty">
+                <i className="bi bi-collection-play" aria-hidden="true" />
+                Todavía no hay títulos publicados.
+              </p>
+            ) : (
+              <>
+                {rows.map((row) => (
+                  <CategoryRow
+                    key={row.category.id}
+                    title={row.category.name}
+                    movies={row.movies}
+                  />
+                ))}
 
-            {publishedTopMovies.length > 0 && (
-              <TopRow title="Top 5 películas" movies={publishedTopMovies} />
+                {publishedTopMovies.length > 0 && (
+                  <TopRow title="Top 5 películas" movies={publishedTopMovies} />
+                )}
+
+                {publishedTopSeries.length > 0 && (
+                  <TopRow title="Top 5 series" movies={publishedTopSeries} />
+                )}
+              </>
             )}
-
-            {publishedTopSeries.length > 0 && (
-              <TopRow title="Top 5 series" movies={publishedTopSeries} />
-            )}
-          </>
-        )}
-      </div>
+          </div>
+        </>
+      )}
     </main>
   )
 }

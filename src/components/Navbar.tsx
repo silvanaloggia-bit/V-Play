@@ -1,6 +1,5 @@
 import Button from 'react-bootstrap/Button'
 import Container from 'react-bootstrap/Container'
-import Form from 'react-bootstrap/Form'
 import Nav from 'react-bootstrap/Nav'
 import Navbar from 'react-bootstrap/Navbar'
 import NavDropdown from 'react-bootstrap/NavDropdown'
@@ -9,6 +8,7 @@ import { plans } from '../data/initialData'
 import { useAuth } from '../hooks/useAuth'
 import { useCategories } from '../hooks/useCategories'
 import { slugify } from '../utils/slugify'
+import SearchBar from './movies/SearchBar'
 import vplayLogo from '../assets/images/logo/vplay-logo-navbar.svg'
 import './Navbar.css'
 const roleLabels = {
@@ -41,8 +41,8 @@ return (
               Inicio
             </Nav.Link>
 
-            <Nav.Link as={Link} to="/">
-              Tendencias
+            <Nav.Link as={Link} to="/" className="navbar-top-link">
+              Top V-Play
             </Nav.Link>
 
             <NavDropdown title="Categorías" id="navbarCategoriesDropdown">
@@ -58,21 +58,7 @@ return (
           </Nav>
 
           <div className="d-flex flex-column flex-xl-row align-items-xl-center gap-3">
-            <Form
-              className="d-flex"
-              role="search"
-              onSubmit={(event) => event.preventDefault()}
-            >
-              <Form.Control
-                type="search"
-                placeholder="Buscar película"
-                className="me-2 navbar-search-input"
-                aria-label="Buscar película"
-              />
-              <Button type="submit" className="navbar-search-button" aria-label="Buscar">
-                <i className="bi bi-search" aria-hidden="true"></i>
-              </Button>
-            </Form>
+           <SearchBar />
 
             <div className="navbar-session">
               {!loggedUser && (
