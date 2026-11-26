@@ -1,7 +1,7 @@
 import { useState, type FormEvent } from 'react'
 import Form from 'react-bootstrap/Form'
 import Modal from 'react-bootstrap/Modal'
-import type { Category } from '../../types/category'
+import type { Category } from '../../../types/category'
 import './CategoryFormModal.css'
 
 interface CategoryFormModalProps {
