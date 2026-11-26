@@ -3,12 +3,11 @@ import Dropdown from 'react-bootstrap/Dropdown'
 import { useCategories } from '../../hooks/useCategories'
 import type { Category, Movie } from '../../types/movie'
 import { formatTitleMeta } from '../../utils/movieMeta'
+import { matchesQuery } from '../../utils/search'
 import './MovieTable.css'
 
 type CategoryFilter = Category | 'todas'
 
-// ID visual corto: "001" para los ids numéricos del seed y 6 caracteres
-// para los UUID generados con crypto.randomUUID().
 function formatShortId(id: string): string {
   if (/^\d+$/.test(id)) return id.padStart(3, '0')
   return id.replace(/-/g, '').slice(0, 6).toUpperCase()
@@ -38,13 +37,19 @@ export default function MovieTable({
 }: MovieTableProps) {
   const { categories } = useCategories()
   const [categoryFilter, setCategoryFilter] = useState<CategoryFilter>('todas')
+  const [search, setSearch] = useState('')
 
-  const filteredMovies =
-    categoryFilter === 'todas'
-      ? movies
-      : movies.filter((movie) => movie.category === categoryFilter)
+  const filteredMovies = movies.filter((movie) => {
+    if (categoryFilter !== 'todas' && movie.category !== categoryFilter) {
+      return false
+    }
+    return (
+      matchesQuery(movie.name, search) ||
+      matchesQuery(formatShortId(movie.id), search)
+    )
+  })
 
-  const filtering = categoryFilter !== 'todas'
+  const filtering = categoryFilter !== 'todas' || search.trim() !== ''
 
   const rows = filteredMovies.map((movie) => ({
     movie,
@@ -54,7 +59,6 @@ export default function MovieTable({
   return (
     <section>
       <div className="movie-table__toolbar">
-        {/* Buscador: por ahora solo visual. TODO: conectarlo al filtro de la tabla. */}
         <div className="movie-table__search-box">
           <i className="bi bi-search" aria-hidden="true" />
           <input
@@ -62,12 +66,16 @@ export default function MovieTable({
             className="movie-table__search-input"
             placeholder="Buscar por nombre o código"
             aria-label="Buscar por nombre o código"
+            value={search}
+            onChange={(event) => setSearch(event.target.value)}
           />
         </div>
         <span className="movie-table__counter">
-          {filtering
-            ? `${filteredMovies.length} de ${movies.length} en "${categoryFilter}"`
-            : `${movies.length} título${movies.length === 1 ? '' : 's'}`}
+          {search.trim()
+            ? `${filteredMovies.length} de ${movies.length} para "${search.trim()}"`
+            : filtering
+              ? `${filteredMovies.length} de ${movies.length} en "${categoryFilter}"`
+              : `${movies.length} título${movies.length === 1 ? '' : 's'}`}
         </span>
       </div>
 
@@ -122,7 +130,9 @@ export default function MovieTable({
                 <td colSpan={5} className="movie-table__empty">
                   {movies.length === 0
                     ? 'No hay títulos cargados todavía.'
-                    : 'No hay títulos en esta categoría.'}
+                    : search.trim()
+                      ? 'No hay títulos que coincidan con la búsqueda.'
+                      : 'No hay títulos en esta categoría.'}
                 </td>
               </tr>
             )}
