@@ -53,20 +53,37 @@ export function hasTmdbKey(): boolean {
   return Boolean(API_KEY)
 }
 
+export function getTmdbErrorMessage(error: unknown): string {
+  return error instanceof Error ? error.message : 'No se pudo conectar con TMDb.'
+}
+
+function describeStatus(status: number): string {
+  if (status === 401) return 'La API key de TMDb no es válida.'
+  if (status === 429) return 'TMDb limitó las consultas. Probá de nuevo en unos minutos.'
+  return `TMDb devolvió el estado ${status} al buscar.`
+}
+
 export async function searchTmdb(term: string): Promise<TmdbResult[]> {
   if (!API_KEY) return []
 
-  const response = await fetch(
-    `${API_BASE}/search/multi?api_key=${API_KEY}&language=es-ES&include_adult=false&query=${encodeURIComponent(term)}`,
-  )
+  try {
+    const response = await fetch(
+      `${API_BASE}/search/multi?api_key=${API_KEY}&language=es-ES&include_adult=false&query=${encodeURIComponent(term)}`,
+    )
 
-  if (!response.ok) throw new Error(`TMDb respondió ${response.status}`)
+    if (!response.ok) throw new Error(describeStatus(response.status))
 
-  const data = (await response.json()) as { results?: TmdbResult[] }
+    const data = (await response.json()) as { results?: TmdbResult[] }
 
-  return (data.results ?? []).filter(
-    (result) => result.media_type !== 'person' && Boolean(result.poster_path),
-  )
+    return (data.results ?? []).filter(
+      (result) => result.media_type !== 'person' && Boolean(result.poster_path),
+    )
+  } catch (error) {
+    if (error instanceof Error) throw error
+    throw new Error('No se pudo conectar con TMDb. Revisá tu conexión.', {
+      cause: error,
+    })
+  }
 }
 
 interface TmdbDetails {
