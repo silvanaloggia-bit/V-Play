@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import Modal from 'react-bootstrap/Modal'
-import type { Movie, MovieType } from '../../types/movie'
+import type { Movie, MovieType } from '../../../types/movie'
 import './TopPickerModal.css'
 
 interface TopPickerModalProps {
