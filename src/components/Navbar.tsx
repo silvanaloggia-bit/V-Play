@@ -44,6 +44,13 @@ return (
             <Nav.Link as={Link} to="/" className="navbar-top-link">
               Top V-Play
             </Nav.Link>
+            {isSubscriber && (
+              <Nav.Link as={Link} to="/mi-lista">
+                <i className="bi bi-bookmark-heart me-1" aria-hidden="true"></i>
+                Mi lista
+              </Nav.Link>
+            )}
+
 
             <NavDropdown title="Categorías" id="navbarCategoriesDropdown">
               {categories.map((category) => (
