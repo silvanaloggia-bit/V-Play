@@ -9,12 +9,9 @@ import ImagePickerModal from './ImagePickerModal'
 import './MovieFormModal.css'
 
 interface MovieFormModalProps {
-  /** null = crear un título nuevo; con movie = editar ese título */
   movie: Movie | null
   nextId: string
-  /** Cuántas destacadas hay actualmente */
   featuredCount?: number
-  /** Máximo de destacadas permitidas */
   featuredLimit?: number
   onClose: () => void
   onSave: (movie: Movie) => void
@@ -58,8 +55,6 @@ function toOptionalNumber(value: string): number | undefined {
   return Number.isFinite(parsed) ? parsed : undefined
 }
 
-// El componente se monta cada vez que se abre el modal,
-// así el estado inicial sale directo de la prop movie.
 function toFormValues(movie: Movie | null): FormValues {
   if (!movie) return EMPTY_VALUES
 
@@ -115,6 +110,7 @@ export default function MovieFormModal({
   const [submitted, setSubmitted] = useState(false)
   const [imagePickerOpen, setImagePickerOpen] = useState(false)
   const [tmdbId, setTmdbId] = useState<number | undefined>(movie?.tmdbId)
+  const [trailerKey, setTrailerKey] = useState<string | undefined>(movie?.trailerKey)
 
   const editing = Boolean(movie)
   const featuredFull = !values.isFeatured && featuredCount >= featuredLimit
@@ -161,6 +157,7 @@ export default function MovieFormModal({
       releaseYear: toOptionalNumber(data.releaseYear),
       rating: toOptionalNumber(data.rating),
       tmdbId: tmdbId ?? movie?.tmdbId,
+      trailerKey: trailerKey ?? movie?.trailerKey,
     })
   }
 
@@ -397,7 +394,6 @@ export default function MovieFormModal({
               checked={values.published}
               onChange={(event) => {
                 const published = event.target.checked
-                // Un borrador no puede quedar como destacada
                 setValues((previous) => ({
                   ...previous,
                   published,
@@ -452,6 +448,7 @@ export default function MovieFormModal({
           onSelect={(picked) => {
             setValues((previous) => fillEmptyValues(previous, picked))
             if (picked.tmdbId) setTmdbId(picked.tmdbId)
+            if (picked.trailerKey) setTrailerKey(picked.trailerKey)
             setImagePickerOpen(false)
           }}
         />
