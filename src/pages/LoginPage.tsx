@@ -9,18 +9,22 @@ import './Login.css'
 export default function LoginPage() {
 const { login } = useAuth()
 const navigate = useNavigate()
-const [hasLoginFailed, setHasLoginFailed] = useState(false)
+const [loginErrorMessage, setLoginErrorMessage] = useState('')
 const {
 register,
 handleSubmit,
 formState: { errors },
 } = useForm({ resolver: zodResolver(loginSchema) })
 const submitLogin = handleSubmit((loginData) => {
-const isLoginValid = login(loginData.email, loginData.password)
-if (!isLoginValid) {
-setHasLoginFailed(true)
-return
-}
+const loginResult = login(loginData.email, loginData.password)
+if (loginResult === 'inactive') {
+ setLoginErrorMessage('Tu cuenta está inactiva. Comunicate con VPLAY.')
+ return
+  }
+  if (loginResult === 'wrong-credentials') {
+  setLoginErrorMessage('Email o contraseña incorrectos')
+  return
+  }
     const loggedUser = authService.getLoggedUser()
     if (loggedUser?.role === 'admin' || loggedUser?.role === 'editor') {
       navigate('/admin')
@@ -44,7 +48,7 @@ return (
               className="form-control login-input"
               placeholder="tu@email.com"
               autoComplete="email"
-              {...register('email', { onChange: () => setHasLoginFailed(false) })}
+              {...register('email', { onChange: () => setLoginErrorMessage('') })}
             />
             {errors.email && <div className="login-error">{errors.email.message}</div>}
           </div>
@@ -59,7 +63,7 @@ return (
               className="form-control login-input"
               placeholder="Tu contraseña"
               autoComplete="current-password"
-              {...register('password', { onChange: () => setHasLoginFailed(false) })}
+              {...register('password', { onChange: () => setLoginErrorMessage('') })}
             />
             {errors.password && <div className="login-error">{errors.password.message}</div>}
           </div>
@@ -67,10 +71,9 @@ return (
           <button type="submit" className="btn w-100 login-button">
             Ingresar
           </button>
-
-          {hasLoginFailed && (
+          {loginErrorMessage && (
             <div className="mt-3 login-error" role="alert">
-              Email o contraseña incorrectos
+              {loginErrorMessage}
             </div>
           )}
         </form>
