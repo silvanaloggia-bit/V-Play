@@ -1,70 +1,68 @@
 import { useState } from 'react'
 import Carousel from 'react-bootstrap/Carousel'
-import { banners } from '../../assets/importMovies'
+import { useMovies } from '../../hooks/useMovies'
+import { formatTitleMeta } from '../../utils/movieMeta'
 import './Hero.css'
 
-type Slide = {
-  image: string
-  title: string
-  description: string
-  badge: string
-}
-
-const slides: Slide[] = [
-  {
-    image: banners.duna2,
-    title: 'Duna: Parte Dos',
-    description:
-      'Paul Atreides se une a los Fremen para vengar la conspiración que destruyó a su familia, mientras enfrenta un destino que solo él puede evitar.',
-    badge: 'Tendencia VPlay',
-  },
-  {
-    image: banners.gladiador2,
-    title: 'Gladiador II',
-    description:
-      'Lucio vuelve a la arena para enfrentarse al poder que lo desterró y recuperar el honor de su familia.',
-    badge: 'Tendencia VPlay',
-  },
-  {
-    image: banners.pecadores,
-    title: 'Pecadores',
-    description:
-      'Dos hermanos regresan a su ciudad natal para empezar de nuevo, pero descubren un mal aún mayor que los espera.',
-    badge: 'Tendencia VPlay',
-  },
-]
+const BADGE = 'Destacadas en VPlay'
 
 export default function HeroBanner() {
+  const { movies } = useMovies()
   const [index, setIndex] = useState(0)
+
+  // Las destacadas del CRUD son las que alimentan el carrusel.
+  const slides = movies
+    .filter((movie) => movie.isFeatured && movie.published)
+    .map((movie) => ({
+      id: movie.id,
+      image: movie.bannerUrl || movie.imageUrl,
+      // Sin banner subtitle solo queda el poster vertical de TMDb.
+      posterOnly: !movie.bannerUrl,
+      title: movie.name,
+      description: movie.description,
+      meta: formatTitleMeta(movie),
+    }))
 
   const handleSelect = (selectedIndex: number) => {
     setIndex(selectedIndex)
   }
 
+  if (slides.length === 0) return null
+
+  const activeIndex = Math.min(index, slides.length - 1)
+
   return (
     <Carousel
       className="hero-carousel"
-      activeIndex={index}
+      activeIndex={activeIndex}
       onSelect={handleSelect}
       interval={null}
     >
       {slides.map((slide) => (
-        <Carousel.Item key={slide.title}>
-          <img className="hero-image" src={slide.image} alt={slide.title} />
-          <div className="hero-overlay" />
+        <Carousel.Item key={slide.id}>
+          {slide.posterOnly ? (
+            <>
+              <img
+                className="hero-image hero-image--poster-bg"
+                src={slide.image}
+                alt=""
+                aria-hidden="true"
+              />
+              <div className="hero-overlay" />
+              <img className="hero-poster" src={slide.image} alt={slide.title} />
+            </>
+          ) : (
+            <>
+              <img className="hero-image" src={slide.image} alt={slide.title} />
+              <div className="hero-overlay" />
+            </>
+          )}
           <Carousel.Caption className="hero-caption">
             <div className="hero-content">
-              <span className="hero-badge">{slide.badge}</span>
+              <span className="hero-badge">{BADGE}</span>
               <h2 className="hero-title">{slide.title}</h2>
+              {slide.meta && <span className="hero-meta">{slide.meta}</span>}
               <p className="hero-description">{slide.description}</p>
-              <div className="hero-actions">
-                <button type="button" className="btn btn-light fw-semibold px-4">
-                  ▶ Reproducir
-                </button>
-                <button type="button" className="btn btn-outline-light fw-semibold px-4">
-                  ⓘ Más información
-                </button>
-              </div>
             </div>
           </Carousel.Caption>
         </Carousel.Item>

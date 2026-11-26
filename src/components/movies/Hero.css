@@ -18,6 +18,24 @@
   object-position: center top;
 }
 
+/* Poster vertical de TMDb sin banner: se usa desenfocado de fondo */
+.hero-image--poster-bg {
+  object-position: center;
+  filter: blur(28px) brightness(0.55);
+  transform: scale(1.15);
+}
+
+.hero-poster {
+  position: absolute;
+  top: 0;
+  right: 6%;
+  z-index: 1;
+  height: 100%;
+  width: auto;
+  max-width: 45%;
+  object-fit: contain;
+}
+
 .hero-overlay {
   position: absolute;
   inset: 0;
@@ -56,6 +74,11 @@
   z-index: 3;
 }
 
+.hero-carousel .carousel-control-prev-icon,
+.hero-carousel .carousel-control-next-icon {
+  filter: brightness(0) invert(1);
+}
+
 .hero-badge {
   font-family: var(--font-display);
   letter-spacing: 2px;
@@ -70,6 +93,14 @@
   margin: 8px 0 16px;
 }
 
+.hero-meta {
+  display: block;
+  margin: -6px 0 14px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+}
+
 .hero-description {
   color: var(--color-text-base);
   font-size: 1.05rem;
@@ -77,30 +108,13 @@
   margin-bottom: 28px;
 }
 
-.hero-actions {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
+/* La posición del carrusel (indicadores) queda oculta */
 .hero-carousel .carousel-indicators {
-  justify-content: flex-start;
-  margin-left: 0;
-  margin-right: 0;
-  padding-left: 6%;
-  margin-bottom: 14px;
+  display: none;
 }
 
-.hero-carousel .carousel-indicators [data-bs-target] {
-  width: 34px;
-  height: 3px;
-  border: 0;
-  border-radius: 0;
-  background-color: rgba(255, 255, 255, 0.4);
-  opacity: 1;
-  margin: 0 2px;
-}
-
-.hero-carousel .carousel-indicators .active {
-  background-color: var(--color-accent);
+@media (max-width: 767px) {
+  .hero-poster {
+    display: none;
+  }
 }
