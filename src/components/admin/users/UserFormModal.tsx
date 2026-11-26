@@ -52,7 +52,7 @@ export default function UserFormModal({ user, onClose, onSave }: UserFormModalPr
               Plan
             </label>
             <select id="user-plan" className="form-select" {...register('planId')}>
-              <option value="">Sin plan</option>
+              <option value="">Free</option>
               {plans.map((plan) => (
                 <option key={plan.id} value={plan.id}>
                   {plan.name} · $ {plan.price.toLocaleString('es-AR')}

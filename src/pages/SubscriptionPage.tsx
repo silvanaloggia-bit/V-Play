@@ -15,15 +15,13 @@ const MOSAIC_POSTER_COUNT = 16
 const includedBenefits = [
   { icon: 'bi-collection-play', text: 'Películas y series de todas las categorías' },
   { icon: 'bi-phone', text: 'Mirá en el celular, la tablet o la tele' },
-  { icon: 'bi-calendar-x', text: 'Sin permanencia: cancelás cuando quieras' },
+  { icon: 'bi-lightning-charge', text: 'Tu plan se activa apenas pagás' },
 ]
 
 export default function SubscriptionPage() {
   const { loggedUser } = useAuth()
   const navigate = useNavigate()
   const [planToPayId, setPlanToPayId] = useState('')
-  const [purchaseMessage, setPurchaseMessage] = useState('')
-
   const isSubscriber = loggedUser?.role === 'subscriber'
   const currentPlan = plans.find((plan) => plan.id === loggedUser?.planId)
   const planToPay = plans.find((plan) => plan.id === planToPayId)
@@ -39,11 +37,10 @@ export default function SubscriptionPage() {
       return
     }
 
-    setPurchaseMessage('')
     setPlanToPayId(planId)
   }
 
-  function handlePaymentApproved(cardDescription: string): void {
+  function handlePaymentApproved(): void {
     if (!loggedUser || !planToPay) {
       return
     }
@@ -55,8 +52,6 @@ export default function SubscriptionPage() {
       planEndDate: getDateInDays(PLAN_DURATION_DAYS),
     })
 
-    setPurchaseMessage(`¡Listo! Ya tenés el plan ${planToPay.name}. Pagaste con ${cardDescription}.`)
-    setPlanToPayId('')
     navigate('/suscripcion', { replace: true })
   }
 
@@ -101,12 +96,6 @@ export default function SubscriptionPage() {
               Estás con una cuenta del equipo: los planes son para suscriptores.
             </p>
           )}
-
-          {purchaseMessage && (
-            <p className="subscription-success" role="status">
-              {purchaseMessage}
-            </p>
-          )}
         </div>
       </section>
 
@@ -141,6 +130,7 @@ export default function SubscriptionPage() {
           cardHolderName={`${loggedUser.name} ${loggedUser.lastName}`.trim()}
           onClose={() => setPlanToPayId('')}
           onPaymentApproved={handlePaymentApproved}
+          onStartWatching={() => navigate('/')}
         />
       )}
     </main>

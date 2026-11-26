@@ -47,7 +47,7 @@ export default function UserTable({ users, onEdit, onDelete, canDelete }: UserTa
                   </td>
                   <td>
                     <span className="badge user-table__plan-badge">
-                      {userPlan ? userPlan.name : 'Sin plan'}
+                      {userPlan ? userPlan.name : 'Free'}
                     </span>
                   </td>
                   <td>
