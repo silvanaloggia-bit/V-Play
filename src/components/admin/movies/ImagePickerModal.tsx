@@ -3,6 +3,7 @@ import Modal from 'react-bootstrap/Modal'
 import { useDebouncedText } from '../../../hooks/useDebouncedText'
 import {
   getTmdbDetails,
+  getTmdbErrorMessage,
   hasTmdbKey,
   searchTmdb,
   TMDB_IMAGE_BASE,
@@ -12,7 +13,6 @@ import {
 import './ImagePickerModal.css'
 
 interface ImagePickerModalProps {
-  /** Texto inicial para buscar (normalmente el nombre del título) */
   defaultQuery?: string
   onClose: () => void
   onSelect: (picked: TmdbPicked) => void
@@ -41,9 +41,9 @@ export default function ImagePickerModal({
         if (!active) return
         setResults(found)
       })
-      .catch(() => {
+      .catch((error: unknown) => {
         if (!active) return
-        setError('No se pudo buscar en TMDb. Revisá la API key o la conexión.')
+        setError(getTmdbErrorMessage(error))
         setResults([])
       })
       .finally(() => {
@@ -68,8 +68,8 @@ export default function ImagePickerModal({
 
     try {
       onSelect(await getTmdbDetails(result))
-    } catch {
-      setError('No se pudieron cargar los datos de TMDb.')
+    } catch (error) {
+      setError(getTmdbErrorMessage(error))
       setLoading(false)
     }
   }
