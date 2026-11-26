@@ -4,6 +4,7 @@ import AppNavbar from './components/Navbar'
 import HomePage from './pages/HomePage'
 import AdminPage from './pages/AdminPage'
 import LoginPage from './pages/LoginPage'
+import RegisterPage from './pages/RegisterPage'
 import NotFoundPage from './pages/NotFoundPage'
 import ProtectedRoute from './routes/ProtectedRoute'
 import SubscriptionPage from './pages/SubscriptionPage'
@@ -16,7 +17,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
-        <Route path="/suscripcion" element={<SubscriptionPage />} />
+        <Route path="/registro" element={<RegisterPage />} />
         <Route path="/suscripcion" element={<SubscriptionPage />} />
         <Route path="/acerca-de-nosotros" element={<AboutPage />} />
         <Route element={<ProtectedRoute allowedRoles={['admin', 'editor']} />}>
