@@ -3,32 +3,34 @@ import type { TeamMember } from '../types/teamMember'
 export const teamMembers: TeamMember[] = [
   {
     id: 'silvana',
-    name: 'Silvana',
+    name: 'Silvana Loggia',
     tagline: 'La que eligió el plan',
     role: 'Team Leader',
     description:
-      'Diseñó la experiencia de VPLAY y armó la página 404, los planes, el login y el registro de usuarios.',
+      'Siempre promete ver un solo capítulo y termina la temporada entera. Su récord: tres temporadas en un fin de semana, con café incluido.',
   },
   {
     id: 'lucas',
     name: 'Lucas Díez',
     tagline: 'El guardián del catálogo',
     role: 'Scrum Master',
-    description: 'Cargó películas y series, y creó el panel de administración con los tops.',
+    description:
+      'No le da play a nada sin pochoclos. Se sabe todas las escenas poscréditos y no deja que nadie se levante del sillón antes de tiempo.',
   },
   {
     id: 'julian',
     name: 'Julián Medina',
     tagline: 'El que abre las puertas',
     role: 'Developer',
-    description: 'Hizo el inicio de sesión y el banner principal de la Home.',
+    description:
+      'Mira todas las intros completas porque dice que son parte de la película. Si alguien aprieta "Saltar intro" al lado suyo, se ofende un poquito.',
   },
   {
     id: 'luciana',
-    name: 'Luciana',
+    name: 'Luciana Villca',
     tagline: 'Los créditos finales',
     role: 'Developer',
     description:
-      'Creó el navbar, el footer, esta página de Acerca de nosotros y los perfiles de usuario.',
+      'Tiene una lista de "para ver" tan larga que le alcanza para varios años. Igual, cada noche le suma dos títulos más y, después de media hora eligiendo, termina viendo otra vez su serie favorita.',
   },
 ]
