@@ -41,7 +41,7 @@ return (
               Inicio
             </Nav.Link>
 
-            <Nav.Link as={Link} to="/" className="navbar-top-link">
+           <Nav.Link as={Link} to="/#categoria-top-5-peliculas" className="navbar-top-link">
               Top V-Play
             </Nav.Link>
             {isSubscriber && (
