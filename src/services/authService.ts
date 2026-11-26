@@ -15,6 +15,27 @@ export const authService = {
     localStorage.setItem(storageKey.users, JSON.stringify(userList))
   },
 
+  isEmailTaken(email: string): boolean {
+    const userList = authService.getUsers()
+    return userList.some((user) => user.email === email)
+  },
+
+  registerUser(newUser: User): void {
+    const userList = authService.getUsers()
+    authService.saveUsers([...userList, newUser])
+  },
+
+  updateUser(updatedUser: User): void {
+     const updatedUserList = authService
+        .getUsers()
+        .map((user) => (user.id === updatedUser.id ? updatedUser : user))
+      authService.saveUsers(updatedUserList)
+
+      const loggedUser = authService.getLoggedUser()
+      if (loggedUser?.id === updatedUser.id) {
+        authService.saveLoggedUser(updatedUser)
+      }
+    },
   findUserByCredentials(email: string, password: string): User | undefined {
     const userList = authService.getUsers()
     const foundUser = userList.find(
