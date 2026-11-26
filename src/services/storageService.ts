@@ -3,20 +3,20 @@ import { initialData } from '../data/initialData'
 import { userSeed } from '../data/userSeed'
 import type { Movie } from '../types/movie'
 import { movieService } from './movieService'
+import { getTmdbTrailer } from './tmdbService'
 
-// Clave y versión propias de la migración de seeds. Se guardan aparte de
-// localStorage["movies"] para no mezclarlas con los datos del usuario.
 const SEED_VERSION_KEY = 'seedVersion'
 const SEED_VERSION = 2
+const TRAILER_VERSION_KEY = 'trailerVersion'
+const TRAILER_VERSION = 1
+export const MOVIES_UPDATED_EVENT = 'vplay:movies-updated'
 
-/** Agrega los seeds cuyo id no existe, sin pisar los títulos ya guardados. */
 function mergeMissingSeeds(saved: Movie[], seeds: Movie[]): Movie[] {
   const savedIds = new Set(saved.map((movie) => movie.id))
   const missing = seeds.filter((seed) => !savedIds.has(seed.id))
   return missing.length > 0 ? [...saved, ...missing] : saved
 }
 
-/** Completa `type` solo donde falte y el seed lo conozca. */
 function backfillType(saved: Movie[], seeds: Movie[]): Movie[] {
   const seedById = new Map(seeds.map((seed) => [seed.id, seed]))
   let changed = false
@@ -31,12 +31,28 @@ function backfillType(saved: Movie[], seeds: Movie[]): Movie[] {
   return changed ? result : saved
 }
 
+async function migrateTrailers(): Promise<void> {
+  const movies = movieService.getMovies()
+
+  const updated = await Promise.all(
+    movies.map(async (movie) => {
+      if (movie.trailerKey || !movie.tmdbId) return movie
+      const trailerKey = await getTmdbTrailer(movie.tmdbId, movie.type ?? 'pelicula')
+      return trailerKey ? { ...movie, trailerKey } : movie
+    }),
+  )
+
+  if (updated.some((movie, index) => movie !== movies[index])) {
+    movieService.saveMovies(updated)
+    window.dispatchEvent(new Event(MOVIES_UPDATED_EVENT))
+  }
+}
+
 export const storageService = {
   seedInitialData(): void {
     const savedRaw = localStorage.getItem(storageKey.movies)
     const version = Number(localStorage.getItem(SEED_VERSION_KEY) ?? 0)
 
-    // Se ejecuta si no hay datos, o una sola vez por versión de seed.
     if (savedRaw === null || version < SEED_VERSION) {
       const saved = savedRaw ? movieService.getMovies() : []
       const merged = backfillType(mergeMissingSeeds(saved, initialData), initialData)
@@ -48,6 +64,11 @@ export const storageService = {
     const savedUsers = localStorage.getItem(storageKey.users)
     if (!savedUsers) {
       localStorage.setItem(storageKey.users, JSON.stringify(userSeed))
+    }
+
+    if (Number(localStorage.getItem(TRAILER_VERSION_KEY) ?? 0) < TRAILER_VERSION) {
+      localStorage.setItem(TRAILER_VERSION_KEY, String(TRAILER_VERSION))
+      void migrateTrailers()
     }
   },
 }

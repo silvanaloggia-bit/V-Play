@@ -1,20 +1,30 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { movieService } from '../services/movieService'
+import { MOVIES_UPDATED_EVENT } from '../services/storageService'
 import type { Movie } from '../types/movie'
 
 export function useMovies() {
-    const [movies, setMovies] = useState(() => movieService.getMovies())
+  const [movies, setMovies] = useState(() => movieService.getMovies())
 
-    const nextId = movieService.getNextId(movies)
+  const nextId = movieService.getNextId(movies)
 
-    function updateMovies(updatedMovieList: Movie[]): void {
-      setMovies(updatedMovieList)
-      movieService.saveMovies(updatedMovieList)
+  useEffect(() => {
+    function handleMoviesUpdated(): void {
+      setMovies(movieService.getMovies())
     }
 
-    return {
-      movies,
-      nextId,
-      updateMovies
-    }
+    window.addEventListener(MOVIES_UPDATED_EVENT, handleMoviesUpdated)
+    return () => window.removeEventListener(MOVIES_UPDATED_EVENT, handleMoviesUpdated)
+  }, [])
+
+  function updateMovies(updatedMovieList: Movie[]): void {
+    setMovies(updatedMovieList)
+    movieService.saveMovies(updatedMovieList)
+  }
+
+  return {
+    movies,
+    nextId,
+    updateMovies,
+  }
 }
