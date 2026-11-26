@@ -39,7 +39,7 @@ export default function MyListPage() {
       )}
 
       {isSubscriber && myListMovies.length > 0 && (
-        <div className="my-list-page\\\_\\\_grid">
+        <div className="my-list-page__grid">
           {myListMovies.map((movie) => (
             <MovieCard key={movie.id} movie={movie} />
           ))}
