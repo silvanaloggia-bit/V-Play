@@ -6,12 +6,16 @@ import MovieFormModal from '../components/admin/MovieFormModal'
 import MovieTable from '../components/admin/MovieTable'
 import TopsPanel from '../components/admin/TopsPanel'
 import TopPickerModal from '../components/admin/TopPickerModal'
+import UserFormModal from '../components/admin/users/UserFormModal'
+import UserTable from '../components/admin/users/UserTable'
 import { useAuth } from '../hooks/useAuth'
 import { useCategories } from '../hooks/useCategories'
 import { useMovies } from '../hooks/useMovies'
 import { TOP_LIMIT, useTops } from '../hooks/useTops'
+import { useUsers } from '../hooks/useUsers'
 import type { Category } from '../types/category'
 import type { Movie, MovieType } from '../types/movie'
+import type { User } from '../types/user'
 import './AdminPage.css'
 
 const FEATURED_LIMIT = 3
@@ -20,6 +24,7 @@ const TABS = [
   { id: 'titulos', label: 'Títulos', icon: 'bi-collection' },
   { id: 'tops', label: 'Tops', icon: 'bi-trophy' },
   { id: 'categorias', label: 'Categorías', icon: 'bi-tags' },
+  { id: 'usuarios', label: 'Usuarios registrados', icon: 'bi-people' },
 ] as const
 
 type TabId = (typeof TABS)[number]['id']
@@ -37,6 +42,23 @@ export default function AdminPage() {
   // Solo el rol admin puede eliminar títulos
   const { loggedUser } = useAuth()
   const canDelete = loggedUser?.role === 'admin'
+
+  const { users, updateUsers } = useUsers()
+  const registeredUsers = users.filter((user) => user.role === 'subscriber')
+  const [userToEditId, setUserToEditId] = useState('')
+  const [userToDeleteId, setUserToDeleteId] = useState('')
+  const userToEdit = users.find((user) => user.id === userToEditId)
+  const userToDelete = users.find((user) => user.id === userToDeleteId)
+
+  function handleSaveUser(updatedUser: User): void {
+    updateUsers(users.map((user) => (user.id === updatedUser.id ? updatedUser : user)))
+    setUserToEditId('')
+  }
+
+  function handleConfirmDeleteUser(): void {
+    updateUsers(users.filter((user) => user.id !== userToDeleteId))
+    setUserToDeleteId('')
+  }
 
   // Top: CRUD propio, persistido en localStorage a través de useTops
   const {
@@ -288,6 +310,14 @@ export default function AdminPage() {
             onDelete={setCategoryToDelete}
           />
         )}
+        {activeTab === 'usuarios' && (
+          <UserTable
+            users={registeredUsers}
+            onEdit={setUserToEditId}
+            onDelete={setUserToDeleteId}
+            canDelete={canDelete}
+          />
+        )}
       </main>
 
       {pickerType && (
@@ -344,6 +374,25 @@ export default function AdminPage() {
         ¿Seguro que querés eliminar{' '}
         <strong>{categoryToDelete?.name}</strong>? Esta acción no se puede
         deshacer.
+      </DeleteMovieModal>
+      
+      {userToEdit && (
+        <UserFormModal
+          user={userToEdit}
+          onClose={() => setUserToEditId('')}
+          onSave={handleSaveUser}
+        />
+      )}
+
+      <DeleteMovieModal
+        open={userToDelete !== undefined}
+        title="Eliminar usuario"
+        confirmLabel="Eliminar"
+        onCancel={() => setUserToDeleteId('')}
+        onConfirm={handleConfirmDeleteUser}
+      >
+        ¿Seguro que querés eliminar a <strong>{userToDelete?.email}</strong>? Ya no va a
+        poder iniciar sesión. Esta acción no se puede deshacer.
       </DeleteMovieModal>
     </div>
   )
