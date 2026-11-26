@@ -29,11 +29,6 @@
   color: var(--color-text);
 }
 
-.category-table__icon {
-  color: var(--color-accent);
-  font-size: 1.1rem;
-}
-
 .category-table__id {
   color: var(--color-text-muted);
   font-size: 0.85rem;
@@ -68,7 +63,7 @@
   border-color: var(--color-error-border);
 }
 
-.category-table__action--delete:disabled {
+.category-table__action:disabled {
   opacity: 0.4;
   cursor: not-allowed;
 }

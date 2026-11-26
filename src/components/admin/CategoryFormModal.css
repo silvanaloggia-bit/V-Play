@@ -53,28 +53,6 @@
   color: var(--color-error);
 }
 
-.category-form__icon-row {
-  display: flex;
-  align-items: center;
-  gap: var(--space-xs);
-}
-
-.category-form__icon-preview {
-  flex: 0 0 auto;
-  width: var(--height-field);
-  height: var(--height-field);
-  display: grid;
-  place-items: center;
-  border: 1px solid var(--color-border-strong);
-  border-radius: var(--radius-sm);
-  background: var(--color-bg);
-  color: var(--color-accent);
-}
-
-.category-form__hint {
-  color: var(--color-text-muted);
-}
-
 .category-form__error {
   margin: 0;
   padding: var(--space-xs) var(--space-sm);
