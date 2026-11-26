@@ -1,6 +1,7 @@
 import { Navigate, Route, Routes } from 'react-router'
 import Footer from './components/Footer'
 import AppNavbar from './components/Navbar'
+import ScrollToTop from './components/ScrollToTop'
 import HomePage from './pages/HomePage'
 import AdminPage from './pages/AdminPage'
 import AdminTitlesPage from './pages/admin/AdminTitlesPage'
@@ -18,6 +19,7 @@ import MyListPage from './pages/MyListPage'
 export default function App() {
   return (
     <>
+      <ScrollToTop />
       <AppNavbar />
       <Routes>
         <Route path="/" element={<HomePage />} />
