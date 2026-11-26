@@ -1,0 +1,53 @@
+.register-title-accent {
+  color: var(--color-accent);
+}
+
+.register-plan-note {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-md);
+  padding: var(--space-xs) var(--space-sm);
+  border: 1px solid color-mix(in srgb, var(--color-plan-basic) 45%, transparent);
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--color-plan-basic) 10%, transparent);
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+}
+
+.register-plan-note i {
+  color: var(--color-accent);
+}
+
+.register-plan-note strong {
+  color: var(--color-text);
+}
+
+.register-check {
+  background-color: var(--color-bg);
+  border-color: var(--color-border-strong);
+}
+
+.register-check:checked {
+  background-color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.register-check:focus {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-accent) 25%, transparent);
+}
+
+.register-terms {
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+}
+
+.register-terms-link {
+  color: var(--color-accent);
+}
+
+@media (min-width: 768px) {
+  .register-card {
+    max-width: 600px;
+  }
+}
