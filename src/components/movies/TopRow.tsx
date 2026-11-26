@@ -1,6 +1,7 @@
 import type { Movie } from '../../types/movie'
 import { formatTitleMeta } from '../../utils/movieMeta'
 import { slugify } from '../../utils/slugify'
+import TrailerOverlay from './TrailerOverlay'
 import './TopRow.css'
 
 type TopRowProps = {
@@ -62,6 +63,7 @@ export default function TopRow({ title, movies }: TopRowProps) {
                       {movie.description}
                     </p>
                   </div>
+                  <TrailerOverlay movie={movie} />
                 </div>
 
                 <span className="top-row__name">{movie.name}</span>
