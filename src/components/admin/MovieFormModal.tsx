@@ -2,6 +2,8 @@ import { useState, type FormEvent } from 'react'
 import Form from 'react-bootstrap/Form'
 import Modal from 'react-bootstrap/Modal'
 import { useCategories } from '../../hooks/useCategories'
+import { getMovieFieldErrors, movieSchema } from '../../schemas/movieSchema'
+import type { TmdbPicked } from '../../services/tmdbService'
 import type { Category, Movie, MovieType } from '../../types/movie'
 import ImagePickerModal from './ImagePickerModal'
 import './MovieFormModal.css'
@@ -9,6 +11,7 @@ import './MovieFormModal.css'
 interface MovieFormModalProps {
   /** null = crear un título nuevo; con movie = editar ese título */
   movie: Movie | null
+  nextId: string
   /** Cuántas destacadas hay actualmente */
   featuredCount?: number
   /** Máximo de destacadas permitidas */
@@ -55,21 +58,6 @@ function toOptionalNumber(value: string): number | undefined {
   return Number.isFinite(parsed) ? parsed : undefined
 }
 
-function isPositiveInteger(value: string): boolean {
-  const parsed = Number(value)
-  return Number.isInteger(parsed) && parsed > 0
-}
-
-function isValidYear(value: string): boolean {
-  const parsed = Number(value)
-  return Number.isInteger(parsed) && parsed >= 1888 && parsed <= 2100
-}
-
-function isValidRating(value: string): boolean {
-  const parsed = Number(value)
-  return Number.isFinite(parsed) && parsed >= 0 && parsed <= 10
-}
-
 // El componente se monta cada vez que se abre el modal,
 // así el estado inicial sale directo de la prop movie.
 function toFormValues(movie: Movie | null): FormValues {
@@ -92,8 +80,31 @@ function toFormValues(movie: Movie | null): FormValues {
   }
 }
 
+function fillEmptyValues(values: FormValues, picked: TmdbPicked): FormValues {
+  const keep = (current: string, incoming?: string | number): string => {
+    if (current.trim() !== '') return current
+    return incoming === undefined ? '' : String(incoming)
+  }
+
+  return {
+    ...values,
+    type: picked.type,
+    name: keep(values.name, picked.name),
+    description: keep(values.description, picked.description),
+    category: keep(values.category, picked.category),
+    imageUrl: keep(values.imageUrl, picked.posterUrl),
+    bannerUrl: keep(values.bannerUrl, picked.bannerUrl),
+    duration: keep(values.duration, picked.duration),
+    seasons: keep(values.seasons, picked.seasons),
+    episodes: keep(values.episodes, picked.episodes),
+    releaseYear: keep(values.releaseYear, picked.releaseYear),
+    rating: keep(values.rating, picked.rating),
+  }
+}
+
 export default function MovieFormModal({
   movie,
+  nextId,
   featuredCount = 0,
   featuredLimit = 3,
   onClose,
@@ -103,6 +114,7 @@ export default function MovieFormModal({
   const [values, setValues] = useState<FormValues>(() => toFormValues(movie))
   const [submitted, setSubmitted] = useState(false)
   const [imagePickerOpen, setImagePickerOpen] = useState(false)
+  const [tmdbId, setTmdbId] = useState<number | undefined>(movie?.tmdbId)
 
   const editing = Boolean(movie)
   const featuredFull = !values.isFeatured && featuredCount >= featuredLimit
@@ -110,87 +122,45 @@ export default function MovieFormModal({
   const update = <K extends keyof FormValues>(key: K, value: FormValues[K]) =>
     setValues((previous) => ({ ...previous, [key]: value }))
 
-  const nameError = submitted && values.name.trim() === ''
-  const categoryError = submitted && values.category === ''
-  const imageError = submitted && values.imageUrl.trim() === ''
-  const durationError =
-    submitted &&
-    values.duration.trim() !== '' &&
-    !isPositiveInteger(values.duration)
-  const seasonsError =
-    submitted &&
-    values.seasons.trim() !== '' &&
-    !isPositiveInteger(values.seasons)
-  const episodesError =
-    submitted &&
-    values.episodes.trim() !== '' &&
-    !isPositiveInteger(values.episodes)
-  const releaseYearError =
-    submitted &&
-    values.releaseYear.trim() !== '' &&
-    !isValidYear(values.releaseYear)
-  const ratingError =
-    submitted && values.rating.trim() !== '' && !isValidRating(values.rating)
+  const parsed = movieSchema.safeParse(values)
+  const errors = parsed.success ? {} : getMovieFieldErrors(parsed.error)
+
+  const nameError = submitted && Boolean(errors.name)
+  const categoryError = submitted && Boolean(errors.category)
+  const imageError = submitted && Boolean(errors.imageUrl)
+  const durationError = submitted && Boolean(errors.duration)
+  const seasonsError = submitted && Boolean(errors.seasons)
+  const episodesError = submitted && Boolean(errors.episodes)
+  const releaseYearError = submitted && Boolean(errors.releaseYear)
+  const ratingError = submitted && Boolean(errors.rating)
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault()
     setSubmitted(true)
 
-    const name = values.name.trim()
-    const category = values.category
-    const imageUrl = values.imageUrl.trim()
+    const result = movieSchema.safeParse(values)
+    if (!result.success) return
 
-    const durationValid =
-      values.type !== 'pelicula' ||
-      values.duration.trim() === '' ||
-      isPositiveInteger(values.duration)
-    const seasonsValid =
-      values.type !== 'serie' ||
-      values.seasons.trim() === '' ||
-      isPositiveInteger(values.seasons)
-    const episodesValid =
-      values.type !== 'serie' ||
-      values.episodes.trim() === '' ||
-      isPositiveInteger(values.episodes)
-    const releaseYearValid =
-      values.releaseYear.trim() === '' || isValidYear(values.releaseYear)
-    const ratingValid =
-      values.rating.trim() === '' || isValidRating(values.rating)
-
-    if (
-      !name ||
-      !category ||
-      !imageUrl ||
-      !durationValid ||
-      !seasonsValid ||
-      !episodesValid ||
-      !releaseYearValid ||
-      !ratingValid
-    ) {
-      return
-    }
-
+    const data = result.data
     onSave({
-      id: movie?.id ?? crypto.randomUUID(),
-      name,
-      description: values.description.trim(),
-      type: values.type,
-      category,
-      imageUrl,
-      bannerUrl: values.bannerUrl.trim() || undefined,
-      published: values.published,
-      isFeatured: values.isFeatured,
+      id: movie?.id ?? nextId,
+      name: data.name,
+      description: data.description,
+      type: data.type,
+      category: data.category as Category,
+      imageUrl: data.imageUrl,
+      bannerUrl: data.bannerUrl || undefined,
+      published: data.published,
+      isFeatured: data.isFeatured,
       duration:
-        values.type === 'pelicula'
-          ? toOptionalNumber(values.duration)
-          : undefined,
+        data.type === 'pelicula' ? toOptionalNumber(data.duration) : undefined,
       seasons:
-        values.type === 'serie' ? toOptionalNumber(values.seasons) : undefined,
+        data.type === 'serie' ? toOptionalNumber(data.seasons) : undefined,
       episodes:
-        values.type === 'serie' ? toOptionalNumber(values.episodes) : undefined,
-      releaseYear: toOptionalNumber(values.releaseYear),
-      rating: toOptionalNumber(values.rating),
-      tmdbId: movie?.tmdbId,
+        data.type === 'serie' ? toOptionalNumber(data.episodes) : undefined,
+      releaseYear: toOptionalNumber(data.releaseYear),
+      rating: toOptionalNumber(data.rating),
+      tmdbId: tmdbId ?? movie?.tmdbId,
     })
   }
 
@@ -212,6 +182,17 @@ export default function MovieFormModal({
 
         <Modal.Body>
           <Form id="movie-form" onSubmit={handleSubmit} noValidate>
+          <div className="d-flex justify-content-end mb-3">
+            <button
+              type="button"
+              className="movie-form__pick-image-btn"
+              onClick={() => setImagePickerOpen(true)}
+            >
+              <i className="bi bi-stars me-1" aria-hidden="true" />
+              Autocompletar con TMDb
+            </button>
+          </div>
+
           <Form.Group className="mb-3" controlId="movie-name">
             <Form.Label>Nombre</Form.Label>
             <Form.Control
@@ -383,20 +364,10 @@ export default function MovieFormModal({
           </div>
 
           <Form.Group className="mb-4" controlId="movie-image">
-            <div className="d-flex justify-content-between align-items-center mb-1">
-              <Form.Label className="mb-0">Imagen</Form.Label>
-              <button
-                type="button"
-                className="movie-form__pick-image-btn"
-                onClick={() => setImagePickerOpen(true)}
-              >
-                <i className="bi bi-search me-1" aria-hidden="true" />
-                Buscar en TMDb
-              </button>
-            </div>
+            <Form.Label>Imagen</Form.Label>
             <Form.Control
               type="url"
-              placeholder="Pegá una URL o buscá en TMDb…"
+              placeholder="Pegá una URL del póster…"
               value={values.imageUrl}
               onChange={(event) => update('imageUrl', event.target.value)}
               isInvalid={imageError}
@@ -478,9 +449,9 @@ export default function MovieFormModal({
         <ImagePickerModal
           defaultQuery={values.name}
           onClose={() => setImagePickerOpen(false)}
-          onSelect={({ posterUrl, bannerUrl }) => {
-            update('imageUrl', posterUrl)
-            if (bannerUrl) update('bannerUrl', bannerUrl)
+          onSelect={(picked) => {
+            setValues((previous) => fillEmptyValues(previous, picked))
+            if (picked.tmdbId) setTmdbId(picked.tmdbId)
             setImagePickerOpen(false)
           }}
         />

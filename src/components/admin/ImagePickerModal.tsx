@@ -1,46 +1,21 @@
 import { useEffect, useState, type FormEvent } from 'react'
 import Modal from 'react-bootstrap/Modal'
+import { useDebouncedText } from '../../hooks/useDebouncedText'
+import {
+  getTmdbDetails,
+  hasTmdbKey,
+  searchTmdb,
+  TMDB_IMAGE_BASE,
+  type TmdbPicked,
+  type TmdbResult,
+} from '../../services/tmdbService'
 import './ImagePickerModal.css'
-
-const API_KEY = import.meta.env.VITE_TMDB_API_KEY as string | undefined
-const TMDB_SEARCH_URL = 'https://api.themoviedb.org/3/search/multi'
-const TMDB_IMAGE_BASE = 'https://image.tmdb.org/t/p'
-
-interface TmdbResult {
-  id: number
-  media_type: 'movie' | 'tv' | 'person'
-  title?: string
-  name?: string
-  poster_path: string | null
-  backdrop_path: string | null
-}
-
-export interface PickedImages {
-  posterUrl: string
-  bannerUrl?: string
-}
 
 interface ImagePickerModalProps {
   /** Texto inicial para buscar (normalmente el nombre del título) */
   defaultQuery?: string
   onClose: () => void
-  onSelect: (images: PickedImages) => void
-}
-
-async function searchTmdb(term: string): Promise<TmdbResult[]> {
-  const response = await fetch(
-    `${TMDB_SEARCH_URL}?api_key=${API_KEY}&language=es-ES&include_adult=false&query=${encodeURIComponent(term)}`,
-  )
-
-  if (!response.ok) {
-    throw new Error(`TMDb respondió ${response.status}`)
-  }
-
-  const data = (await response.json()) as { results?: TmdbResult[] }
-
-  return (data.results ?? []).filter(
-    (result) => result.media_type !== 'person' && Boolean(result.poster_path),
-  )
+  onSelect: (picked: TmdbPicked) => void
 }
 
 export default function ImagePickerModal({
@@ -50,56 +25,53 @@ export default function ImagePickerModal({
 }: ImagePickerModalProps) {
   const [query, setQuery] = useState(defaultQuery)
   const [results, setResults] = useState<TmdbResult[]>([])
-  const [loading, setLoading] = useState(Boolean(API_KEY && defaultQuery.trim()))
+  const [loading, setLoading] = useState(Boolean(hasTmdbKey() && defaultQuery.trim()))
   const [error, setError] = useState('')
+  const [searchTick, setSearchTick] = useState(0)
+  const debouncedQuery = useDebouncedText(query, 400)
 
   useEffect(() => {
-    if (!API_KEY || !defaultQuery.trim()) return
+    const term = debouncedQuery.trim()
+    if (!hasTmdbKey() || !term) return
 
     let active = true
 
-    searchTmdb(defaultQuery)
+    searchTmdb(term)
       .then((found) => {
         if (!active) return
         setResults(found)
-        setLoading(false)
       })
       .catch(() => {
         if (!active) return
         setError('No se pudo buscar en TMDb. Revisá la API key o la conexión.')
-        setLoading(false)
+        setResults([])
+      })
+      .finally(() => {
+        if (active) setLoading(false)
       })
 
     return () => {
       active = false
     }
-  }, [defaultQuery])
+  }, [debouncedQuery, searchTick])
 
-  const runSearch = async (event: FormEvent) => {
+  const runSearch = (event: FormEvent) => {
     event.preventDefault()
-    if (!query.trim()) return
+    setLoading(true)
+    setError('')
+    setSearchTick((tick) => tick + 1)
+  }
 
+  const handlePick = async (result: TmdbResult) => {
     setLoading(true)
     setError('')
 
     try {
-      setResults(await searchTmdb(query.trim()))
+      onSelect(await getTmdbDetails(result))
     } catch {
-      setError('No se pudo buscar en TMDb. Revisá la API key o la conexión.')
-    } finally {
+      setError('No se pudieron cargar los datos de TMDb.')
       setLoading(false)
     }
-  }
-
-  const handlePick = (result: TmdbResult) => {
-    if (!result.poster_path) return
-
-    onSelect({
-      posterUrl: `${TMDB_IMAGE_BASE}/w500${result.poster_path}`,
-      bannerUrl: result.backdrop_path
-        ? `${TMDB_IMAGE_BASE}/w780${result.backdrop_path}`
-        : undefined,
-    })
   }
 
   return (
@@ -113,11 +85,13 @@ export default function ImagePickerModal({
       contentClassName="image-picker__content"
     >
       <Modal.Header closeButton closeVariant="white" className="image-picker__header">
-        <Modal.Title className="image-picker__title">Buscar imagen en TMDb</Modal.Title>
+        <Modal.Title className="image-picker__title">
+          Autocompletar con TMDb
+        </Modal.Title>
       </Modal.Header>
 
       <Modal.Body>
-        {!API_KEY ? (
+        {!hasTmdbKey() ? (
           <p className="image-picker__message">
             Falta configurar <code>VITE_TMDB_API_KEY</code> en el archivo{' '}
             <code>.env</code>.
@@ -130,14 +104,20 @@ export default function ImagePickerModal({
                 <input
                   type="search"
                   className="image-picker__search-input"
-                  placeholder="Buscar película o serie…"
+                  placeholder="Escribí un nombre para buscar…"
                   aria-label="Buscar película o serie en TMDb"
                   value={query}
-                  onChange={(event) => setQuery(event.target.value)}
+                  onChange={(event) => {
+                    const next = event.target.value
+                    setQuery(next)
+                    setResults([])
+                    setError('')
+                    setLoading(Boolean(next.trim()))
+                  }}
                 />
               </div>
               <button type="submit" className="image-picker__search-btn" disabled={loading}>
-                {loading ? 'Buscando…' : 'Buscar'}
+                {loading ? 'Buscando…' : 'Buscar ahora'}
               </button>
             </form>
 
@@ -145,7 +125,8 @@ export default function ImagePickerModal({
 
             {!loading && !error && results.length === 0 && (
               <p className="image-picker__message">
-                Escribí un título y presioná Buscar.
+                La búsqueda se hace sola mientras escribís. Al elegir un
+                resultado se completan los campos vacíos del formulario.
               </p>
             )}
 
@@ -155,7 +136,8 @@ export default function ImagePickerModal({
                   <button
                     type="button"
                     className="image-picker__result-btn"
-                    onClick={() => handlePick(result)}
+                    onClick={() => void handlePick(result)}
+                    disabled={loading}
                     title={result.title ?? result.name ?? 'Seleccionar'}
                   >
                     <img
