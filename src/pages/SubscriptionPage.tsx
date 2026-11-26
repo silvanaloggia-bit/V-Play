@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router'
+import PaymentModal from '../components/plans/PaymentModal'
 import PlanCard from '../components/plans/PlanCard'
 import { posters } from '../assets/importMovies'
 import { plans } from '../data/initialData'
@@ -20,10 +21,12 @@ const includedBenefits = [
 export default function SubscriptionPage() {
   const { loggedUser } = useAuth()
   const navigate = useNavigate()
-  const [purchasedPlanName, setPurchasedPlanName] = useState('')
+  const [planToPayId, setPlanToPayId] = useState('')
+  const [purchaseMessage, setPurchaseMessage] = useState('')
 
   const isSubscriber = loggedUser?.role === 'subscriber'
   const currentPlan = plans.find((plan) => plan.id === loggedUser?.planId)
+  const planToPay = plans.find((plan) => plan.id === planToPayId)
   const mosaicPosters = Object.values(posters).slice(0, MOSAIC_POSTER_COUNT)
 
   function handleSelectPlan(planId: string): void {
@@ -36,19 +39,24 @@ export default function SubscriptionPage() {
       return
     }
 
-    const selectedPlan = plans.find((plan) => plan.id === planId)
-    if (!selectedPlan) {
+    setPurchaseMessage('')
+    setPlanToPayId(planId)
+  }
+
+  function handlePaymentApproved(cardDescription: string): void {
+    if (!loggedUser || !planToPay) {
       return
     }
 
     authService.updateUser({
       ...loggedUser,
-      planId,
+      planId: planToPay.id,
       isActive: true,
       planEndDate: getDateInDays(PLAN_DURATION_DAYS),
     })
 
-    setPurchasedPlanName(selectedPlan.name)
+    setPurchaseMessage(`¡Listo! Ya tenés el plan ${planToPay.name}. Pagaste con ${cardDescription}.`)
+    setPlanToPayId('')
     navigate('/suscripcion', { replace: true })
   }
 
@@ -94,9 +102,9 @@ export default function SubscriptionPage() {
             </p>
           )}
 
-          {purchasedPlanName && (
+          {purchaseMessage && (
             <p className="subscription-success" role="status">
-              ¡Listo! Ya tenés el plan {purchasedPlanName}.
+              {purchaseMessage}
             </p>
           )}
         </div>
@@ -126,6 +134,15 @@ export default function SubscriptionPage() {
           </ul>
         </section>
       </div>
+
+      {planToPay && loggedUser && (
+        <PaymentModal
+          plan={planToPay}
+          cardHolderName={`${loggedUser.name} ${loggedUser.lastName}`.trim()}
+          onClose={() => setPlanToPayId('')}
+          onPaymentApproved={handlePaymentApproved}
+        />
+      )}
     </main>
   )
 }
