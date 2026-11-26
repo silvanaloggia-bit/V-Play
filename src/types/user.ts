@@ -10,4 +10,5 @@ export interface User {
   planId?: string
   isActive?: boolean
   planEndDate?: string
+  myListIds?: string 
 }
