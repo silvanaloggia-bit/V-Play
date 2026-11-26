@@ -1,0 +1,90 @@
+.user-form-modal__content {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-base);
+}
+
+.user-form-modal__header {
+  border-bottom-color: var(--color-border);
+}
+
+.user-form-modal__title {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  color: var(--color-text);
+}
+
+.user-form-modal__footer {
+  border-top-color: var(--color-border);
+}
+
+.user-form-modal__content .form-label {
+  margin-bottom: 6px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.user-form-modal__content .form-control,
+.user-form-modal__content .form-select {
+  height: var(--height-field);
+  background-color: var(--color-bg);
+  border-color: var(--color-border-strong);
+  color: var(--color-text);
+}
+
+.user-form-modal__content .form-control:focus,
+.user-form-modal__content .form-select:focus {
+  background-color: var(--color-bg);
+  border-color: var(--color-accent);
+  box-shadow: none;
+  color: var(--color-text);
+}
+
+.user-form-modal__content .form-select option {
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+.user-form-modal__content .form-control::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}
+
+.user-form-modal__content .form-check-input:checked {
+  background-color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.user-form-modal__user-email {
+  margin-bottom: 20px;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.user-form-modal__hint {
+  margin-top: 4px;
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+}
+
+.user-form-modal__error {
+  margin-top: 4px;
+  font-size: 0.85rem;
+  color: var(--color-error);
+}
+
+.user-form-modal__save-button {
+  height: var(--height-btn);
+  padding: 0 20px;
+  border: none;
+  border-radius: var(--radius-sm);
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+  font-weight: 700;
+}
+
+.user-form-modal__save-button:hover {
+  filter: brightness(1.1);
+}
