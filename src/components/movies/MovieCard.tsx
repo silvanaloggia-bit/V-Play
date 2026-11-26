@@ -1,5 +1,6 @@
 import type { Movie } from '../../types/movie'
 import { formatTitleMeta } from '../../utils/movieMeta'
+import MyListButton from '../my-list/MyListButton'
 import './MovieCard.css'
 
 type MovieCardProps = {
@@ -28,6 +29,7 @@ export default function MovieCard({ movie }: MovieCardProps) {
         )}
 
         <span className="movie-card__badge">{typeLabel}</span>
+        <MyListButton movieId={movie.id} movieName={movie.name} />
 
         <div className="movie-card__overlay">
           <h3 className="movie-card__title">{movie.name}</h3>

@@ -13,6 +13,7 @@ import NotFoundPage from './pages/NotFoundPage'
 import ProtectedRoute from './routes/ProtectedRoute'
 import SubscriptionPage from './pages/SubscriptionPage'
 import AboutPage from './pages/AboutPage'
+import MyListPage from './pages/MyListPage'
 
 export default function App() {
   return (
@@ -24,6 +25,7 @@ export default function App() {
         <Route path="/registro" element={<RegisterPage />} />
         <Route path="/suscripcion" element={<SubscriptionPage />} />
         <Route path="/acerca-de-nosotros" element={<AboutPage />} />
+        <Route path="/mi-lista" element={<MyListPage />} />
         <Route element={<ProtectedRoute allowedRoles={['admin', 'editor']} />}>
           <Route path="/admin" element={<AdminPage />}>
             <Route index element={<Navigate to="titulos" replace />} />

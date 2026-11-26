@@ -1,6 +1,6 @@
 import { storageKey } from '../config/constants'
 import type { User } from '../types/user'
-
+export const LOGGED_USER_CHANGE_EVENT = 'logged-user-change'
 export const authService = {
   getUsers(): User[] {
     const savedUsers = localStorage.getItem(storageKey.users)
@@ -55,9 +55,11 @@ export const authService = {
 
   saveLoggedUser(loggedUser: User): void {
     localStorage.setItem(storageKey.loggedUser, JSON.stringify(loggedUser))
+    window.dispatchEvent(new Event(LOGGED_USER_CHANGE_EVENT))
   },
 
   removeLoggedUser(): void {
     localStorage.removeItem(storageKey.loggedUser)
+    window.dispatchEvent(new Event(LOGGED_USER_CHANGE_EVENT))
   },
 }
