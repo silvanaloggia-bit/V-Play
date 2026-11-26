@@ -47,14 +47,6 @@ export default function HomePage() {
 
   return (
     <main className="home-page">
-      <div className="container">
-        <h1 className="home-page__title">Cartelera</h1>
-        <p className="home-page__subtitle">
-          {publishedMovies.length} título
-          {publishedMovies.length === 1 ? '' : 's'} disponibles
-        </p>
-      </div>
-
       {normalizedSearchText ? (
         <section className="container home-page__search" aria-live="polite">
           <h2 className="home-page__search-title">

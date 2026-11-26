@@ -158,6 +158,15 @@
   color: var(--color-text);
 }
 
+.top-row__meta {
+  overflow: hidden;
+  font-size: 0.72rem;
+  line-height: 1.2;
+  color: var(--color-text-muted);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 @media (hover: hover) {
   .top-row__item:hover,
   .top-row__item:focus-within {
