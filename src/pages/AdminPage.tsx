@@ -28,7 +28,7 @@ export default function AdminPage() {
   const [activeTab, setActiveTab] = useState<TabId>('titulos')
 
   // Persistencia real: useMovies guarda en localStorage a través de movieService
-  const { movies, updateMovies } = useMovies()
+  const { movies, nextId, updateMovies } = useMovies()
 
   // Categorías: CRUD propio, persistido en localStorage a través de useCategories
   const { categories, createCategory, updateCategory, deleteCategory } =
@@ -304,6 +304,7 @@ export default function AdminPage() {
       {formOpen && (
         <MovieFormModal
           movie={movieToEdit}
+          nextId={nextId}
           featuredCount={featuredCount}
           featuredLimit={FEATURED_LIMIT}
           onClose={() => setFormOpen(false)}

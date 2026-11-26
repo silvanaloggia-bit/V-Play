@@ -12,6 +12,14 @@ export const movieService = {
     return movieList
   },
 
+  getNextId(movieList: Movie[]): string {
+    const numericIds = movieList
+      .map((movie) => Number(movie.id))
+      .filter((id) => Number.isInteger(id) && id > 0)
+
+    return String(numericIds.length > 0 ? Math.max(...numericIds) + 1 : 1)
+  },
+
   saveMovies(movieList: Movie[]): void {
     localStorage.setItem(storageKey.movies, JSON.stringify(movieList))
   },

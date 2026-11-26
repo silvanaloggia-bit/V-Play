@@ -4,7 +4,9 @@ import type { Movie } from '../types/movie'
 
 export function useMovies() {
     const [movies, setMovies] = useState(() => movieService.getMovies())
-  
+
+    const nextId = movieService.getNextId(movies)
+
     function updateMovies(updatedMovieList: Movie[]): void {
       setMovies(updatedMovieList)
       movieService.saveMovies(updatedMovieList)
@@ -12,6 +14,7 @@ export function useMovies() {
 
     return {
       movies,
+      nextId,
       updateMovies
     }
 }
