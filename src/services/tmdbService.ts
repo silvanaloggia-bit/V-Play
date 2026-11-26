@@ -27,6 +27,14 @@ export interface TmdbPicked {
   rating?: number
   posterUrl?: string
   bannerUrl?: string
+  trailerKey?: string
+}
+
+interface TmdbVideo {
+  key: string
+  site: string
+  type: string
+  official: boolean
 }
 
 const GENRE_TO_CATEGORY: Record<number, string> = {
@@ -84,6 +92,37 @@ function categoryFromGenres(genres: { id: number }[] | undefined): string {
   return genres?.map((genre) => GENRE_TO_CATEGORY[genre.id]).find(Boolean) ?? ''
 }
 
+export async function getTmdbTrailer(
+  id: number,
+  type: MovieType,
+): Promise<string | undefined> {
+  if (!API_KEY) return undefined
+
+  const mediaPath = type === 'serie' ? 'tv' : 'movie'
+
+  try {
+    const response = await fetch(
+      `${API_BASE}/${mediaPath}/${id}/videos?api_key=${API_KEY}&language=es-ES`,
+    )
+    if (!response.ok) return undefined
+
+    const data = (await response.json()) as { results?: TmdbVideo[] }
+    const videos = (data.results ?? []).filter(
+      (video) => video.site === 'YouTube' && Boolean(video.key),
+    )
+
+    const trailer =
+      videos.find((video) => video.type === 'Trailer' && video.official) ??
+      videos.find((video) => video.type === 'Trailer') ??
+      videos.find((video) => video.type === 'Teaser') ??
+      videos.find((video) => video.type === 'Clip')
+
+    return trailer?.key
+  } catch {
+    return undefined
+  }
+}
+
 export async function getTmdbDetails(result: TmdbResult): Promise<TmdbPicked> {
   const type: MovieType = result.media_type === 'tv' ? 'serie' : 'pelicula'
   const detailsPath = type === 'serie' ? 'tv' : 'movie'
@@ -104,6 +143,7 @@ export async function getTmdbDetails(result: TmdbResult): Promise<TmdbPicked> {
   const backdropPath = details.backdrop_path ?? result.backdrop_path
   const rating = details.vote_average
   const releaseYear = firstYear(details.release_date ?? details.first_air_date)
+  const trailerKey = await getTmdbTrailer(result.id, type)
 
   return {
     tmdbId: result.id,
@@ -118,5 +158,6 @@ export async function getTmdbDetails(result: TmdbResult): Promise<TmdbPicked> {
     rating: rating && rating > 0 ? Math.round(rating * 10) / 10 : undefined,
     posterUrl: posterPath ? `${TMDB_IMAGE_BASE}/w500${posterPath}` : undefined,
     bannerUrl: backdropPath ? `${TMDB_IMAGE_BASE}/w780${backdropPath}` : undefined,
+    trailerKey,
   }
 }

@@ -1,6 +1,7 @@
 import type { Movie } from '../../types/movie'
 import { formatTitleMeta } from '../../utils/movieMeta'
 import MyListButton from '../my-list/MyListButton'
+import TrailerOverlay from './TrailerOverlay'
 import './MovieCard.css'
 
 type MovieCardProps = {
@@ -37,6 +38,8 @@ export default function MovieCard({ movie }: MovieCardProps) {
           <span className="movie-card__category">{movie.category}</span>
           {meta && <span className="movie-card__meta">{meta}</span>}
         </div>
+
+        <TrailerOverlay movie={movie} />
       </div>
     </article>
   )
