@@ -61,7 +61,7 @@ return (
            <SearchBar />
 
             <div className="navbar-session">
-              {!loggedUser && (
+              {(!loggedUser || isSubscriber) && (
                 <Button
                   className="navbar-subscribe-button flex-grow-1 flex-xl-grow-0"
                   onClick={() => navigate('/suscripcion')}
@@ -88,7 +88,7 @@ return (
                   <div className="navbar-user-text">
                     <span className="navbar-user-name">Hola, {loggedUser.name}</span>
                     <span className="navbar-user-plan">
-                      {userPlan ? `Plan ${userPlan.name}` : roleLabels[loggedUser.role]}
+                    {userPlan ? `Plan ${userPlan.name}` : isSubscriber ? 'Sin plan' : roleLabels[loggedUser.role]}
                     </span>
                   </div>
                   {isSubscriber && (

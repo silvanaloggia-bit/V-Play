@@ -25,5 +25,7 @@ export const userSeed: User[] = [
     password: 'Diego12345',
     role: 'subscriber',
     planId: 'estandar',
+    isActive: true,
+    planEndDate: '2026-12-25',
   },
 ]
