@@ -55,7 +55,7 @@ export function useCategories() {
     return null
   }
 
-  function createCategory(name: string, icon?: string): CategoryResult {
+  function createCategory(name: string): CategoryResult {
     const error = validate(name)
     if (error) {
       return { ok: false, error }
@@ -65,18 +65,13 @@ export function useCategories() {
     const category: Category = {
       id: buildId(trimmed, categories),
       name: trimmed,
-      icon: icon || undefined,
     }
     persist([...categories, category])
     return { ok: true, category }
   }
 
   // El id nunca cambia: las películas guardan el nombre, no el id.
-  function updateCategory(
-    id: string,
-    name: string,
-    icon?: string,
-  ): CategoryResult {
+  function updateCategory(id: string, name: string): CategoryResult {
     const current = categories.find((category) => category.id === id)
     if (!current) {
       return { ok: false, error: 'No se encontró la categoría.' }
@@ -88,7 +83,7 @@ export function useCategories() {
     }
 
     const trimmed = name.trim()
-    const updated: Category = { ...current, name: trimmed, icon: icon || undefined }
+    const updated: Category = { ...current, name: trimmed }
     persist(categories.map((category) => (category.id === id ? updated : category)))
     return { ok: true, category: updated }
   }
@@ -97,5 +92,24 @@ export function useCategories() {
     persist(categories.filter((category) => category.id !== id))
   }
 
-  return { categories, createCategory, updateCategory, deleteCategory }
+  // El orden del array es el orden en que el Home muestra las categorías.
+  function moveCategory(id: string, direction: 'up' | 'down'): void {
+    const index = categories.findIndex((category) => category.id === id)
+    if (index === -1) return
+
+    const target = direction === 'up' ? index - 1 : index + 1
+    if (target < 0 || target >= categories.length) return
+
+    const next = [...categories]
+    ;[next[index], next[target]] = [next[target], next[index]]
+    persist(next)
+  }
+
+  return {
+    categories,
+    createCategory,
+    updateCategory,
+    deleteCategory,
+    moveCategory,
+  }
 }

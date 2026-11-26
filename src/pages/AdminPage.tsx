@@ -36,8 +36,13 @@ export default function AdminPage() {
   const { movies, nextId, updateMovies } = useMovies()
 
   // Categorías: CRUD propio, persistido en localStorage a través de useCategories
-  const { categories, createCategory, updateCategory, deleteCategory } =
-    useCategories()
+  const {
+    categories,
+    createCategory,
+    updateCategory,
+    deleteCategory,
+    moveCategory,
+  } = useCategories()
 
   // Solo el rol admin puede eliminar títulos
   const { loggedUser } = useAuth()
@@ -181,12 +186,12 @@ export default function AdminPage() {
   }
 
   /** Devuelve un mensaje de error si no se pudo guardar; null si salió bien. */
-  const handleSaveCategory = (name: string, icon: string): string | null => {
+  const handleSaveCategory = (name: string): string | null => {
     const trimmed = name.trim()
 
     if (categoryToEdit) {
       const previousName = categoryToEdit.name
-      const result = updateCategory(categoryToEdit.id, trimmed, icon)
+      const result = updateCategory(categoryToEdit.id, trimmed)
       if (!result.ok) return result.error
 
       // Cascada: los títulos guardan el nombre anterior, no el id.
@@ -200,7 +205,7 @@ export default function AdminPage() {
         )
       }
     } else {
-      const result = createCategory(trimmed, icon)
+      const result = createCategory(trimmed)
       if (!result.ok) return result.error
     }
 
@@ -218,6 +223,10 @@ export default function AdminPage() {
     }
     deleteCategory(categoryToDelete.id)
     setCategoryToDelete(null)
+  }
+
+  const handleMoveCategory = (category: Category, direction: 'up' | 'down') => {
+    moveCategory(category.id, direction)
   }
 
   const handleAddToTop = (movie: Movie) => {
@@ -308,6 +317,7 @@ export default function AdminPage() {
             movies={movies}
             onEdit={handleOpenEditCategory}
             onDelete={setCategoryToDelete}
+            onMove={handleMoveCategory}
           />
         )}
         {activeTab === 'usuarios' && (

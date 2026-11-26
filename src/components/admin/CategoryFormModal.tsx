@@ -9,21 +9,8 @@ interface CategoryFormModalProps {
   category: Category | null
   onClose: () => void
   /** Devuelve un mensaje de error si no se pudo guardar; null si salió bien. */
-  onSave: (name: string, icon: string) => string | null
+  onSave: (name: string) => string | null
 }
-
-const ICON_OPTIONS = [
-  { value: '', label: 'Sin icono' },
-  { value: 'bi-lightning-charge', label: 'Rayo' },
-  { value: 'bi-emoji-smile', label: 'Sonrisa' },
-  { value: 'bi-film', label: 'Película' },
-  { value: 'bi-ghost', label: 'Fantasma' },
-  { value: 'bi-rocket-takeoff', label: 'Cohete' },
-  { value: 'bi-star', label: 'Estrella' },
-  { value: 'bi-trophy', label: 'Trofeo' },
-  { value: 'bi-heart', label: 'Corazón' },
-  { value: 'bi-music-note-beamed', label: 'Música' },
-]
 
 export default function CategoryFormModal({
   category,
@@ -31,7 +18,6 @@ export default function CategoryFormModal({
   onSave,
 }: CategoryFormModalProps) {
   const [name, setName] = useState(() => category?.name ?? '')
-  const [icon, setIcon] = useState(() => category?.icon ?? '')
   const [submitted, setSubmitted] = useState(false)
   const [saveError, setSaveError] = useState<string | null>(null)
 
@@ -45,7 +31,7 @@ export default function CategoryFormModal({
 
     if (name.trim() === '') return
 
-    const error = onSave(name, icon)
+    const error = onSave(name)
     if (error) {
       setSaveError(error)
     }
@@ -83,30 +69,6 @@ export default function CategoryFormModal({
                 El nombre es obligatorio.
               </Form.Control.Feedback>
             )}
-          </Form.Group>
-
-          <Form.Group controlId="category-icon" className="mb-3">
-            <Form.Label>Icono</Form.Label>
-            <div className="category-form__icon-row">
-              {icon && (
-                <span className="category-form__icon-preview" aria-hidden="true">
-                  <i className={`bi ${icon}`} />
-                </span>
-              )}
-              <Form.Select
-                value={icon}
-                onChange={(event) => setIcon(event.target.value)}
-              >
-                {ICON_OPTIONS.map((option) => (
-                  <option key={option.value} value={option.value}>
-                    {option.label}
-                  </option>
-                ))}
-              </Form.Select>
-            </div>
-            <Form.Text className="category-form__hint">
-              Opcional. Se muestra junto al nombre en el panel.
-            </Form.Text>
           </Form.Group>
 
           {saveError && (

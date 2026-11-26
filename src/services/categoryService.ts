@@ -3,11 +3,11 @@ import type { Category } from '../types/category'
 import { slugify } from '../utils/slugify'
 
 const seedCategories: Category[] = [
-  { id: slugify('Acción'), name: 'Acción', icon: 'bi-lightning-charge' },
-  { id: slugify('Comedia'), name: 'Comedia', icon: 'bi-emoji-smile' },
-  { id: slugify('Drama'), name: 'Drama', icon: 'bi-film' },
-  { id: slugify('Terror'), name: 'Terror', icon: 'bi-ghost' },
-  { id: slugify('Ciencia ficción'), name: 'Ciencia ficción', icon: 'bi-rocket-takeoff' },
+  { id: slugify('Acción'), name: 'Acción' },
+  { id: slugify('Comedia'), name: 'Comedia' },
+  { id: slugify('Drama'), name: 'Drama' },
+  { id: slugify('Terror'), name: 'Terror' },
+  { id: slugify('Ciencia ficción'), name: 'Ciencia ficción' },
 ]
 
 /** NFD + sin diacríticos + minúsculas + solo alfanuméricos. */
@@ -23,9 +23,7 @@ function isCategory(value: unknown): value is Category {
   if (typeof value !== 'object' || value === null) return false
   const candidate = value as Record<string, unknown>
   return (
-    typeof candidate.id === 'string' &&
-    typeof candidate.name === 'string' &&
-    (candidate.icon === undefined || typeof candidate.icon === 'string')
+    typeof candidate.id === 'string' && typeof candidate.name === 'string'
   )
 }
 

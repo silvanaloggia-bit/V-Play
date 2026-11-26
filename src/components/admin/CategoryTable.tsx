@@ -7,6 +7,7 @@ interface CategoryTableProps {
   movies: Movie[]
   onEdit: (category: Category) => void
   onDelete: (category: Category) => void
+  onMove: (category: Category, direction: 'up' | 'down') => void
 }
 
 export default function CategoryTable({
@@ -14,6 +15,7 @@ export default function CategoryTable({
   movies,
   onEdit,
   onDelete,
+  onMove,
 }: CategoryTableProps) {
   // Las películas guardan el NOMBRE de la categoría, no el id.
   const usage = movies.reduce<Record<string, number>>((counts, movie) => {
@@ -42,7 +44,7 @@ export default function CategoryTable({
               </tr>
             )}
 
-            {categories.map((category) => {
+            {categories.map((category, index) => {
               const count = usage[category.name] ?? 0
               const deleteLabel = `Eliminar ${category.name}`
 
@@ -50,12 +52,6 @@ export default function CategoryTable({
                 <tr key={category.id}>
                   <td>
                     <span className="category-table__name">
-                      {category.icon && (
-                        <i
-                          className={`bi ${category.icon} category-table__icon`}
-                          aria-hidden="true"
-                        />
-                      )}
                       <span>{category.name}</span>
                     </span>
                   </td>
@@ -67,6 +63,26 @@ export default function CategoryTable({
                   </td>
                   <td>
                     <div className="category-table__actions">
+                      <button
+                        type="button"
+                        className="btn btn-sm category-table__action"
+                        aria-label={`Subir ${category.name}`}
+                        title="Subir en el orden del Inicio"
+                        disabled={index === 0}
+                        onClick={() => onMove(category, 'up')}
+                      >
+                        <i className="bi bi-arrow-up" aria-hidden="true" />
+                      </button>
+                      <button
+                        type="button"
+                        className="btn btn-sm category-table__action"
+                        aria-label={`Bajar ${category.name}`}
+                        title="Bajar en el orden del Inicio"
+                        disabled={index === categories.length - 1}
+                        onClick={() => onMove(category, 'down')}
+                      >
+                        <i className="bi bi-arrow-down" aria-hidden="true" />
+                      </button>
                       <button
                         type="button"
                         className="btn btn-sm category-table__action"
