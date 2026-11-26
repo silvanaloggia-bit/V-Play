@@ -7,6 +7,11 @@ export const registerSchema = z
       .trim()
       .min(2, 'Ingresá tu nombre.')
       .max(40, 'El nombre puede tener hasta 40 caracteres.'),
+      lastName: z
+        .string()
+        .trim()
+        .min(2, 'Ingresá tu apellido.')
+        .max(40, 'El apellido puede tener hasta 40 caracteres.'),
     email: z
       .string()
       .trim()
