@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import CategoryFormModal from '../../components/admin/CategoryFormModal'
-import CategoryTable from '../../components/admin/CategoryTable'
+import CategoryFormModal from '../../components/admin/categories/CategoryFormModal'
+import CategoryTable from '../../components/admin/categories/CategoryTable'
 import DeleteMovieModal from '../../components/admin/DeleteMovieModal'
 import { useCategories } from '../../hooks/useCategories'
 import { useMovies } from '../../hooks/useMovies'

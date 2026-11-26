@@ -1,4 +1,4 @@
-import type { Movie, MovieType } from '../../types/movie'
+import type { Movie, MovieType } from '../../../types/movie'
 import './TopsPanel.css'
 
 const TOP_SIZE = 5

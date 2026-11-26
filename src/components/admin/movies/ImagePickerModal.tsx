@@ -1,6 +1,6 @@
 import { useEffect, useState, type FormEvent } from 'react'
 import Modal from 'react-bootstrap/Modal'
-import { useDebouncedText } from '../../hooks/useDebouncedText'
+import { useDebouncedText } from '../../../hooks/useDebouncedText'
 import {
   getTmdbDetails,
   hasTmdbKey,
@@ -8,7 +8,7 @@ import {
   TMDB_IMAGE_BASE,
   type TmdbPicked,
   type TmdbResult,
-} from '../../services/tmdbService'
+} from '../../../services/tmdbService'
 import './ImagePickerModal.css'
 
 interface ImagePickerModalProps {

@@ -1,6 +1,6 @@
 import { useState } from 'react'
-import TopPickerModal from '../../components/admin/TopPickerModal'
-import TopsPanel from '../../components/admin/TopsPanel'
+import TopPickerModal from '../../components/admin/tops/TopPickerModal'
+import TopsPanel from '../../components/admin/tops/TopsPanel'
 import { useMovies } from '../../hooks/useMovies'
 import { TOP_LIMIT, useTops } from '../../hooks/useTops'
 import type { Movie, MovieType } from '../../types/movie'

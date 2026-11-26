@@ -1,5 +1,5 @@
-import type { Category } from '../../types/category'
-import type { Movie } from '../../types/movie'
+import type { Category } from '../../../types/category'
+import type { Movie } from '../../../types/movie'
 import './CategoryTable.css'
 
 interface CategoryTableProps {
