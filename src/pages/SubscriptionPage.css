@@ -181,6 +181,7 @@
 
   .subscription-plans > :last-child {
     grid-column: auto;
+    justify-self: stretch;
     width: auto;
   }
 }
