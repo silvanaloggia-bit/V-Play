@@ -33,7 +33,7 @@ export default function RegisterPage() {
     const newUser: User = {
       id: crypto.randomUUID(),
       name: registerData.name.trim(),
-      lastName: '',
+      lastName: registerData.lastName,
       email,
       password: registerData.password,
       role: 'subscriber',
@@ -77,8 +77,24 @@ export default function RegisterPage() {
               />
               {errors.name && <div className="login-error">{errors.name.message}</div>}
             </div>
-
+            
             <div className="col-md-6 mb-3">
+              <label htmlFor="register-last-name" className="form-label login-label">
+                Apellido
+              </label>
+              <input
+                id="register-last-name"
+                type="text"
+                className="form-control login-input"
+                placeholder="Tu apellido"
+                autoComplete="family-name"
+                maxLength={40}
+                {...register('lastName')}
+              />
+              {errors.lastName && <div className="login-error">{errors.lastName.message}</div>}
+            </div>
+
+            <div className="col-12 mb-3">
               <label htmlFor="register-email" className="form-label login-label">
                 Correo electrónico
               </label>
