@@ -1,8 +1,12 @@
-import { Route, Routes } from 'react-router'
+import { Navigate, Route, Routes } from 'react-router'
 import Footer from './components/Footer'
 import AppNavbar from './components/Navbar'
 import HomePage from './pages/HomePage'
 import AdminPage from './pages/AdminPage'
+import AdminTitlesPage from './pages/admin/AdminTitlesPage'
+import AdminTopsPage from './pages/admin/AdminTopsPage'
+import AdminCategoriesPage from './pages/admin/AdminCategoriesPage'
+import AdminUsersPage from './pages/admin/AdminUsersPage'
 import LoginPage from './pages/LoginPage'
 import RegisterPage from './pages/RegisterPage'
 import NotFoundPage from './pages/NotFoundPage'
@@ -21,7 +25,13 @@ export default function App() {
         <Route path="/suscripcion" element={<SubscriptionPage />} />
         <Route path="/acerca-de-nosotros" element={<AboutPage />} />
         <Route element={<ProtectedRoute allowedRoles={['admin', 'editor']} />}>
-          <Route path="/admin" element={<AdminPage />} />
+          <Route path="/admin" element={<AdminPage />}>
+            <Route index element={<Navigate to="titulos" replace />} />
+            <Route path="titulos" element={<AdminTitlesPage />} />
+            <Route path="tops" element={<AdminTopsPage />} />
+            <Route path="categorias" element={<AdminCategoriesPage />} />
+            <Route path="usuarios" element={<AdminUsersPage />} />
+          </Route>
         </Route>
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
