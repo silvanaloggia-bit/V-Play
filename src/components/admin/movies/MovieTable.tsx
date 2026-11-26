@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import Dropdown from 'react-bootstrap/Dropdown'
-import { useCategories } from '../../hooks/useCategories'
-import type { Category, Movie } from '../../types/movie'
-import { formatTitleMeta } from '../../utils/movieMeta'
-import { matchesQuery } from '../../utils/search'
+import { useCategories } from '../../../hooks/useCategories'
+import type { Category, Movie } from '../../../types/movie'
+import { formatTitleMeta } from '../../../utils/movieMeta'
+import { matchesQuery } from '../../../utils/search'
 import './MovieTable.css'
 
 type CategoryFilter = Category | 'todas'
