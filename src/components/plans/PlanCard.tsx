@@ -46,7 +46,7 @@ export default function PlanCard({ plan, isSelected, onSelectPlan }: PlanCardPro
       </ul>
 
       <button type="button" className={buttonClassName} onClick={() => onSelectPlan(plan.id)}>
-        {isSelected ? 'Plan elegido' : 'Elegir plan'}
+        {isSelected ? 'Tu plan actual' : 'Elegir plan'}
       </button>
     </article>
   )
