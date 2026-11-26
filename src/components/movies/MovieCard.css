@@ -90,6 +90,7 @@
   color: var(--color-text-secondary);
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 4;
+  line-clamp: 4;
 }
 
 .movie-card__category {
