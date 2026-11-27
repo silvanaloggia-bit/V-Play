@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import type { Movie } from '../../types/movie'
 import { slugify } from '../../utils/slugify'
+import MoviePreview from './MoviePreview'
 import MovieCard from './MovieCard'
 import './CategoryRow.css'
 
@@ -9,9 +10,16 @@ type CategoryRowProps = {
   movies: Movie[]
 }
 
+type HoveredMovie = {
+  movie: Movie
+  left: number
+}
+
 export default function CategoryRow({ title, movies }: CategoryRowProps) {
   const scrollerRef = useRef<HTMLDivElement>(null)
+  const sectionRef = useRef<HTMLElement>(null)
   const [canScroll, setCanScroll] = useState({ left: false, right: false })
+  const [hovered, setHovered] = useState<HoveredMovie | null>(null)
 
   const updateScrollState = useCallback(() => {
     const scroller = scrollerRef.current
@@ -30,7 +38,24 @@ export default function CategoryRow({ title, movies }: CategoryRowProps) {
     return () => window.removeEventListener('resize', updateScrollState)
   }, [updateScrollState, movies.length])
 
-  const scrollByPage = (direction: 1 | -1) => {
+  if (movies.length === 0) return null
+
+  function showPreview(movie: Movie, target: HTMLElement) {
+    const section = sectionRef.current
+    if (!section) return
+
+    const sectionRect = section.getBoundingClientRect()
+    const cardRect = target.getBoundingClientRect()
+    const raw = cardRect.left - sectionRect.left + cardRect.width / 2
+    const half = Math.min(280, sectionRect.width / 2)
+
+    setHovered({
+      movie,
+      left: Math.min(Math.max(raw, half), sectionRect.width - half),
+    })
+  }
+
+  function scrollByPage(direction: 1 | -1) {
     const scroller = scrollerRef.current
     if (!scroller) return
 
@@ -40,13 +65,15 @@ export default function CategoryRow({ title, movies }: CategoryRowProps) {
     })
   }
 
-  if (movies.length === 0) return null
+  const id = `categoria-${slugify(title)}`
 
   return (
     <section
-      id={`categoria-${slugify(title)}`}
+      ref={sectionRef}
+      id={id}
       className="category-row"
       aria-labelledby={`categoria-${slugify(title)}-titulo`}
+      onMouseLeave={() => setHovered(null)}
     >
       <header className="category-row__header">
         <div>
@@ -85,15 +112,33 @@ export default function CategoryRow({ title, movies }: CategoryRowProps) {
 
       <div
         ref={scrollerRef}
-        className="category-row__viewport"
+        className={`category-row__viewport ${hovered ? 'category-row__viewport--preview' : ''}`}
         onScroll={updateScrollState}
       >
         <div className="category-row__track">
           {movies.map((movie) => (
-            <MovieCard key={movie.id} movie={movie} />
+            <div
+              key={movie.id}
+              className="category-row__card-wrap"
+              onMouseEnter={(event) => showPreview(movie, event.currentTarget)}
+              onFocus={(event) => showPreview(movie, event.currentTarget)}
+            >
+              <MovieCard movie={movie} />
+            </div>
           ))}
         </div>
       </div>
+
+      {hovered && (
+        <div
+          className="category-row__preview"
+          style={{ left: hovered.left }}
+          role="group"
+          aria-label={`Vista previa de ${hovered.movie.name}`}
+        >
+          <MoviePreview movie={hovered.movie} />
+        </div>
+      )}
     </section>
   )
 }
