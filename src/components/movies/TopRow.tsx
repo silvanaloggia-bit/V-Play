@@ -31,7 +31,7 @@ export default function TopRow({ title, movies }: TopRowProps) {
           return (
             <li
               key={movie.id}
-              className="top-row__item"
+              className={`top-row__item ${index === 0 ? 'top-row__item--first' : ''}`}
               tabIndex={0}
               aria-label={`${index + 1}. ${movie.name}${meta ? `. ${meta}` : ''}`}
             >
