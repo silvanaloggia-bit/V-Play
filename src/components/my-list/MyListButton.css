@@ -2,7 +2,7 @@
   position: absolute;
   top: 8px;
   right: 8px;
-  z-index: 2;
+  z-index: 5;
   display: grid;
   place-items: center;
   width: 32px;
@@ -12,6 +12,7 @@
   border-radius: var(--radius-pill);
   background: color-mix(in srgb, var(--color-bg) 80%, transparent);
   color: var(--color-text);
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--color-bg) 70%, transparent);
   font-size: 1rem;
   transition: background 0.2s ease, color 0.2s ease;
 }

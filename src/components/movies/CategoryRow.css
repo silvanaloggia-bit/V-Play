@@ -1,6 +1,7 @@
 .category-row {
   --movie-card-width: clamp(140px, 15vw, 190px);
 
+  position: relative;
   margin-bottom: var(--space-section);
   scroll-margin-top: 96px;
 }
@@ -74,14 +75,64 @@
   scroll-snap-align: start;
 }
 
+.category-row__card-wrap {
+  display: flex;
+}
+
+.category-row__viewport--preview .trailer-overlay {
+  display: none;
+}
+
+.category-row__preview {
+  position: absolute;
+  bottom: 24px;
+  z-index: 20;
+  width: min(560px, 92vw);
+  min-height: 280px;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-md);
+  background: var(--color-surface);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.7);
+  transform: translateX(-50%);
+  transform-origin: bottom center;
+  animation: category-preview-in 0.35s cubic-bezier(0.22, 1, 0.36, 1) 0.12s both;
+}
+
+@keyframes category-preview-in {
+  from {
+    opacity: 0;
+    transform: translateX(-50%) translateY(14px) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+}
+
+@media (hover: hover) {
+  .category-row__card-wrap:hover .movie-card__poster {
+    border-color: var(--color-accent);
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--color-accent) 40%, transparent);
+  }
+}
+
 @media (max-width: 767px) {
   .category-row__controls {
     display: none;
+  }
+
+  .category-row__preview {
+    width: 94vw;
+    min-height: 240px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .category-row__viewport {
     scroll-behavior: auto;
+  }
+
+  .category-row__preview {
+    animation: none;
   }
 }
