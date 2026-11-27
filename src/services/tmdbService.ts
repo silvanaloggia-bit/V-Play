@@ -119,7 +119,7 @@ export async function getTmdbTrailer(
 
   try {
     const response = await fetch(
-      `${API_BASE}/${mediaPath}/${id}/videos?api_key=${API_KEY}&language=es-ES`,
+      `${API_BASE}/${mediaPath}/${id}/videos?api_key=${API_KEY}&language=es-ES&include_video_language=es,en`,
     )
     if (!response.ok) return undefined
 

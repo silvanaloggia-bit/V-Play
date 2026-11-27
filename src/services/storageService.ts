@@ -8,7 +8,7 @@ import { getTmdbTrailer } from './tmdbService'
 const SEED_VERSION_KEY = 'seedVersion'
 const SEED_VERSION = 2
 const TRAILER_VERSION_KEY = 'trailerVersion'
-const TRAILER_VERSION = 1
+const TRAILER_VERSION = 2
 export const MOVIES_UPDATED_EVENT = 'vplay:movies-updated'
 
 function mergeMissingSeeds(saved: Movie[], seeds: Movie[]): Movie[] {
