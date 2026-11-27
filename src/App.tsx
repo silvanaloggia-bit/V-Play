@@ -15,6 +15,8 @@ import ProtectedRoute from './routes/ProtectedRoute'
 import SubscriptionPage from './pages/SubscriptionPage'
 import AboutPage from './pages/AboutPage'
 import MyListPage from './pages/MyListPage'
+import ContactPage from './pages/ContactPage'
+
 
 export default function App() {
   return (
@@ -28,6 +30,7 @@ export default function App() {
         <Route path="/suscripcion" element={<SubscriptionPage />} />
         <Route path="/acerca-de-nosotros" element={<AboutPage />} />
         <Route path="/mi-lista" element={<MyListPage />} />
+        <Route path="/contacto" element={<ContactPage />} />
         <Route element={<ProtectedRoute allowedRoles={['admin', 'editor']} />}>
           <Route path="/admin" element={<AdminPage />}>
             <Route index element={<Navigate to="titulos" replace />} />
