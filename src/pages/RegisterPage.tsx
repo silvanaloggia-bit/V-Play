@@ -154,7 +154,10 @@ export default function RegisterPage() {
                 {...register('acceptTerms')}
               />
               <label htmlFor="register-accept-terms" className="form-check-label register-terms">
-                Acepto los <span className="register-terms-link">términos y condiciones</span>
+                Acepto los{' '}
+                <Link to="/terminos" target="_blank" rel="noreferrer" className="register-terms-link">
+                  términos y condiciones
+                </Link>
               </label>
             </div>
             {errors.acceptTerms && <div className="login-error">{errors.acceptTerms.message}</div>}
