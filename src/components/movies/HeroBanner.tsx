@@ -2,6 +2,7 @@ import { useState } from 'react'
 import Carousel from 'react-bootstrap/Carousel'
 import { useMovies } from '../../hooks/useMovies'
 import { formatTitleMeta } from '../../utils/movieMeta'
+import { slugify } from '../../utils/slugify'
 import './Hero.css'
 
 const BADGE = 'Destacadas en VPlay'
@@ -37,6 +38,7 @@ export default function HeroBanner() {
       activeIndex={activeIndex}
       onSelect={handleSelect}
       interval={null}
+      controls={slides.length > 1}
     >
       {slides.map((slide) => (
         <Carousel.Item key={slide.id}>
@@ -53,14 +55,14 @@ export default function HeroBanner() {
             </>
           ) : (
             <>
-              <img className="hero-image" src={slide.image} alt={slide.title} />
+              <img className={`hero-image hero-image--${slugify(slide.title)}`} src={slide.image} alt={slide.title} />
               <div className="hero-overlay" />
             </>
           )}
           <Carousel.Caption className="hero-caption">
             <div className="hero-content">
               <span className="hero-badge">{BADGE}</span>
-              <h2 className="hero-title">{slide.title}</h2>
+              <h2 className={`hero-title hero-title--${slugify(slide.title)}`}>{slide.title}</h2>
               {slide.meta && <span className="hero-meta">{slide.meta}</span>}
               <p className="hero-description">{slide.description}</p>
             </div>

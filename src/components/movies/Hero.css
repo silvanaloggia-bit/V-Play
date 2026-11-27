@@ -1,9 +1,10 @@
 .hero-carousel {
+  --hero-arrow-width: 64px;
+  --navbar-height: 75px;
   width: 100%;
-  max-width: var(--container-max);
-  height: min(600px, 70vh);
-  min-height: 420px;
-  margin: 0 auto;
+  height: min(680px, 80vh);
+  min-height: 440px;
+  margin-top: calc((var(--space-page) + var(--navbar-height)) * -1);
 }
 
 .hero-carousel .carousel-inner,
@@ -18,7 +19,10 @@
   object-position: center top;
 }
 
-/* Poster vertical de TMDb sin banner: se usa desenfocado de fondo */
+.hero-image--duna-parte-dos {
+  object-position: center 70%;
+}
+
 .hero-image--poster-bg {
   object-position: center;
   filter: blur(28px) brightness(0.55);
@@ -47,7 +51,8 @@
       color-mix(in srgb, var(--color-bg) 45%, transparent) 100%),
     linear-gradient(0deg,
       var(--color-bg) 0%,
-      color-mix(in srgb, var(--color-bg) 0%, transparent) 40%);
+      color-mix(in srgb, var(--color-bg) 60%, transparent) 15%,
+      color-mix(in srgb, var(--color-bg) 0%, transparent) 45%);
 }
 
 .hero-caption {
@@ -58,7 +63,7 @@
   bottom: 0;
   display: flex;
   align-items: center;
-  padding: 0 6%;
+  padding: 0 calc(var(--hero-arrow-width) + 2%);
   text-align: left;
   z-index: 2;
   pointer-events: none;
@@ -72,6 +77,7 @@
 .hero-carousel .carousel-control-prev,
 .hero-carousel .carousel-control-next {
   z-index: 3;
+  width: var(--hero-arrow-width);
 }
 
 .hero-carousel .carousel-control-prev-icon,
@@ -93,6 +99,58 @@
   margin: 8px 0 16px;
 }
 
+.hero-title--gladiador-ii {
+  font-family: 'Cinzel', serif;
+  font-weight: 800;
+  font-size: clamp(2.25rem, 5.5vw, 4.75rem);
+  color: #e9c46a;
+  text-shadow: 0 4px 24px color-mix(in srgb, #e9c46a 35%, transparent);
+}
+
+.hero-title--pecadores {
+  font-family: 'Rye', serif;
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  color: #e63946;
+  text-shadow: 0 4px 24px color-mix(in srgb, #e63946 40%, transparent);
+}
+
+.hero-title--duna-parte-dos {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 700;
+  font-size: clamp(2rem, 5vw, 4.25rem);
+  letter-spacing: 0.12em;
+  color: #f4a261;
+  text-shadow: 0 4px 24px color-mix(in srgb, #f4a261 35%, transparent);
+}
+
+.hero-title--stranger-things {
+  font-family: 'Libre Baskerville', serif;
+  font-weight: 700;
+  font-size: clamp(2.25rem, 5.5vw, 4.5rem);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #ff3b3b;
+  text-shadow:
+    0 0 8px color-mix(in srgb, #ff3b3b 80%, transparent),
+    0 0 28px color-mix(in srgb, #ff3b3b 50%, transparent);
+}
+
+.hero-title--superman {
+  font-family: 'Anton', sans-serif;
+  font-size: clamp(2.75rem, 6.5vw, 5.5rem);
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  color: #4d8dff;
+  text-shadow: 3px 3px 0 #e63946;
+}
+
+.hero-title--the-last-of-us {
+  font-family: 'Special Elite', serif;
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  color: #d9c7a0;
+  text-shadow: 0 4px 20px color-mix(in srgb, #000000 70%, transparent);
+}
+
 .hero-meta {
   display: block;
   margin: -6px 0 14px;
@@ -108,9 +166,14 @@
   margin-bottom: 28px;
 }
 
-/* La posición del carrusel (indicadores) queda oculta */
 .hero-carousel .carousel-indicators {
   display: none;
+}
+
+@media (min-width: 1200px) {
+  .hero-carousel {
+    --navbar-height: 87px;
+  }
 }
 
 @media (max-width: 767px) {
