@@ -25,14 +25,20 @@
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--color-text-secondary);
+  white-space: nowrap;
   transition: color 0.2s;
 }
 
 .main-navbar .navbar-nav .navbar-top-link {
   font-family: 'Fredoka', sans-serif;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   text-transform: none;
   letter-spacing: 0.02em;
+}
+
+.main-navbar--over-hero .navbar-nav .nav-link {
+  color: var(--color-text-base);
+  text-shadow: 0 1px 6px color-mix(in srgb, var(--color-bg) 80%, transparent);
 }
 
 
@@ -79,13 +85,23 @@
 }
 @media (min-width: 1200px) {
   .navbar-search-input {
-    width: 220px;
+    width: 120px;
   }
   .navbar-logo {
     height: 52px;
   }
 }
+@media (min-width: 1300px) {
+  .navbar-search-input {
+    width: 170px;
+  }
+}
 @media (min-width: 1400px) {
+  .navbar-search-input {
+    width: 260px;
+  }
+}
+@media (min-width: 1600px) {
   .navbar-search-input {
     width: 380px;
   }
