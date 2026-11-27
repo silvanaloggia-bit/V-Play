@@ -16,6 +16,7 @@ import SubscriptionPage from './pages/SubscriptionPage'
 import AboutPage from './pages/AboutPage'
 import MyListPage from './pages/MyListPage'
 import TermsPage from './pages/TermsPage'
+import FaqPage from './pages/FaqPage'
 import ContactPage from './pages/ContactPage'
 
 
@@ -32,6 +33,7 @@ export default function App() {
         <Route path="/acerca-de-nosotros" element={<AboutPage />} />
         <Route path="/mi-lista" element={<MyListPage />} />
         <Route path="/terminos" element={<TermsPage />} />
+        <Route path="/preguntas-frecuentes" element={<FaqPage />} />
         <Route path="/contacto" element={<ContactPage />} />
         <Route element={<ProtectedRoute allowedRoles={['admin', 'editor']} />}>
           <Route path="/admin" element={<AdminPage />}>
