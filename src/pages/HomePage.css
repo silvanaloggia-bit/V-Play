@@ -4,7 +4,15 @@
 }
 
 .home-page__rows {
-  margin-top: var(--space-section);
+  position: relative;
+  z-index: 2;
+  margin-top: var(--space-md);
+}
+
+@media (min-width: 768px) {
+  .home-page__rows {
+    margin-top: calc(var(--space-lg) * -1);
+  }
 }
 
 .home-page__empty {
