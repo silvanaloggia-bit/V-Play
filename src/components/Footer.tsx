@@ -18,7 +18,7 @@ const footerLinks: FooterLink[] = [
 { label: 'Contacto', path: '/contacto' },
 { label: 'Preguntas frecuentes', path: '/preguntas-frecuentes' },
 { label: 'Términos de uso', path: '/terminos' },
-{ label: 'Privacidad', path: '/privacidad' },
+{ label: 'Privacidad', path: '/terminos#terminos-privacidad' },
 ]
 const socialNetworks: SocialNetwork[] = [
 { name: 'Instagram', icon: 'bi-instagram', path: '/instagram' },
