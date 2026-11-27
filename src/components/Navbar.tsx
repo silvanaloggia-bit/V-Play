@@ -1,9 +1,10 @@
+import { useEffect, useState } from 'react'
 import Button from 'react-bootstrap/Button'
 import Container from 'react-bootstrap/Container'
 import Nav from 'react-bootstrap/Nav'
 import Navbar from 'react-bootstrap/Navbar'
 import NavDropdown from 'react-bootstrap/NavDropdown'
-import { Link, useNavigate } from 'react-router'
+import { Link, useLocation, useNavigate } from 'react-router'
 import { plans } from '../data/initialData'
 import { useAuth } from '../hooks/useAuth'
 import { useCategories } from '../hooks/useCategories'
@@ -11,6 +12,7 @@ import { slugify } from '../utils/slugify'
 import SearchBar from './movies/SearchBar'
 import vplayLogo from '../assets/images/logo/vplay-logo-navbar.svg'
 import './Navbar.css'
+const SCROLL_TO_DARKEN_NAVBAR = 40
 const roleLabels = {
 admin: 'Administrador',
 editor: 'Editor',
@@ -23,12 +25,25 @@ const { categories } = useCategories()
 const isStaff = loggedUser?.role === 'admin' || loggedUser?.role === 'editor'
 const isSubscriber = loggedUser?.role === 'subscriber'
 const userPlan = plans.find((plan) => plan.id === loggedUser?.planId)
+const { pathname } = useLocation()
+const [isPageScrolled, setIsPageScrolled] = useState(window.scrollY > SCROLL_TO_DARKEN_NAVBAR)
+const isOverHero = pathname === '/' && !isPageScrolled
+
+useEffect(() => {
+  function handlePageScroll(): void {
+    setIsPageScrolled(window.scrollY > SCROLL_TO_DARKEN_NAVBAR)
+  }
+
+  window.addEventListener('scroll', handlePageScroll)
+  return () => window.removeEventListener('scroll', handlePageScroll)
+}, [])
+
 function handleLogout(): void {
 logout()
 navigate('/')
 }
 return (
-<Navbar expand="xl" sticky="top" className="main-navbar">
+<Navbar expand="xl" sticky="top" className={isOverHero ? 'main-navbar main-navbar--over-hero' : 'main-navbar'}>
 <Container fluid>
 <Navbar.Brand as={Link} to="/">
 <img src={vplayLogo} alt="VPLAY" className="navbar-logo" />
