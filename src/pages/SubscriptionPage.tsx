@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router'
 import PaymentModal from '../components/plans/PaymentModal'
 import PlanCard from '../components/plans/PlanCard'
+import VplayIntro from '../components/plans/VplayIntro'
 import { posters } from '../assets/importMovies'
 import { plans } from '../data/initialData'
 import { useAuth } from '../hooks/useAuth'
@@ -22,6 +23,7 @@ export default function SubscriptionPage() {
   const { loggedUser } = useAuth()
   const navigate = useNavigate()
   const [planToPayId, setPlanToPayId] = useState('')
+  const [isIntroVisible, setIsIntroVisible] = useState(false)
   const isSubscriber = loggedUser?.role === 'subscriber'
   const currentPlan = plans.find((plan) => plan.id === loggedUser?.planId)
   const planToPay = plans.find((plan) => plan.id === planToPayId)
@@ -53,6 +55,11 @@ export default function SubscriptionPage() {
     })
 
     navigate('/suscripcion', { replace: true })
+  }
+
+  function handleStartWatching(): void {
+    setPlanToPayId('')
+    setIsIntroVisible(true)
   }
 
   return (
@@ -130,9 +137,11 @@ export default function SubscriptionPage() {
           cardHolderName={`${loggedUser.name} ${loggedUser.lastName}`.trim()}
           onClose={() => setPlanToPayId('')}
           onPaymentApproved={handlePaymentApproved}
-          onStartWatching={() => navigate('/')}
+          onStartWatching={handleStartWatching}
         />
       )}
+
+      {isIntroVisible && <VplayIntro />}
     </main>
   )
 }

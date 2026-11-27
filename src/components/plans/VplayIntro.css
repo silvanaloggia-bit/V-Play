@@ -1,0 +1,44 @@
+.vplay-intro {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  padding: 0;
+  border: none;
+  background: black;
+  cursor: pointer;
+}
+
+.vplay-intro__logo {
+  width: min(60vw, 420px);
+  height: auto;
+  animation: vplay-intro-logo 2.5s ease both;
+}
+
+@keyframes vplay-intro-logo {
+  0% {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+  25% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  70% {
+    opacity: 1;
+    transform: scale(1.08);
+    filter: drop-shadow(0 0 24px color-mix(in srgb, var(--color-accent) 60%, transparent));
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.6);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vplay-intro__logo {
+    animation: none;
+  }
+}
