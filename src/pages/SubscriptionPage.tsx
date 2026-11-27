@@ -35,7 +35,7 @@ export default function SubscriptionPage() {
       return
     }
 
-    if (!isSubscriber) {
+    if (!isSubscriber || currentPlan) {
       return
     }
 
@@ -75,9 +75,16 @@ export default function SubscriptionPage() {
           <h1 className="subscription-title">
             Elegí tu <span className="subscription-title-accent">plan</span>
           </h1>
-          <p className="subscription-subtitle">
-            Cambiá o cancelá cuando quieras.
-          </p>
+          {isSubscriber && currentPlan ? (
+            <Link to="/contacto" className="subscription-contact-button">
+              Cambiá o cancelá cuando quieras
+              <i className="bi bi-arrow-right" aria-hidden="true"></i>
+            </Link>
+          ) : (
+            <p className="subscription-subtitle">
+              Cambiá o cancelá cuando quieras.
+            </p>
+          )}
 
           {!loggedUser && (
             <p className="subscription-status">
@@ -113,6 +120,7 @@ export default function SubscriptionPage() {
               key={plan.id}
               plan={plan}
               isSelected={plan.id === loggedUser?.planId}
+              isLocked={isSubscriber && currentPlan !== undefined && plan.id !== currentPlan.id}
               onSelectPlan={handleSelectPlan}
             />
           ))}
