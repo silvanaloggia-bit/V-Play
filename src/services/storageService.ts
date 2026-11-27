@@ -6,9 +6,9 @@ import { movieService } from './movieService'
 import { getTmdbTrailer } from './tmdbService'
 
 const SEED_VERSION_KEY = 'seedVersion'
-const SEED_VERSION = 2
+const SEED_VERSION = 3
 const TRAILER_VERSION_KEY = 'trailerVersion'
-const TRAILER_VERSION = 2
+const TRAILER_VERSION = 3
 export const MOVIES_UPDATED_EVENT = 'vplay:movies-updated'
 
 function mergeMissingSeeds(saved: Movie[], seeds: Movie[]): Movie[] {
@@ -26,6 +26,20 @@ function backfillType(saved: Movie[], seeds: Movie[]): Movie[] {
     if (!seed?.type || movie.type) return movie
     changed = true
     return { ...movie, type: seed.type }
+  })
+
+  return changed ? result : saved
+}
+
+function backfillTmdbId(saved: Movie[], seeds: Movie[]): Movie[] {
+  const seedById = new Map(seeds.map((seed) => [seed.id, seed]))
+  let changed = false
+
+  const result = saved.map((movie) => {
+    const seed = seedById.get(movie.id)
+    if (!seed?.tmdbId || movie.tmdbId) return movie
+    changed = true
+    return { ...movie, tmdbId: seed.tmdbId }
   })
 
   return changed ? result : saved
@@ -56,8 +70,9 @@ export const storageService = {
     if (savedRaw === null || version < SEED_VERSION) {
       const saved = savedRaw ? movieService.getMovies() : []
       const merged = backfillType(mergeMissingSeeds(saved, initialData), initialData)
+      const withIds = backfillTmdbId(merged, initialData)
 
-      movieService.saveMovies(merged)
+      movieService.saveMovies(withIds)
       localStorage.setItem(SEED_VERSION_KEY, String(SEED_VERSION))
     }
 
