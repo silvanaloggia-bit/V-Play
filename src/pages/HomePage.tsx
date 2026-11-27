@@ -1,7 +1,8 @@
-import { useSearchParams } from 'react-router'
+import { Link, useSearchParams } from 'react-router'
 import CategoryRow from '../components/movies/CategoryRow'
 import HeroBanner from '../components/movies/HeroBanner'
 import MovieCard from '../components/movies/MovieCard'
+import SearchFeaturedResult from '../components/movies/SearchFeaturedResult'
 import TopRow from '../components/movies/TopRow'
 import { useCategories } from '../hooks/useCategories'
 import { useDebouncedText } from '../hooks/useDebouncedText'
@@ -10,6 +11,7 @@ import { useTops } from '../hooks/useTops'
 import './HomePage.css'
 
 const SEARCH_DELAY_IN_MILLISECONDS = 400
+const SUGGESTION_COUNT = 6
 
 function normalizeText(text: string): string {
   return text
@@ -32,6 +34,8 @@ export default function HomePage() {
   const searchResults = publishedMovies.filter((movie) =>
     normalizeText(movie.name).includes(normalizedSearchText),
   )
+  const [featuredResult, ...otherResults] = searchResults
+  const suggestedMovies = publishedMovies.slice(0, SUGGESTION_COUNT)
 
   // Solo se muestran filas con títulos publicados.
   const rows = categories
@@ -53,17 +57,39 @@ export default function HomePage() {
             Resultados para <span>"{debouncedSearchText.trim()}"</span>
           </h2>
 
-          {searchResults.length === 0 ? (
-            <p className="home-page__empty">
-              <i className="bi bi-search" aria-hidden="true" />
-              No encontramos títulos con ese nombre. Probá con otra palabra.
-            </p>
+          {featuredResult ? (
+            <>
+              <SearchFeaturedResult key={featuredResult.id} movie={featuredResult} />
+
+              {otherResults.length > 0 && (
+                <>
+                  <h3 className="home-page__more-title">Más resultados</h3>
+                  <div className="home-page__search-results">
+                    {otherResults.map((movie) => (
+                      <MovieCard key={movie.id} movie={movie} />
+                    ))}
+                  </div>
+                </>
+              )}
+            </>
           ) : (
-            <div className="home-page__search-results">
-              {searchResults.map((movie) => (
-                <MovieCard key={movie.id} movie={movie} />
-              ))}
-            </div>
+            <>
+              <div className="home-page__empty home-page__empty--search">
+                <i className="bi bi-search" aria-hidden="true" />
+                <span>No encontramos títulos con ese nombre. Probá con otra palabra.</span>
+                <Link to="/" className="home-page__back-button">
+                  <i className="bi bi-house-door-fill" aria-hidden="true" />
+                  Volver al inicio
+                </Link>
+              </div>
+
+              <h3 className="home-page__more-title">Te puede interesar</h3>
+              <div className="home-page__search-results">
+                {suggestedMovies.map((movie) => (
+                  <MovieCard key={movie.id} movie={movie} />
+                ))}
+              </div>
+            </>
           )}
         </section>
       ) : (
