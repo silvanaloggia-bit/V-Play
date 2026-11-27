@@ -5,16 +5,22 @@
   flex-direction: column;
   height: 100%;
   padding: var(--space-md);
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-xl);
-  transition: transform 0.25s ease, border-color 0.25s ease;
+  background: black;
+  border-top: 8px dotted var(--color-border-strong);
+  border-bottom: 8px dotted var(--color-border-strong);
+  border-radius: var(--radius-sm);
+  transform: rotate(-1deg);
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.plan-card:nth-child(even) {
+  transform: rotate(1deg);
 }
 
 .plan-card::before {
   content: '';
   position: absolute;
-  top: 0;
+  top: 8px;
   left: var(--space-md);
   right: var(--space-md);
   height: 3px;
@@ -31,21 +37,21 @@
 }
 
 .plan-card:hover {
-  transform: translateY(-6px);
+  transform: rotate(0deg) scale(1.03);
   border-color: var(--plan-color);
 }
 
 .plan-card-recommended {
   background: linear-gradient(
     180deg,
-    color-mix(in srgb, var(--color-accent) 14%, var(--color-surface)) 0%,
-    var(--color-surface) 60%
+    color-mix(in srgb, var(--color-accent) 16%, black) 0%,
+    black 65%
   );
 }
 
 .plan-card-selected {
   border-color: var(--plan-color);
-  box-shadow: 0 0 0 1px var(--plan-color);
+  box-shadow: 0 0 0 2px var(--plan-color);
 }
 
 .plan-card-badge {

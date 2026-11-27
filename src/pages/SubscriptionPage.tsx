@@ -69,7 +69,7 @@ export default function SubscriptionPage() {
             Elegí tu <span className="subscription-title-accent">plan</span>
           </h1>
           <p className="subscription-subtitle">
-            Pelis y series sin pausa. Cambiá o cancelá cuando quieras.
+            Cambiá o cancelá cuando quieras.
           </p>
 
           {!loggedUser && (

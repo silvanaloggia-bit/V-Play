@@ -44,10 +44,11 @@
 
 .subscription-title {
   margin: 0;
-  font-family: var(--font-main);
-  font-size: 2.5rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
+  font-family: var(--font-display);
+  font-size: 3.5rem;
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
 .subscription-title-accent {
@@ -62,7 +63,13 @@
 }
 
 .subscription-status {
-  margin: var(--space-sm) 0 0;
+  display: inline-block;
+  margin: var(--space-md) 0 0;
+  padding: 6px 16px;
+  border: 1px solid var(--color-border-strong);
+  border-radius: var(--radius-pill);
+  background: color-mix(in srgb, var(--color-surface) 80%, transparent);
+  font-size: 0.95rem;
   color: var(--color-text-base);
 }
 
@@ -79,7 +86,7 @@
   grid-template-columns: 1fr;
   gap: var(--space-lg);
   max-width: 1120px;
-  margin: calc(var(--space-lg) * -1) auto 0;
+  margin: calc((var(--space-lg) + var(--space-sm)) * -1) auto 0;
 }
 
 .subscription-included {
@@ -129,14 +136,10 @@
     grid-template-columns: repeat(6, 1fr);
   }
 
-  .subscription-title {
-    font-size: 3.25rem;
-  }
-
   .subscription-plans {
     grid-template-columns: repeat(2, 1fr);
     gap: var(--space-md);
-    margin-top: calc(var(--space-xl) * -1);
+    margin-top: calc((var(--space-xl) + var(--space-sm)) * -1);
   }
 
   .subscription-plans > :last-child {
@@ -160,13 +163,14 @@
   }
 
   .subscription-title {
-    font-size: 2.75rem;
+    font-size: 4.5rem;
   }
 
   .subscription-plans {
     grid-template-columns: repeat(3, 1fr);
     gap: var(--space-lg);
     align-items: center;
+    margin-top: calc((var(--space-lg) + var(--space-sm)) * -1);
   }
 
   .subscription-plans > :last-child {
