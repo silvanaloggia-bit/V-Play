@@ -56,7 +56,8 @@ return (
               {categories.map((category) => (
                 <NavDropdown.Item
                   key={category.id}
-                  href={`#categoria-${slugify(category.name)}`}
+                  as={Link}
+                  to={`/#categoria-${slugify(category.name)}`}
                 >
                   {category.name}
                 </NavDropdown.Item>
