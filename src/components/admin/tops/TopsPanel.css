@@ -1,9 +1,9 @@
-/* Panel de Tops (películas y series) */
-
 .tops-panel__header {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
   margin-bottom: 1rem;
 }
 
@@ -39,13 +39,20 @@
   filter: none;
 }
 
-/* --- Tabla del top --- */
 .tops-panel__list-wrapper {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
 }
 
 .tops-panel__table {
+  min-width: 560px;
   --bs-table-bg: var(--color-surface);
   --bs-table-color: var(--color-text-base);
   --bs-table-hover-bg: var(--color-bg-header);
@@ -57,7 +64,6 @@
   width: 64px;
 }
 
-/* Número de puesto (1 a 5) */
 .tops-panel__rank-badge {
   display: inline-flex;
   align-items: center;
@@ -94,7 +100,6 @@
   gap: 0.5rem;
 }
 
-/* Botón de acción: ícono de basura (igual que en el CRUD) */
 .tops-panel__icon-btn {
   width: 36px;
   height: 36px;
@@ -128,7 +133,6 @@
   filter: none;
 }
 
-/* Puestos vacíos del top de series */
 .tops-panel__placeholder-thumb {
   height: 48px;
   width: 84px;
@@ -144,4 +148,26 @@
   margin-top: 1rem;
   color: var(--color-text-muted);
   font-size: 0.85rem;
+}
+
+@media (max-width: 575px) {
+  .tops-panel__list-wrapper {
+    scrollbar-width: none;
+  }
+
+  .tops-panel__list-wrapper::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tops-panel__table {
+    min-width: 520px;
+  }
+
+  .tops-panel__heading {
+    font-size: 1.3rem;
+  }
+
+  .tops-panel__header--spaced {
+    margin-top: 2rem;
+  }
 }
