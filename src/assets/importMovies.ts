@@ -64,9 +64,11 @@ export const posters = {
 import duna2Banner from './images/banners/duna-parte-dos.webp'
 import gladiador2Banner from './images/banners/gladiador-2.webp'
 import pecadoresBanner from './images/banners/pecadores.webp'
+import strangerThingsBanner from './images/banners/stranger-things.webp'
 
 export const banners = {
   duna2: duna2Banner,
   gladiador2: gladiador2Banner,
   pecadores: pecadoresBanner,
+  strangerThings: strangerThingsBanner,
 }
