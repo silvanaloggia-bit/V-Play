@@ -4,5 +4,6 @@ export const storageKey = {
   loggedUser: 'loggedUser',
   tops: 'tops',
   categories: 'categories',
+  contactMessages: 'contactMessages',
 } as const
 
