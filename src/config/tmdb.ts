@@ -1,2 +1,1 @@
-
-export const TMDB_API_KEY = (import.meta.env.VITE_TMDB_API_KEY as string | undefined)?.trim()
+export const TMDB_API_TOKEN = (import.meta.env.VITE_TMDB_API_KEY as string | undefined)?.trim()

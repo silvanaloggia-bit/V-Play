@@ -4,7 +4,7 @@ import { useDebouncedText } from '../../../hooks/useDebouncedText'
 import {
   getTmdbDetails,
   getTmdbErrorMessage,
-  hasTmdbKey,
+  hasTmdbToken,
   searchTmdb,
   TMDB_IMAGE_BASE,
   type TmdbPicked,
@@ -25,14 +25,14 @@ export default function ImagePickerModal({
 }: ImagePickerModalProps) {
   const [query, setQuery] = useState(defaultQuery)
   const [results, setResults] = useState<TmdbResult[]>([])
-  const [loading, setLoading] = useState(Boolean(hasTmdbKey() && defaultQuery.trim()))
+  const [loading, setLoading] = useState(Boolean(hasTmdbToken() && defaultQuery.trim()))
   const [error, setError] = useState('')
   const [searchTick, setSearchTick] = useState(0)
   const debouncedQuery = useDebouncedText(query, 400)
 
   useEffect(() => {
     const term = debouncedQuery.trim()
-    if (!hasTmdbKey() || !term) return
+    if (!hasTmdbToken() || !term) return
 
     let active = true
 
@@ -91,9 +91,9 @@ export default function ImagePickerModal({
       </Modal.Header>
 
       <Modal.Body>
-        {!hasTmdbKey() ? (
+        {!hasTmdbToken() ? (
           <p className="image-picker__message">
-            Falta configurar <code>VITE_TMDB_API_KEY</code> en el archivo{' '}
+            Falta configurar <code>VITE_TMDB_API_KEY</code> con el token de lectura de TMDb en el archivo{' '}
             <code>.env</code>.
           </p>
         ) : (

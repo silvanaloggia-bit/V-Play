@@ -1,7 +1,7 @@
-import { TMDB_API_KEY } from '../config/tmdb'
+import { TMDB_API_TOKEN } from '../config/tmdb'
 import type { MovieType } from '../types/movie'
 
-const API_KEY = TMDB_API_KEY
+const TOKEN = TMDB_API_TOKEN
 const API_BASE = 'https://api.themoviedb.org/3'
 export const TMDB_IMAGE_BASE = 'https://image.tmdb.org/t/p'
 
@@ -49,8 +49,15 @@ const GENRE_TO_CATEGORY: Record<number, string> = {
   9648: 'Terror',
 }
 
-export function hasTmdbKey(): boolean {
-  return Boolean(API_KEY)
+function getHeaders(): HeadersInit {
+  return {
+    Authorization: `Bearer ${TOKEN}`,
+    accept: 'application/json',
+  }
+}
+
+export function hasTmdbToken(): boolean {
+  return Boolean(TOKEN)
 }
 
 export function getTmdbErrorMessage(error: unknown): string {
@@ -58,17 +65,18 @@ export function getTmdbErrorMessage(error: unknown): string {
 }
 
 function describeStatus(status: number): string {
-  if (status === 401) return 'La API key de TMDb no es válida.'
+  if (status === 401) return 'El token de TMDb no es válido.'
   if (status === 429) return 'TMDb limitó las consultas. Probá de nuevo en unos minutos.'
   return `TMDb devolvió el estado ${status} al buscar.`
 }
 
 export async function searchTmdb(term: string): Promise<TmdbResult[]> {
-  if (!API_KEY) return []
+  if (!TOKEN) return []
 
   try {
     const response = await fetch(
-      `${API_BASE}/search/multi?api_key=${API_KEY}&language=es-ES&include_adult=false&query=${encodeURIComponent(term)}`,
+      `${API_BASE}/search/multi?language=es-ES&include_adult=false&query=${encodeURIComponent(term)}`,
+      { headers: getHeaders() },
     )
 
     if (!response.ok) throw new Error(describeStatus(response.status))
@@ -113,13 +121,14 @@ export async function getTmdbTrailer(
   id: number,
   type: MovieType,
 ): Promise<string | undefined> {
-  if (!API_KEY) return undefined
+  if (!TOKEN) return undefined
 
   const mediaPath = type === 'serie' ? 'tv' : 'movie'
 
   try {
     const response = await fetch(
-      `${API_BASE}/${mediaPath}/${id}/videos?api_key=${API_KEY}&language=es-ES&include_video_language=es,en`,
+      `${API_BASE}/${mediaPath}/${id}/videos?language=es-ES&include_video_language=es,en`,
+      { headers: getHeaders() },
     )
     if (!response.ok) return undefined
 
@@ -145,10 +154,11 @@ export async function getTmdbDetails(result: TmdbResult): Promise<TmdbPicked> {
   const detailsPath = type === 'serie' ? 'tv' : 'movie'
 
   let details: TmdbDetails = {}
-  if (API_KEY) {
+  if (TOKEN) {
     try {
       const response = await fetch(
-        `${API_BASE}/${detailsPath}/${result.id}?api_key=${API_KEY}&language=es-ES`,
+        `${API_BASE}/${detailsPath}/${result.id}?language=es-ES`,
+        { headers: getHeaders() },
       )
       if (response.ok) details = (await response.json()) as TmdbDetails
     } catch {
