@@ -4,10 +4,11 @@ import './PlanCard.css'
 interface PlanCardProps {
   plan: Plan
   isSelected: boolean
+  isLocked: boolean
   onSelectPlan: (planId: string) => void
 }
 
-export default function PlanCard({ plan, isSelected, onSelectPlan }: PlanCardProps) {
+export default function PlanCard({ plan, isSelected, isLocked, onSelectPlan }: PlanCardProps) {
   const formattedPrice = plan.price.toLocaleString('es-AR')
 
   let cardClassName = `plan-card plan-card-${plan.id}`
@@ -16,6 +17,9 @@ export default function PlanCard({ plan, isSelected, onSelectPlan }: PlanCardPro
   }
   if (isSelected) {
     cardClassName += ' plan-card-selected'
+  }
+  if (isLocked) {
+    cardClassName += ' plan-card-locked'
   }
 
   let buttonClassName = 'plan-card-button'
@@ -45,7 +49,12 @@ export default function PlanCard({ plan, isSelected, onSelectPlan }: PlanCardPro
         ))}
       </ul>
 
-      <button type="button" className={buttonClassName} onClick={() => onSelectPlan(plan.id)}>
+      <button
+        type="button"
+        className={buttonClassName}
+        disabled={isSelected || isLocked}
+        onClick={() => onSelectPlan(plan.id)}
+      >
         {isSelected ? 'Tu plan actual' : 'Elegir plan'}
       </button>
     </article>
