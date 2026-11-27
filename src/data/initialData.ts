@@ -7,6 +7,7 @@ export const initialData: Movie[] = [
   {
     id: '1',
     name: 'Misión: Imposible - Sentencia final',
+    tmdbId: 575265,
     description: 'Ethan Hunt y su equipo enfrentan su misión más peligrosa contra una inteligencia artificial que amenaza al mundo.',
     category: 'Acción',
     imageUrl: posters.misionImposible,
@@ -16,6 +17,7 @@ export const initialData: Movie[] = [
   {
     id: '2',
     name: 'F1: La película',
+    tmdbId: 911430,
     description: 'Un piloto veterano vuelve a la Fórmula 1 para guiar a un joven talento en un equipo que lucha por sobrevivir.',
     category: 'Acción',
     imageUrl: posters.f1,
@@ -25,6 +27,7 @@ export const initialData: Movie[] = [
   {
     id: '3',
     name: 'Gladiador II',
+    tmdbId: 558449,
     description: 'Años después de la muerte de Máximo, un nuevo guerrero llega al Coliseo para enfrentar a los emperadores de Roma.',
     category: 'Acción',
     imageUrl: posters.gladiador2,
@@ -38,6 +41,7 @@ export const initialData: Movie[] = [
   {
     id: '4',
     name: 'Deadpool & Wolverine',
+    tmdbId: 533535,
     description: 'Deadpool recluta a una versión muy particular de Wolverine para salvar su universo, entre peleas y chistes sin filtro.',
     category: 'Comedia',
     imageUrl: posters.deadpoolWolverine,
@@ -47,6 +51,7 @@ export const initialData: Movie[] = [
   {
     id: '5',
     name: 'Intensa-Mente 2',
+    tmdbId: 1022789,
     description: 'Riley entra en la adolescencia y nuevas emociones, como Ansiedad, llegan a revolucionar el cuartel general.',
     category: 'Comedia',
     imageUrl: posters.intensaMente2,
@@ -56,6 +61,7 @@ export const initialData: Movie[] = [
   {
     id: '6',
     name: 'Una película de Minecraft',
+    tmdbId: 950387,
     description: 'Cuatro inadaptados terminan dentro de un mundo hecho de cubos y deben aprender a construir para volver a casa.',
     category: 'Comedia',
     imageUrl: posters.minecraft,
@@ -65,6 +71,7 @@ export const initialData: Movie[] = [
   {
     id: '7',
     name: 'Cónclave',
+    tmdbId: 974576,
     description: 'Tras la muerte del Papa, un cardenal debe organizar la elección del sucesor mientras descubre secretos ocultos.',
     category: 'Drama',
     imageUrl: posters.conclave,
@@ -74,6 +81,7 @@ export const initialData: Movie[] = [
   {
     id: '8',
     name: 'Anora',
+    tmdbId: 1064213,
     description: 'Una joven de Brooklyn se casa impulsivamente con el hijo de un millonario ruso, y la familia no piensa aceptarlo.',
     category: 'Drama',
     imageUrl: posters.anora,
@@ -83,6 +91,7 @@ export const initialData: Movie[] = [
   {
     id: '9',
     name: 'El brutalista',
+    tmdbId: 549509,
     description: 'Un arquitecto que sobrevivió a la guerra emigra a Estados Unidos e intenta reconstruir su vida y su carrera.',
     category: 'Drama',
     imageUrl: posters.elBrutalista,
@@ -92,6 +101,7 @@ export const initialData: Movie[] = [
   {
     id: '10',
     name: 'Pecadores',
+    tmdbId: 1233413,
     description: 'Dos hermanos vuelven a su pueblo para empezar de nuevo, pero una fuerza oscura los espera.',
     category: 'Terror',
     imageUrl: posters.pecadores,
@@ -105,6 +115,7 @@ export const initialData: Movie[] = [
   {
     id: '11',
     name: 'La sustancia',
+    tmdbId: 933260,
     description: 'Una estrella en decadencia prueba una sustancia que promete una versión mejor de sí misma, con consecuencias terribles.',
     category: 'Terror',
     imageUrl: posters.laSustancia,
@@ -114,6 +125,7 @@ export const initialData: Movie[] = [
   {
     id: '12',
     name: 'La hora de la desaparición',
+    tmdbId: 1078605,
     description: 'Todos los chicos de una misma clase desaparecen la misma noche, y el pueblo busca respuestas.',
     category: 'Terror',
     imageUrl: posters.laHoraDesaparicion,
@@ -123,6 +135,7 @@ export const initialData: Movie[] = [
   {
     id: '13',
     name: 'Duna: Parte Dos',
+    tmdbId: 693134,
     description: 'Paul Atreides se une a los Fremen para vengar a su familia y decidir el futuro del universo.',
     category: 'Ciencia ficción',
     imageUrl: posters.duna2,
@@ -136,6 +149,7 @@ export const initialData: Movie[] = [
   {
     id: '14',
     name: 'Superman',
+    tmdbId: 1061474,
     description: 'Superman intenta equilibrar su herencia kryptoniana con su vida humana, mientras el mundo duda de él.',
     category: 'Ciencia ficción',
     imageUrl: posters.superman,
@@ -149,6 +163,7 @@ export const initialData: Movie[] = [
   {
     id: '15',
     name: 'Los 4 Fantásticos: Primeros pasos',
+    tmdbId: 617126,
     description: 'La primera familia de Marvel debe proteger la Tierra de una amenaza cósmica sin descuidar su propia familia.',
     category: 'Ciencia ficción',
     imageUrl: posters.cuatroFantasticos,
@@ -159,6 +174,7 @@ export const initialData: Movie[] = [
     {
     id: '16',
     name: 'Reacher',
+    tmdbId: 108978,
     description: 'Un ex policía militar recorre el país sin rumbo fijo y termina metido en conspiraciones que solo él puede resolver a golpes.',
     category: 'Acción',
     imageUrl: posters.reacher,
@@ -169,6 +185,7 @@ export const initialData: Movie[] = [
   {
     id: '17',
     name: 'The Boys',
+    tmdbId: 76479,
     description: 'Un grupo de justicieros sin poderes se enfrenta a los superhéroes más famosos, que en secreto abusan de su fuerza.',
     category: 'Acción',
     imageUrl: posters.theBoys,
@@ -179,6 +196,7 @@ export const initialData: Movie[] = [
   {
     id: '18',
     name: 'Daredevil: Renacido',
+    tmdbId: 202555,
     description: 'Matt Murdock, abogado ciego de día y justiciero de noche, vuelve a cruzarse con Kingpin, que ahora quiere ser alcalde de Nueva York.',
     category: 'Acción',
     imageUrl: posters.daredevil,
@@ -189,6 +207,7 @@ export const initialData: Movie[] = [
   {
     id: '19',
     name: 'El agente nocturno',
+    tmdbId: 129552,
     description: 'Un agente del FBI que atiende un teléfono de emergencias recibe una llamada que lo mete en una conspiración dentro de la Casa Blanca.',
     category: 'Acción',
     imageUrl: posters.agenteNocturno,
@@ -199,6 +218,7 @@ export const initialData: Movie[] = [
   {
     id: '20',
     name: 'Jack Ryan',
+    tmdbId: 73375,
     description: 'Un analista de la CIA deja la oficina para salir al terreno y frenar amenazas terroristas en distintas partes del mundo.',
     category: 'Acción',
     imageUrl: posters.jackRyan,
@@ -209,6 +229,7 @@ export const initialData: Movie[] = [
   {
     id: '21',
     name: 'Ted Lasso',
+    tmdbId: 97546,
     description: 'Un entrenador de fútbol americano viaja a Inglaterra para dirigir un equipo de fútbol, sin saber nada de este deporte.',
     category: 'Comedia',
     imageUrl: posters.tedLasso,
@@ -219,6 +240,7 @@ export const initialData: Movie[] = [
   {
     id: '22',
     name: 'Solo asesinatos en el edificio',
+    tmdbId: 107113,
     description: 'Tres vecinos fanáticos de los podcasts de crímenes investigan una muerte misteriosa en su propio edificio.',
     category: 'Comedia',
     imageUrl: posters.soloAsesinatos,
@@ -229,6 +251,7 @@ export const initialData: Movie[] = [
   {
     id: '23',
     name: 'Colegio Abbott',
+    tmdbId: 125935,
     description: 'Un equipo de docentes de una escuela pública con poco presupuesto hace todo lo posible por sus alumnos, ante la cámara de un documental.',
     category: 'Comedia',
     imageUrl: posters.colegioAbbott,
@@ -239,6 +262,7 @@ export const initialData: Movie[] = [
   {
     id: '24',
     name: 'Hacks',
+    tmdbId: 124101,
     description: 'Una comediante veterana de Las Vegas y una joven guionista sin trabajo se ven obligadas a escribir juntas.',
     category: 'Comedia',
     imageUrl: posters.hacks,
@@ -249,6 +273,7 @@ export const initialData: Movie[] = [
   {
     id: '25',
     name: 'The Studio',
+    tmdbId: 247767,
     description: 'El nuevo jefe de un gran estudio de Hollywood intenta hacer buen cine sin perder plata ni el puesto.',
     category: 'Comedia',
     imageUrl: posters.theStudio,
@@ -259,6 +284,7 @@ export const initialData: Movie[] = [
   {
     id: '26',
     name: 'Stranger Things',
+    tmdbId: 66732,
     description: 'En un pueblo de los años 80 desaparece un chico, y sus amigos descubren experimentos secretos y un mundo paralelo aterrador.',
     category: 'Terror',
     imageUrl: posters.strangerThings,
@@ -274,6 +300,7 @@ export const initialData: Movie[] = [
   {
     id: '27',
     name: 'The Last of Us',
+    tmdbId: 100088,
     description: 'Veinte años después de una pandemia que convirtió a casi todos en monstruos, un contrabandista debe cruzar el país con una adolescente.',
     category: 'Terror',
     imageUrl: posters.theLastOfUs,
@@ -289,6 +316,7 @@ export const initialData: Movie[] = [
   {
     id: '28',
     name: 'From',
+    tmdbId: 124364,
     description: 'Los habitantes de un pueblo del que nadie puede salir sobreviven cada noche a las criaturas que aparecen cuando oscurece.',
     category: 'Terror',
     imageUrl: posters.fromSerie,
@@ -299,6 +327,7 @@ export const initialData: Movie[] = [
   {
     id: '29',
     name: 'La caída de la casa Usher',
+    tmdbId: 157065,
     description: 'Los herederos de una poderosa familia empiezan a morir uno por uno, y el pasado oscuro de sus padres sale a la luz.',
     category: 'Terror',
     imageUrl: posters.casaUsher,
@@ -309,6 +338,7 @@ export const initialData: Movie[] = [
   {
     id: '30',
     name: 'IT: Bienvenidos a Derry',
+    tmdbId: 200875,
     description: 'En el pueblo de Derry, décadas antes de la película, una ola de desapariciones anuncia la llegada del payaso Pennywise.',
     category: 'Terror',
     imageUrl: posters.bienvenidosDerry,
