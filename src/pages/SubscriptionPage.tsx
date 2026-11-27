@@ -76,7 +76,7 @@ export default function SubscriptionPage() {
             Elegí tu <span className="subscription-title-accent">plan</span>
           </h1>
           {isSubscriber && currentPlan ? (
-            <Link to="/contacto" className="subscription-contact-button">
+            <Link to="/contacto?motivo=plan" className="subscription-contact-button">
               Cambiá o cancelá cuando quieras
               <i className="bi bi-arrow-right" aria-hidden="true"></i>
             </Link>
