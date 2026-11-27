@@ -2,6 +2,17 @@
   background: var(--color-bg);
   border-bottom: 1px solid var(--color-border);
   padding: 12px 0;
+  transition: border-color 0.3s ease;
+}
+
+.main-navbar--over-hero {
+  background: linear-gradient(180deg, color-mix(in srgb, var(--color-bg) 85%, transparent) 0%, transparent 100%) no-repeat;
+  border-bottom-color: transparent;
+}
+
+.main-navbar--over-hero:has(.navbar-collapse.show),
+.main-navbar--over-hero:has(.navbar-collapse.collapsing) {
+  background: var(--color-bg);
 }
 
 .navbar-logo {
