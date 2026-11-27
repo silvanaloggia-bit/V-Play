@@ -5,10 +5,8 @@ import type { Category } from '../../../types/category'
 import './CategoryFormModal.css'
 
 interface CategoryFormModalProps {
-  /** null = crear una categoría nueva; con category = editar esa categoría. */
   category: Category | null
   onClose: () => void
-  /** Devuelve un mensaje de error si no se pudo guardar; null si salió bien. */
   onSave: (name: string) => string | null
 }
 

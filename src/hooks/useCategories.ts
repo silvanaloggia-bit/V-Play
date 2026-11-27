@@ -24,8 +24,6 @@ export function useCategories() {
   const currentLocation = useLocation()
   const [previousPathname, setPreviousPathname] = useState(currentLocation.pathname)
 
-  // El navbar no se desmonta al navegar: releemos localStorage en cada cambio
-  // de ruta, igual que hace useAuth con el usuario logueado.
   if (currentLocation.pathname !== previousPathname) {
     setPreviousPathname(currentLocation.pathname)
     setCategories(categoryService.getCategories())
@@ -70,7 +68,6 @@ export function useCategories() {
     return { ok: true, category }
   }
 
-  // El id nunca cambia: las películas guardan el nombre, no el id.
   function updateCategory(id: string, name: string): CategoryResult {
     const current = categories.find((category) => category.id === id)
     if (!current) {
@@ -92,7 +89,6 @@ export function useCategories() {
     persist(categories.filter((category) => category.id !== id))
   }
 
-  // El orden del array es el orden en que el Home muestra las categorías.
   function moveCategory(id: string, direction: 'up' | 'down'): void {
     const index = categories.findIndex((category) => category.id === id)
     if (index === -1) return

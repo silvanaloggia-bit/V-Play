@@ -18,11 +18,8 @@ interface MovieTableProps {
   onEdit: (movie: Movie) => void
   onDelete: (movie: Movie) => void
   onToggleFeatured: (movie: Movie) => void
-  /** Solo el rol admin ve el botón de eliminar */
   canDelete: boolean
-  /** Cuántas destacadas hay actualmente */
   featuredCount: number
-  /** Máximo de destacadas permitidas */
   featuredLimit: number
 }
 

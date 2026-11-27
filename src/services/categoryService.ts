@@ -10,7 +10,6 @@ const seedCategories: Category[] = [
   { id: slugify('Ciencia ficción'), name: 'Ciencia ficción' },
 ]
 
-/** NFD + sin diacríticos + minúsculas + solo alfanuméricos. */
 function normalizeName(name: string): string {
   return name
     .normalize('NFD')
@@ -31,6 +30,12 @@ function saveCategories(categories: Category[]): void {
   localStorage.setItem(storageKey.categories, JSON.stringify(categories))
 }
 
+function getSeededCategories(): Category[] {
+  const seeded = seedCategories.map((category) => ({ ...category }))
+  saveCategories(seeded)
+  return seeded
+}
+
 export const categoryService = {
   normalizeName,
 
@@ -47,13 +52,11 @@ export const categoryService = {
           return parsed
         }
       } catch {
-        // Un valor corrupto se trata como si no hubiera categorías guardadas.
+        return getSeededCategories()
       }
     }
 
-    const seeded = seedCategories.map((category) => ({ ...category }))
-    saveCategories(seeded)
-    return seeded
+    return getSeededCategories()
   },
 
   saveCategories,

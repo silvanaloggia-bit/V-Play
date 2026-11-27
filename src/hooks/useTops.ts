@@ -24,10 +24,6 @@ function seedTops(movies: Movie[]): Tops {
   }
 }
 
-/**
- * Migración v2: descarta ids que ya no existen y rellena los puestos libres
- * con títulos válidos del mismo tipo, sin tocar el orden de los ids buenos.
- */
 function migrateTops(tops: Tops, movies: Movie[]): Tops {
   const existingIds = new Set(movies.map((movie) => movie.id))
   const moviesByType = {
@@ -60,10 +56,6 @@ function toMovies(ids: string[], movies: Movie[]): Movie[] {
     .filter((movie): movie is Movie => Boolean(movie))
 }
 
-/**
- * CRUD del ranking Top 5: alta, baja, reordenación y lectura.
- * El estado se persiste en localStorage a través de topService.
- */
 export function useTops(movies: Movie[]) {
   const [tops, setTops] = useState<Tops>(() => {
     const saved = topService.getTops()

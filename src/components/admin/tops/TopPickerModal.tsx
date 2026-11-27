@@ -4,9 +4,7 @@ import type { Movie, MovieType } from '../../../types/movie'
 import './TopPickerModal.css'
 
 interface TopPickerModalProps {
-  /** Títulos que todavía no están en el top */
   movies: Movie[]
-  /** Tipo del top que se está editando */
   type: MovieType
   currentCount: number
   limit: number

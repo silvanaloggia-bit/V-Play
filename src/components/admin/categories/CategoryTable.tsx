@@ -17,7 +17,6 @@ export default function CategoryTable({
   onDelete,
   onMove,
 }: CategoryTableProps) {
-  // Las películas guardan el NOMBRE de la categoría, no el id.
   const usage = movies.reduce<Record<string, number>>((counts, movie) => {
     counts[movie.category] = (counts[movie.category] ?? 0) + 1
     return counts

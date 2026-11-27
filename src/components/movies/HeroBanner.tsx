@@ -11,13 +11,11 @@ export default function HeroBanner() {
   const { movies } = useMovies()
   const [index, setIndex] = useState(0)
 
-  // Las destacadas del CRUD son las que alimentan el carrusel.
   const slides = movies
     .filter((movie) => movie.isFeatured && movie.published)
     .map((movie) => ({
       id: movie.id,
       image: movie.bannerUrl || movie.imageUrl,
-      // Sin banner subtitle solo queda el poster vertical de TMDb.
       posterOnly: !movie.bannerUrl,
       title: movie.name,
       description: movie.description,

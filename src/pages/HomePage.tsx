@@ -37,7 +37,6 @@ export default function HomePage() {
   const [featuredResult, ...otherResults] = searchResults
   const suggestedMovies = publishedMovies.slice(0, SUGGESTION_COUNT)
 
-  // Solo se muestran filas con títulos publicados.
   const rows = categories
     .map((category) => ({
       category,
@@ -45,7 +44,6 @@ export default function HomePage() {
     }))
     .filter((row) => row.movies.length > 0)
 
-  // Los tops van siempre después de todas las categorías y nunca muestran borradores.
   const publishedTopMovies = topMovies.filter((movie) => movie.published)
   const publishedTopSeries = topSeries.filter((movie) => movie.published)
 

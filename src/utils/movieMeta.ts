@@ -1,6 +1,5 @@
 import type { Movie } from '../types/movie'
 
-/** Convierte 167 en "2 h 47 min" y 120 en "2 h". */
 export function formatDuration(minutes?: number): string {
   if (!minutes || minutes <= 0) return ''
 
@@ -12,11 +11,6 @@ export function formatDuration(minutes?: number): string {
   return `${hours} h ${rest} min`
 }
 
-/**
- * Texto secundario de un título según su tipo:
- * película → "2024 · 2 h 47 min · ★ 8.2"
- * serie    → "2011 · 8 temporadas · 73 episodios · ★ 8.4"
- */
 export function formatTitleMeta(movie: Movie): string {
   const parts: string[] = []
 
